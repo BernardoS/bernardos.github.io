@@ -4,22 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="/assets/js/theme.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <title>Bernardo Sunderhus</title>
 </head>
 <body>
-  <div class="toolbar">
-    <img class="toolbar__avatar" src="/assets/images/myself.png" alt="This should be my photo">
-    <nav id="tabs" class="mdc-tab-bar mdc-tab-bar--indicator-accent toolbar__navigation">
+  <header>
+    <img src="/images/myself.png" alt="This should be my photo">
+    <nav class="mdc-tab-bar mdc-tab-bar--indicator-accent toolbar__navigation">
       <a class="mdc-tab">About me</a>
       <a class="mdc-tab">Skills</a>
       <a class="mdc-tab">Learn</a>
       <span class="mdc-tab-bar__indicator"></span>
     </nav>
-  </div>
-  <script src="<%= htmlWebpackPlugin.files.chunks.webpack.entry %>"></script>
-  <script src="<%= htmlWebpackPlugin.files.chunks.app.entry %>"></script>
+  </header>
 </body>
 </html>

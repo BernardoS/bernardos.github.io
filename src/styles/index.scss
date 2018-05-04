@@ -1,0 +1,10 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', serif;
+}
+
+body {
+  margin: 0;
+}
+@import "./themes/light";
+@import "@material/tabs/mdc-tabs";
