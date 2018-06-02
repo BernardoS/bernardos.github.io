@@ -1,10 +1,21 @@
 {
-  "extends": ["standard"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier",
+    "react"
+  ],
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "parser": "babel-eslint",
-  "plugins": [
-    "standard"
-  ]
+  "settings": {
+    "react": {
+      "pragma": "DOM"
+    }
+  }
 }
