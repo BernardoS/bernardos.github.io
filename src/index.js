@@ -1,13 +1,16 @@
-import style from './test.css'
-import * as DOM from './utils/DOM'
+import './scss/style.scss'
+// import home from './docs/home.md'
+// import marked from 'marked'
+// import emoji from 'node-emoji'
 
+// export function parse (markdown) {
+//   return marked(markdown.replace(/(:.*:)/g, (match) => emoji.emojify(match)))
+// }
 
-@DOM.define('my-test')
-export class MyTest extends DOM.Component {
-  createTemplate () {
-    return <>
-      <link href={style} rel="stylesheet" />
-      <div className="test">oi</div>
-    </>
-  }
-}
+// fetch(home).then(res => res.text()).then(parse).then(addtohtml)
+
+// const main = document.getElementById('markdown-it')
+// function addtohtml (text) {
+//   main.innerHTML = text
+//   main.classList.remove('markdown-content--invisible')
+// }

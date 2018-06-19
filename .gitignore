@@ -2,3 +2,7 @@
 /dist
 /www
 *.log
+*.psd
+*.studio
+
+.DS_Store

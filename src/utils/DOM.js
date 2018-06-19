@@ -14,7 +14,7 @@ export const insert = (element, fn) => {
   element.textContent = fn()
 }
 
-export class Component extends HTMLElement {
+export class Component extends HTMLElement { 
   constructor() {
     super()
     this.attachShadow({mode: 'open'})
@@ -25,5 +25,5 @@ export class Component extends HTMLElement {
    * @returns {Node}
    * @memberof Component
    */
-  createTemplate () {/* noop */}
+   createTemplate () {/* noop */}
 }

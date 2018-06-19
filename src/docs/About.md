@@ -14,4 +14,4 @@
   
   In a little 6 month project I ended up in a team to develop a machine involving sensors to collect data from urine, and someone had to deal with front-end bullshit (barely knew that front-end was way more than just V in the MVC pattern) and since I wasn't really into sensors it ended up being a whatever I'll do it task.
 
-  Here I am now, almost 3 years later, in love with this great ever evolving echosystem.
+  Here I am now, 4 years later, in love with this great ever evolving echosystem.

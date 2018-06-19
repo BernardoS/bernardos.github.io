@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    link(rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css")
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous")
+    if webpackConfig.mode === 'production'
+      each css in htmlWebpackPlugin.files.css
+        link(rel="stylesheet", href=css)
+    title Bernardo Sunderhus
+    if webpackConfig.mode === 'production'
+      if htmlWebpackPlugin.files.chunks.vendors_components
+        script(src=htmlWebpackPlugin.files.chunks.vendors_components.entry)
+      if htmlWebpackPlugin.files.chunks.components
+        script(src=htmlWebpackPlugin.files.chunks.components.entry)
+  body
+    my-hero(src=require('./images/hero.png') half="")
+      img.avatar(src=require('./images/avatar.png') alt="it's a me, Bernardo!")
+      nav.links
+        a.link(href="#")
+          i.fas.fa-envelope
+        a.link(href="#")
+          i.fab.fa-facebook
+        a.link(href="#")
+          i.fab.fa-github
+        a.link(href="#")
+          i.fab.fa-linkedin
+    span.avatar-relative
+    mark-down(src=require('./docs/home.md'))
+      | # Testes
+    if webpackConfig.mode === 'production'
+      if htmlWebpackPlugin.files.chunks.vendors_main
+        script(src=htmlWebpackPlugin.files.chunks.vendors_main.entry)
+      if htmlWebpackPlugin.files.chunks.main
+        script(src=htmlWebpackPlugin.files.chunks.main.entry)
+    else
+      each js in htmlWebpackPlugin.files.js
+        script(src=js)
+    
