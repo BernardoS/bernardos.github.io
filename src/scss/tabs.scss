@@ -1,0 +1,36 @@
+@import "queries";
+
+.tabs {
+  display: flex;
+  margin-right: 25px;
+  margin-left: 25px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  .tabs--item {
+    flex: 1 1 auto;
+    position: relative;
+    text-decoration: none;
+    padding: 15px;
+    text-align: center;
+    color: var(--accent);
+    box-shadow: 0 2px 0 var(--secondary);
+    &:after {
+      content: "";
+      width: 0px;
+      height: 0px;
+      background: var(--background);
+      position: absolute;
+      transition: all 300ms ease-in-out;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 50%) rotate(45deg);
+      box-shadow: inset 3px 3px 3px var(--secondary), inset 1px 1px 1px var(--accent);
+    }
+    &.tabs--item--selected {
+      &:after {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}

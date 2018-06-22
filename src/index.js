@@ -1,16 +1,18 @@
 import './scss/style.scss'
-// import home from './docs/home.md'
-// import marked from 'marked'
-// import emoji from 'node-emoji'
 
-// export function parse (markdown) {
-//   return marked(markdown.replace(/(:.*:)/g, (match) => emoji.emojify(match)))
-// }
+const router = document.getElementById('router')
+/** @type {HTMLAnchorElement[]} */
+const navs = Array.from(document.getElementsByClassName('nav'))
 
-// fetch(home).then(res => res.text()).then(parse).then(addtohtml)
+onload = () => {
+  router.history.listen(setCurrentNav)
+  setCurrentNav()
+}
 
-// const main = document.getElementById('markdown-it')
-// function addtohtml (text) {
-//   main.innerHTML = text
-//   main.classList.remove('markdown-content--invisible')
-// }
+function setCurrentNav () {
+  for (const nav of navs) {
+    if (nav.pathname === router.history.location.pathname) {
+      nav.classList.add('nav--current')
+    } else nav.classList.remove('nav--current')
+  }
+}

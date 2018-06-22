@@ -3,7 +3,9 @@ export const define = (tag) => (Class) => {
 }
 
 export const insertM = (element, fn) => {
-  element.textContent = fn()
+  const content = fn()
+  if (content instanceof HTMLElement) element.appendChild(content)
+  else element.textContent = content
 }
 
 export const wrap = (acessor, fn) => {
@@ -17,13 +19,14 @@ export const insert = (element, fn) => {
 export class Component extends HTMLElement { 
   constructor() {
     super()
-    this.attachShadow({mode: 'open'})
     const template = this.createTemplate()
-    if (template instanceof Node) this.shadowRoot.appendChild(template)
+    if (template instanceof Node) {
+      this.attachShadow({mode: 'open'})
+      this.shadowRoot.appendChild(template)
+    }
   }
   /**
    * @returns {Node}
-   * @memberof Component
    */
    createTemplate () {/* noop */}
 }

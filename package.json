@@ -8,7 +8,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "bundle": "webpack --env.production -p",
-    "serve": "pushstate-server www"
+    "serve": "pushstate-server www",
+    "clean": "rimraf www"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.49",
@@ -56,6 +57,7 @@
     "pug-loader": "^2.4.0",
     "pushstate-server": "^3.0.1",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "simple-progress-webpack-plugin": "^1.1.2",
     "spawn-loader": "^6.0.0",
@@ -69,9 +71,11 @@
   },
   "dependencies": {
     "autobind": "^1.0.3",
+    "history": "^4.7.2",
     "markdown-it": "^8.4.1",
     "marked": "^0.4.0",
     "node-emoji": "^1.8.1",
+    "path-to-regexp": "^2.2.1",
     "strip-indent": "^2.0.0"
   }
 }

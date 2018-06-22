@@ -9,6 +9,10 @@ const webpack = require('webpack')
 const SimpleProgressPlugin = require('simple-progress-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const fs = require('fs')
+
+const components = fs.readdirSync(path.resolve(__dirname, 'src', 'components'))
+  .reduce((obj, folder) => ({...obj, [folder]: `./components/${folder}/index.js`}), {})
 
 module.exports = (env = {}) => {
   return {
@@ -16,11 +20,11 @@ module.exports = (env = {}) => {
     context: path.resolve(__dirname, 'src'),
     entry: {
       main: './index.js',
-      components: './components/index.js'
+      ...components
     },
     output: {
       path: path.resolve(__dirname, 'www'),
-      filename: env.production ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      filename: env.production ? 'js/[chunkhash].js' : 'js/[name].js',
       publicPath: '/'
     },
     module: {
@@ -60,18 +64,19 @@ module.exports = (env = {}) => {
           test: /\.s?css$/,
           include: path.resolve(__dirname, './src/components'),
           use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: `styles/[${env.production ? 'hash' : 'name'}].css`
-              }
-            },
-            'extract-loader',
+            // {
+            //   loader: 'file-loader',
+            //   options: {
+            //     name: `styles/[${env.production ? 'hash' : 'name'}].css`
+            //   }
+            // },
+            // 'extract-loader',
             {
               loader: 'css-loader',
               options: {
                 minimize: Boolean(env.production),
-                sourceMap: !env.production
+                sourceMap: !env.production,
+                modules: true
               }
             },
             'sass-loader'
@@ -104,8 +109,8 @@ module.exports = (env = {}) => {
     plugins: [
       new OptimizeCssAssets({}),
       new MiniCssExtractWebpackPlugin({
-        filename: env.production ? 'styles/[name].[hash].css' : 'styles/[name].css',
-        chunkFilename: env.production ? 'styles/[id].[hash].css' : 'styles/[id].[hash].css'
+        filename: env.production ? 'styles/[hash].css' : 'styles/[name].css',
+        chunkFilename: env.production ? 'styles/[hash].css' : 'styles/[id].css'
       }),
       new Html({
         template: './index.pug',
@@ -122,9 +127,9 @@ module.exports = (env = {}) => {
     .concat(env.production ? plugins.production : plugins.development),
     optimization: {
       splitChunks: {
-        chunks: 'all',
+        chunks: 'async',
         name: true,
-        automaticNameDelimiter: '_'
+        // automaticNameDelimiter: '_'
       },
       minimizer: [
         new UglifyJsPlugin({

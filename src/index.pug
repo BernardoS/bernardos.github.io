@@ -1,6 +1,7 @@
 doctype html
 html(lang="en")
   head
+    title Bernardo Sunderhus
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     meta(http-equiv="X-UA-Compatible" content="ie=edge")
@@ -9,33 +10,36 @@ html(lang="en")
     if webpackConfig.mode === 'production'
       each css in htmlWebpackPlugin.files.css
         link(rel="stylesheet", href=css)
-    title Bernardo Sunderhus
-    if webpackConfig.mode === 'production'
-      if htmlWebpackPlugin.files.chunks.vendors_components
-        script(src=htmlWebpackPlugin.files.chunks.vendors_components.entry)
-      if htmlWebpackPlugin.files.chunks.components
-        script(src=htmlWebpackPlugin.files.chunks.components.entry)
+      script(src=htmlWebpackPlugin.files.chunks['page-hero'].entry)
+      script(src=htmlWebpackPlugin.files.chunks['mark-down'].entry)
+      script(src=htmlWebpackPlugin.files.chunks['nav-router'].entry)
   body
-    my-hero(src=require('./images/hero.png') half="")
-      img.avatar(src=require('./images/avatar.png') alt="it's a me, Bernardo!")
-      nav.links
-        a.link(href="#")
-          i.fas.fa-envelope
-        a.link(href="#")
-          i.fab.fa-facebook
-        a.link(href="#")
-          i.fab.fa-github
-        a.link(href="#")
-          i.fab.fa-linkedin
-    span.avatar-relative
-    mark-down(src=require('./docs/home.md'))
-      | # Testes
+    nav-router#router
+      page-hero.hero(src=require('./images/hero.png') half)
+        a#home-anchor.hero--avatar(href="/" title="Home")
+          img.hero--avatar_photo(src=require('./images/avatar.png'))
+        nav.hero--links
+          a.hero--links_item(href="mailto:bernardo.sunderhus@gmail.com" title="e-mail")
+            i.hero--links_item_icon.fas.fa-envelope.fa-2x
+          a.hero--links_item(href="https://www.facebook.com/bernardo.sunderhus" target="_blank" title="facebook")
+            i.hero--links_item_icon.fab.fa-facebook.fa-2x
+          a.hero--links_item(href="https://github.com/sunderhus" target="_blank" title="github")
+            i.hero--links_item_icon.fab.fa-github.fa-2x
+      .hero--relative
+        .tabs
+          a#about-anchor.tabs--item(href="/about" title="About")
+            | About
+          a#resume-anchor.tabs--item(href="/resume" title="Resumé")
+            | Resumé
+      main#content.markdown-content
+        nav-route(path="/")
+          mark-down(src=require('./docs/home.md'))
+        nav-route(path="/about")
+          mark-down(src=require('./docs/about.md'))
+        nav-route(path="/resume")
+          | should put my cv here
     if webpackConfig.mode === 'production'
-      if htmlWebpackPlugin.files.chunks.vendors_main
-        script(src=htmlWebpackPlugin.files.chunks.vendors_main.entry)
-      if htmlWebpackPlugin.files.chunks.main
-        script(src=htmlWebpackPlugin.files.chunks.main.entry)
+      script(src=htmlWebpackPlugin.files.chunks.main.entry)
     else
       each js in htmlWebpackPlugin.files.js
         script(src=js)
-    

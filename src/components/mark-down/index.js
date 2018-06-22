@@ -2,24 +2,37 @@ import * as DOM from '../../utils/DOM'
 import marked from 'marked'
 import unindent from 'strip-indent'
 import flatMap from '../../utils/flatMap'
+import style from './style.scss'
+import emoji from 'node-emoji'
 const domParser = new DOMParser()
 
 
 @DOM.define('mark-down')
 export class MarkDown extends DOM.Component {
   static observedAttributes = ['src']
-  connectedCallback () {
-    cleanShadow(this)
-    if (this.childElementCount) appendToShadow(this, flatMap(Array.from(this.childNodes), parse))
+  constructor () {
+    super()
+    if (this.childNodes.length && this.shadowRoot.childElementCount === 1) {
+      appendToShadow(this, flatMap(Array.from(this.childNodes), parse))
+    }
   }
-  attributeChangedCallback (name) {
-    if (name === 'src') loadSrc(this)
+  createTemplate () {
+    return <style>{style}</style>
+  }
+  attributeChangedCallback () {
+    if (this.shadowRoot.childElementCount === 1) loadSrc(this)
   }
   get src () {
     return this.getAttribute('src')
   }
   set src (src) {
     this.setAttribute('src', src)
+  }
+  get text () {
+    return this.textContent
+  }
+  set text (text) {
+    this.textContent = text
   }
 }
 
@@ -30,9 +43,11 @@ export class MarkDown extends DOM.Component {
  */
 function parse (node) {
   if (typeof node === 'string') {
-    return Array.from(domParser.parseFromString(marked(unindent(node)), 'text/html').body.childNodes)
+    const str = unindent(node).replace(/(:.*:)/g, (match) => emoji.emojify(match))
+    return Array.from(domParser.parseFromString(marked(str), 'text/html').body.childNodes)
   } else if (node instanceof Text) {
-    return Array.from(domParser.parseFromString(marked(unindent(node.textContent)), 'text/html').body.childNodes)
+    const str = unindent(node.textContent).replace(/(:.*:)/g, (match) => emoji.emojify(match))
+    return Array.from(domParser.parseFromString(marked(str), 'text/html').body.childNodes)
   } else return [node.cloneNode(true)]
 }
 
@@ -42,13 +57,6 @@ function parse (node) {
  */
 function appendToShadow (element, nodes) {
   if (nodes.length) nodes.forEach(node => element.shadowRoot.appendChild(node))
-}
-
-/**
- * @param {MarkDown} element markdown element
- */
-function cleanShadow (element) {
-  while (element.shadowRoot.hasChildNodes()) element.shadowRoot.removeChild(element.shadowRoot.firstChild)  
 }
 
 /**

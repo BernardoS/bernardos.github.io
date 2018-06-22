@@ -7,13 +7,13 @@
   height: 50vh;
 }
 :host([position="top"]) {
-  header {
+  .header {
     align-items: flex-start;
   }
 }
 
-header {
-  z-index: -1;
+.header {
+  // z-index: -1;
   height: 100%;
   background-position: center;
   background-size: cover;
