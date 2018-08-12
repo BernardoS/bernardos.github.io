@@ -2,14 +2,15 @@ const path = require('path')
 const MiniCssExtractWebpackPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssets = require('optimize-css-assets-webpack-plugin')
 const Html = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpack = require('webpack')
 const SimpleProgressPlugin = require('simple-progress-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const fs = require('fs')
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const components = fs.readdirSync(path.resolve(__dirname, 'src', 'components'))
   .reduce((obj, folder) => ({...obj, [folder]: `./components/${folder}/index.js`}), {})
@@ -22,6 +23,12 @@ module.exports = (env = {}) => {
       main: './index.js',
       ...components
     },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+      alias: {
+        DOM: path.resolve(__dirname, './src/utils/DOM.js')
+      }
+    },
     output: {
       path: path.resolve(__dirname, 'www'),
       filename: env.production ? 'js/[chunkhash].js' : 'js/[name].js',
@@ -29,25 +36,12 @@ module.exports = (env = {}) => {
     },
     module: {
       rules: [
-        // {
-        //   test: /\.html$/,
-        //   use: {
-        //     loader: 'html-loader',
-        //     options: {
-        //       removeComments: true,
-        //       collapseWhitespace: true,
-        //       minimize: false,
-        //       interpolate: true,
-        //       attrs: ['img:src', 'my-hero:src', 'mark-down:src']
-        //     }
-        //   }
-        // },
         {
           test: /\.pug$/,
           use: 'pug-loader'
         },
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
           use: ['babel-loader']
         },
@@ -57,7 +51,12 @@ module.exports = (env = {}) => {
           use: [
             env.production ? MiniCssExtractWebpackPlugin.loader : 'style-loader',
             'css-loader',
-            'sass-loader'
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: ['./node_modules']
+              }
+            }
           ]
         },
         {
@@ -76,14 +75,15 @@ module.exports = (env = {}) => {
               options: {
                 minimize: Boolean(env.production),
                 sourceMap: !env.production,
-                modules: true
+                modules: true,
+                camelCase: true
               }
             },
             'sass-loader'
           ]
         },
         {
-          test: /\.(png|jpg|svg)$/,
+          test: /\.(png|jpg|svg|pdf)$/,
           use: [
             {
               loader: 'file-loader',
@@ -106,25 +106,9 @@ module.exports = (env = {}) => {
         }
       ]
     },
-    plugins: [
-      new OptimizeCssAssets({}),
-      new MiniCssExtractWebpackPlugin({
-        filename: env.production ? 'styles/[hash].css' : 'styles/[name].css',
-        chunkFilename: env.production ? 'styles/[hash].css' : 'styles/[id].css'
-      }),
-      new Html({
-        template: './index.pug',
-        inject: false
-      }),
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: env.production ? 'production' : 'development'
-      }),
-      new SimpleProgressPlugin({
-        format: env.production ? 'compact' : 'minimal'
-      }),
-    ]
-    .concat(env.analyze ? [new BundleAnalyzerPlugin()] : [])
-    .concat(env.production ? plugins.production : plugins.development),
+    plugins: plugins.commons 
+      .concat(env.analyze ? [new BundleAnalyzerPlugin()] : [])
+      .concat(env.production ? plugins.production : plugins.development),
     optimization: {
       splitChunks: {
         chunks: 'async',
@@ -142,7 +126,11 @@ module.exports = (env = {}) => {
     },
     target: 'web',
     stats: env.production ? 'normal' : 'errors-only',
+    devtool: 'source-map',
     devServer: {
+      contentBase: path.resolve('./src'),
+      host: '0.0.0.0',
+      disableHostCheck: true,
       compress: false,
       historyApiFallback: true,
       inline: true,
@@ -154,7 +142,25 @@ module.exports = (env = {}) => {
 }
 
 const plugins = {
+  commons: [
+    new OptimizeCssAssets({}),
+    new Html({
+      template: './index.pug',
+      inject: false
+    })
+  ],
   production: [
+    new CopyWebpackPlugin([
+      'favicon.ico'
+    ]),
+    new MiniCssExtractWebpackPlugin({
+      filename: 'styles/[hash].css',
+      chunkFilename: 'styles/[hash].css'
+    }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production'
+    }),
+    new SimpleProgressPlugin({format: 'compact'}),
     new CleanWebpackPlugin('./www'),
     // new CopyWebpackPlugin(
     //   ['./assets'], {ignore: ['*.ejs', '*.psd', '*.studio', '_*']}
@@ -169,6 +175,12 @@ const plugins = {
   ],
   development: [
     new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new MiniCssExtractWebpackPlugin({
+      filename: 'styles/[name].css',
+      chunkFilename: 'styles/[id].css'
+    }),
+    new webpack.EnvironmentPlugin({NODE_ENV: 'development'}),
+    new SimpleProgressPlugin({format: 'minimal'}),
   ]
 }

@@ -1,23 +1,66 @@
-@import "queries";
-@import "hero";
-@import "tabs";
 
 :root {
-  font-family: 'Fira Code';
-  --primary: whitesmoke;
+  --primary: #fafafa;
   --secondary: #acacac;
   --accent: #212121;
   --background: #ffffff;
 }
 
+$mdc-theme-primary: #212121;
+$mdc-theme-secondary: #acacac;
+$mdc-theme-on-primary: #fafafa;
+$mdc-theme-on-secondary: #fafafa;
+
+
+@import "queries";
+@import "placeholder";
+@import "header";
+@import "footer";
+@import "tabs";
+
+@import "@material/button/mdc-button";
+@import "@material/tab-bar/mdc-tab-bar";
+@import "@material/tab-scroller/mdc-tab-scroller";
+@import "@material/tab-indicator/mdc-tab-indicator";
+@import "@material/tab/mdc-tab";
+@import "@material/fab/mdc-fab";
+
 body {
-  margin: 0;
-  background-color: var(--background);
+  position: relative;
+  min-height: 100vh;
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	background-color: var(--background);
 }
 
-.markdown-content {
-  padding: 0 20px;
+
+p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  line-height: 1.8em;
+	text-align: justify;
+}
+
+blockquote {
+  color: var(--secondary);
+  border-left-style: solid;
+  border-left-width: 2px;
+  border-left-color: var(--secondary);
+  margin: 0;
+  padding: 1em;
+  font-style: italic;
+}
+
+.bs-hairline {
+  font-family: 'Montserrat', arial;
+  font-size: 0.9em;
+  line-height: 1;
+  font-weight: lighter;
+}
+
+.bs-content {
+  padding: 1em 1.5em;
   @media #{$tablet} {
-    padding: 0 60px;
+    padding: 1em 2em;
   }
 }

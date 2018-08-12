@@ -1,48 +1,43 @@
-import * as DOM from '../../utils/DOM'
-import NavRouter from './nav-router'
+import * as DOM from 'DOM'
 
-const _listener = new WeakMap()
+/**
+ * @type WeakMap<HTMLNavRouteElement, () => void>
+*/
+const computeMatchMap = new WeakMap()
 
-@DOM.define('nav-route')
-export default class NavRoute extends HTMLElement {
-  constructor () {
-    super ()
-    this.attachShadow({mode: 'open'})
-  }
-  connectedCallback () {
-    /** @type {NavRouter} */
-    this.router = this.closest('nav-router')
-    if (computeMatch(this)) render(this)
-    const unlisten = this.router.history.listen(() => {
-      if (computeMatch(this)) render(this)
-      else unrender(this)
-    })
-    _listener.set(this, unlisten)
-  }
-  disconnectedCallback () {
-    _listener.get(this)()
-  }
-
+export class HTMLNavRouteElement extends HTMLElement {
   get path () {
     return this.getAttribute('path')
   }
   set path (path) {
     this.setAttribute('path', path)
   }
-}
-/**
- * @param {NavRoute} route
- */
-function computeMatch(route) {
-  if (!(route.router instanceof NavRouter)) {
-    throw new Error('nav-route element should be inserted nested to a nav-router element')
+  constructor () {
+    super ()
+    this.attachShadow({mode: 'open'})
+    computeMatchMap.set(this, computeMatch.bind(undefined, this))
   }
-  return route.router.history.location.pathname === route.path
+  connectedCallback () {
+    const computeMatchFn = computeMatchMap.get(this)
+    computeMatchFn()
+    window.addEventListener('popstate', computeMatchFn, {passive: true})
+  }
+  disconnectedCallback () {
+    const computeMatchFn = computeMatchMap.get(this)
+    window.removeEventListener('popstate', computeMatchFn)
+  }
 }
 
+/**
+ * @param {HTMLNavRouteElement} route 
+ */
+function computeMatch (route) {
+  if (location.pathname === route.path) render(route)
+  else unrender(route)
+}
 
 /**
- * @param {NavRoute} route
+ * @param {HTMLNavRouteElement} route
  */
 function render (route) {
   if (!route.shadowRoot.firstChild && route.dispatchEvent(new Event('enter'))) {
@@ -50,10 +45,12 @@ function render (route) {
   }
 }
 /**
- * @param {NavRoute} route
+ * @param {HTMLNavRouteElement} route
  */
 function unrender (route) {
   if (route.shadowRoot.firstChild && route.dispatchEvent(new Event('leave'))) {
     route.shadowRoot.removeChild(route.shadowRoot.firstChild)
   }
 }
+
+customElements.define('nav-route', HTMLNavRouteElement)

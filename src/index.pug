@@ -2,44 +2,54 @@ doctype html
 html(lang="en")
   head
     title Bernardo Sunderhus
+    //- metadata
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     meta(http-equiv="X-UA-Compatible" content="ie=edge")
-    link(rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css")
+    meta(name="msapplication-TileColor" content="#da532c")
+    meta(name="theme-color" content="#ffffff")
+    //- favicons
+    link(rel="apple-touch-icon" sizes="180x180" href=require("./images/apple-touch-icon.jpg"))
+    link(rel="icon" type="image/png" sizes="32x32" href=require("./images/favicon-32x32.png"))
+    link(rel="icon" type="image/png" sizes="16x16" href=require("./images/favicon-16x16.png"))
+    //- fonts
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    link(rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet" type="text/css")
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous")
-    if webpackConfig.mode === 'production'
+    //- scripts
+    if webpackConfig.mode === "production"
       each css in htmlWebpackPlugin.files.css
         link(rel="stylesheet", href=css)
-      script(src=htmlWebpackPlugin.files.chunks['page-hero'].entry)
-      script(src=htmlWebpackPlugin.files.chunks['mark-down'].entry)
-      script(src=htmlWebpackPlugin.files.chunks['nav-router'].entry)
+      script(src=htmlWebpackPlugin.files.chunks["nav-router"].entry)
   body
-    nav-router#router
-      page-hero.hero(src=require('./images/hero.png') half)
-        a#home-anchor.hero--avatar(href="/" title="Home")
-          img.hero--avatar_photo(src=require('./images/avatar.png'))
-        nav.hero--links
-          a.hero--links_item(href="mailto:bernardo.sunderhus@gmail.com" title="e-mail")
-            i.hero--links_item_icon.fas.fa-envelope.fa-2x
-          a.hero--links_item(href="https://www.facebook.com/bernardo.sunderhus" target="_blank" title="facebook")
-            i.hero--links_item_icon.fab.fa-facebook.fa-2x
-          a.hero--links_item(href="https://github.com/sunderhus" target="_blank" title="github")
-            i.hero--links_item_icon.fab.fa-github.fa-2x
-      .hero--relative
-        .tabs
-          a#about-anchor.tabs--item(href="/about" title="About")
-            | About
-          a#resume-anchor.tabs--item(href="/resume" title="Resumé")
-            | Resumé
-      main#content.markdown-content
-        nav-route(path="/")
-          mark-down(src=require('./docs/home.md'))
-        nav-route(path="/about")
-          mark-down(src=require('./docs/about.md'))
-        nav-route(path="/resume")
-          | should put my cv here
-    if webpackConfig.mode === 'production'
+    include views/components/header
+    .bs-tab-container
+      .mdc-tab-bar#tabs(role="tablist")
+        .mdc-tab-scroller
+          .mdc-tab-scroller__scroll-area
+            .mdc-tab-scroller__scroll-content
+              a.mdc-tab(is="nav-link" href="/" title="Home" role="tab" active-class="mdc-tab--active")
+                .mdc-tab__content
+                  span.mdc-tab__text-label Home
+                span.mdc-tab-indicator(active-class="mdc-tab-indicator--active")
+                  span.mdc-tab-indicator__content.mdc-tab-indicator__content--underline
+                .mdc-tab__ripple
+              a.mdc-tab(is="nav-link" href="/about-me" title="About Me" role="tab" active-class="mdc-tab--active")
+                .mdc-tab__content
+                  span.mdc-tab__text-label About me
+                span.mdc-tab-indicator(active-class="mdc-tab-indicator--active")
+                  span.mdc-tab-indicator__content.mdc-tab-indicator__content--underline
+                .mdc-tab__ripple
+    main.bs-content
+      nav-route(path="/")
+        include views/home
+      nav-route(path="/about-me")
+        include views/history
+    include views/components/footer
+    if webpackConfig.mode === "production"
       script(src=htmlWebpackPlugin.files.chunks.main.entry)
+      script(src=htmlWebpackPlugin.files.chunks["mark-down"].entry async)
     else
       each js in htmlWebpackPlugin.files.js
         script(src=js)

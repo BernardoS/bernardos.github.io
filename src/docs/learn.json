@@ -3,12 +3,12 @@
   "RxJS",
   "Functional Reactive Programming",
   "GraphQL",
-  "Elm language",
+  "Elm",
   "WebRTC",
   "Work more with ServiceWorkers and WebWorkers",
   "BlockStack",
-  "BlockChain",
   "WebComponents",
   "Shadow DOM",
-  "Custom Elements"
+  "Custom Elements",
+  ["DynamoDB", "Amazon is dominating the world people!"]
 ]
