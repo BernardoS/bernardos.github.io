@@ -1,4 +1,4 @@
-import * as DOM from 'DOM'
+import * as DOM from '../../utils/DOM'
 
 /**
  * @type WeakMap<HTMLNavRouteElement, () => void>

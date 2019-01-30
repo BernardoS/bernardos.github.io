@@ -106,9 +106,19 @@ module.exports = (env = {}) => {
         }
       ]
     },
-    plugins: plugins.commons 
-      .concat(env.analyze ? [new BundleAnalyzerPlugin()] : [])
-      .concat(env.production ? plugins.production : plugins.development),
+    plugins: [
+      ...plugins.commons,
+      ...(
+        env.analyze
+        ? [new BundleAnalyzerPlugin()]
+        : []
+      ),
+      ...(
+        env.production
+        ? plugins.production
+        : plugins.development
+      )
+    ],
     optimization: {
       splitChunks: {
         chunks: 'async',
@@ -150,7 +160,7 @@ const plugins = {
     })
   ],
   production: [
-    new CopyWebpackPlugin([
+    CopyWebpackPlugin([
       'favicon.ico'
     ]),
     new MiniCssExtractWebpackPlugin({
@@ -160,7 +170,7 @@ const plugins = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production'
     }),
-    new SimpleProgressPlugin({format: 'compact'}),
+    SimpleProgressPlugin({format: 'compact'}),
     new CleanWebpackPlugin('./www'),
     // new CopyWebpackPlugin(
     //   ['./assets'], {ignore: ['*.ejs', '*.psd', '*.studio', '_*']}
@@ -181,6 +191,6 @@ const plugins = {
       chunkFilename: 'styles/[id].css'
     }),
     new webpack.EnvironmentPlugin({NODE_ENV: 'development'}),
-    new SimpleProgressPlugin({format: 'minimal'}),
+    SimpleProgressPlugin({format: 'minimal'}),
   ]
 }

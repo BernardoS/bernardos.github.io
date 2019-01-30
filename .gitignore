@@ -6,3 +6,4 @@
 *.studio
 
 .DS_Store
+.vscode

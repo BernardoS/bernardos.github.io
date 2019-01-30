@@ -16,7 +16,7 @@ export function hydrate(tag, attributes, ...children) {
 }
 /**
  * 
- * @param {HTMLElement} element 
+ * @param {HTMLElement | DocumentFragment} element 
  * @param {Child} child 
  */
 function appendChild(element, child) {
@@ -32,8 +32,8 @@ function appendChild(element, child) {
 function childToNode(child) {
   if (child instanceof Node) return child
   if (typeof child === 'string') return document.createTextNode(child)
-  if (typeof child === 'number') return document.createTextNode(child)
-  if (typeof child === 'symbol') return document.createTextNode(child)
+  if (typeof child === 'number') return document.createTextNode(child.toString())
+  if (typeof child === 'symbol') return document.createTextNode(child.toString())
   if (Array.isArray(child)) {
     const fragment = document.createDocumentFragment()
     for (const c of child) {
@@ -72,5 +72,5 @@ function setStringAttribute(element, key, attribute) {
  * @param {number} attribute 
  */
 function setNumberAttribute(element, key, attribute) {
-  element.setAttribute(key, attribute)
+  element.setAttribute(key, attribute.toString())
 }

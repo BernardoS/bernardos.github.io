@@ -1,3 +1,1 @@
-# Hi there, I'm Bernardo!
-
-> No I'll not fix your computer! not joking! - said every computer scientist ever...
+# Hi there, I'm Bernardo
