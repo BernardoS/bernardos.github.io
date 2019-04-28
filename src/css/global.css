@@ -1,0 +1,13 @@
+:root {
+  --dark-color: #0D0D0D;
+  --white-color: #F0F0F2;
+  --primary-color-light: #D9918B;
+  --primary-color: #BF5656;
+  --primary-color-dark: #A63333;
+  --space: 50px;
+}
+
+body {
+  background-color: var(--dark-color);
+  margin: var(--space);
+}

@@ -1,4 +1,3 @@
-doctype html
 html(lang="en")
   head
     title Bernardo Sunderhus
@@ -8,8 +7,9 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible" content="ie=edge")
     meta(name="msapplication-TileColor" content="#da532c")
     meta(name="theme-color" content="#ffffff")
-    //- favicons
-    link(rel="apple-touch-icon" sizes="180x180" href=require("./images/apple-touch-icon.jpg"))
+    //- //- favicons
+    link(rel="icon" type="image/png" sizes="48x48" href=require("./images/favicon.ico"))
+    link(rel="apple-touch-icon" sizes="180x180" href=require("./images/apple-touch-icon.png"))
     link(rel="icon" type="image/png" sizes="32x32" href=require("./images/favicon-32x32.png"))
     link(rel="icon" type="image/png" sizes="16x16" href=require("./images/favicon-16x16.png"))
     //- fonts
@@ -21,35 +21,13 @@ html(lang="en")
     if webpackConfig.mode === "production"
       each css in htmlWebpackPlugin.files.css
         link(rel="stylesheet", href=css)
-      script(src=htmlWebpackPlugin.files.chunks["nav-router"].entry)
+      script(src=htmlWebpackPlugin.files.chunks.components.entry)
   body
-    include views/components/header
-    .bs-tab-container
-      .mdc-tab-bar#tabs(role="tablist")
-        .mdc-tab-scroller
-          .mdc-tab-scroller__scroll-area
-            .mdc-tab-scroller__scroll-content
-              a.mdc-tab(is="nav-link" href="/" title="Home" role="tab" active-class="mdc-tab--active")
-                .mdc-tab__content
-                  span.mdc-tab__text-label Home
-                span.mdc-tab-indicator(active-class="mdc-tab-indicator--active")
-                  span.mdc-tab-indicator__content.mdc-tab-indicator__content--underline
-                .mdc-tab__ripple
-              a.mdc-tab(is="nav-link" href="/about-me" title="About Me" role="tab" active-class="mdc-tab--active")
-                .mdc-tab__content
-                  span.mdc-tab__text-label About me
-                span.mdc-tab-indicator(active-class="mdc-tab-indicator--active")
-                  span.mdc-tab-indicator__content.mdc-tab-indicator__content--underline
-                .mdc-tab__ripple
-    main.bs-content
-      nav-route(path="/")
-        include views/home
-      nav-route(path="/about-me")
-        include views/history
-    include views/components/footer
+    div
+      | oi
+    if webpackConfig.mode === "development"
     if webpackConfig.mode === "production"
       script(src=htmlWebpackPlugin.files.chunks.main.entry)
-      script(src=htmlWebpackPlugin.files.chunks["mark-down"].entry async)
     else
       each js in htmlWebpackPlugin.files.js
         script(src=js)
