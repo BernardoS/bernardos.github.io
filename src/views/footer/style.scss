@@ -1,0 +1,60 @@
+@import "../../styles/settings/variables";
+
+$footer-icon-color: var(--footer-icon-color);
+$footer-logo-color: var(--footer-logo-color);
+$footer-icon-size: var(--footer-icon-size);
+
+
+.footer {
+  --footer-icon-color: #{$blue};
+  --footer-logo-color: #{$white};
+  --footer-icon-size: 22px;
+  padding: calc(#{$space} * 2);
+  background-color: $dark-blue;
+  flex-shrink: 0;
+  color: $white;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto 1fr;
+  grid-template-areas: 
+    "logo name"
+    "contact-me contact-me"
+    "icons icons"
+  ;
+  grid-gap: calc(#{$space});
+  align-items: center;
+  justify-items: start;
+}
+
+.name {
+  align-self: end;
+  grid-area: name;
+}
+.contact-me {
+  justify-self: center;
+  align-self: end;
+  grid-area: contact-me;
+}
+.icons {
+  justify-self: stretch;
+  display: flex;
+  // padding: $space) ;
+  justify-content: space-evenly;
+  align-content: space-around;
+  grid-area: icons;
+}
+
+.logo {
+  width: 40px;
+  grid-area: logo;
+  justify-self: start;
+  align-self: start;
+  color: $footer-logo-color;
+}
+
+.icon {
+  padding: $space;
+  height: $footer-icon-size;
+  width: $footer-icon-size;
+  color: $footer-icon-color;
+}

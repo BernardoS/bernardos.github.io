@@ -1,0 +1,48 @@
+
+.title {
+  font-family: $title-font-family;
+  font-weight: $title-font-weight;
+  font-size: 2.3rem;
+  @include laptop {
+    font-size: 2.8rem;
+  }
+  @include desktop {
+    font-size: 3.2rem;
+  }
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.sub-title {
+  font-family: $title-font-family;
+  font-weight: $title-font-weight;
+  font-size: 1rem;
+  @include tablet {
+    font-size: 1.3rem;
+  }
+  @include laptop {
+    font-size: 1.5rem;
+  }
+  @include desktop {
+    font-size: 1.7rem;
+  }
+}
+
+.text {
+  font-family: $text-font-family;
+  font-size: 1rem;
+  text-align: justify;
+  line-height: 1.2;
+}
+
+.caption {
+  font-family: $caption-font-family;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  @include tablet {
+    font-size: 0.875rem;
+  }
+}

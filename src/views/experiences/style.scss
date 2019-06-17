@@ -1,0 +1,12 @@
+@import "../../styles/settings/variables";
+
+.event-content {
+  overflow: auto;
+  margin-top: $space;
+}
+
+.strv {
+  float: left;
+  padding: $space;
+  max-width: 100px;
+}

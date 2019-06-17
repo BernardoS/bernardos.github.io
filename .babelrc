@@ -1,17 +1,23 @@
 {
   "presets": [
-    "@babel/preset-env",
+    ["@babel/preset-env", {
+      "exclude": [
+        "@babel/plugin-transform-classes"
+      ]
+    }],
     ["@babel/typescript", {
       "jsxPragma": "DOM"
     }]
   ],
   "plugins": [
+    ["@babel/plugin-proposal-decorators", {
+      "decoratorsBeforeExport": true
+    }],
+    "@babel/plugin-syntax-dynamic-import",
     ["@babel/plugin-transform-react-jsx", {
       "pragma": "DOM.hydrate",
       "pragmaFrag": "DOM.FRAGMENT"
     }],
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose" : true }],
-    "@babel/plugin-syntax-dynamic-import"
+    "@babel/plugin-proposal-class-properties"
   ]
 }

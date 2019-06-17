@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  // display: grid;
+  // grid-template-columns: 1fr auto auto;
+  // grid-template-areas:
+  //   "title    location    timestamp"
+  //   "content  content     .........";
+  // align-items: center;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+slot {
+  display: block;
+}
+
+.title {
+  grid-area: title;
+}
+
+.location {
+  grid-area: location;
+}
+
+.timestamp {
+  grid-area: timestamp;
+}
+
+.subTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  align-self: baseline;
+  grid-area: content;
+}

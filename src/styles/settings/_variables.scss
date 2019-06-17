@@ -1,0 +1,38 @@
+$max-width: 960px;
+
+$phone-max-width: 425px;
+$tablet-min-width: 426px;
+$laptop-min-width: 769px;
+$desktop-min-width: 1024px;
+
+$space: var(--space);
+$text-font-family: var(--text-font-family);
+$title-font-family: var(--title-font-family);
+$title-font-weight: var(--title-font-weight);
+$caption-font-family: var(--caption-font-family);
+
+
+$white: var(--white);
+$black: var(--black);
+$black-50: var(--black-50);
+$lighter-coral: var(--lighter-coral);
+$light-coral: var(--light-coral);
+$coral: var(--coral);
+$dark-coral: var(--dark-coral);
+$darker-coral: var(--darker-coral);
+$light-green: var(--light-green);
+$green: var(--green);
+$dark-green: var(--dark-green);
+$dark-blue: var(--dark-blue);
+$blue: var(--blue);
+$light-blue: var(--light-blue);
+$beige: var(--beige);
+
+$z-indexes: (
+    "header": (
+      "education",
+      "experience",
+      "about",
+      "app-bar"
+    )
+);

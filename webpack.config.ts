@@ -1,112 +1,203 @@
+import './src/utils/polyfills'
 import webpack from 'webpack'
 import path from 'path'
 import MiniCssExtractWebpackPlugin from 'mini-css-extract-plugin'
 import OptimizeCssAssets from 'optimize-css-assets-webpack-plugin'
-import Html from 'html-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import SimpleProgressPlugin from 'simple-progress-webpack-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
-import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
+import TerserWebpackPlugin from 'terser-webpack-plugin'
+import HTMLWebpackPlugin from 'html-webpack-plugin'
+import PreRenderSPAPlugin from 'prerender-spa-plugin'
 
 
-interface EnvVars {
-  production?: boolean
-  analyze?: boolean
-}
 
-const configuration = (env: EnvVars = {}): webpack.Configuration => ({
+const configuration = (env: { production?: boolean, analyze?: boolean } = {}): webpack.Configuration => ({
   mode: env.production ? 'production' : 'development',
   context: path.resolve(__dirname, 'src'),
   entry: {
     main: './index.tsx',
-    components: './components/index.ts'
+    components: './web-components/index.ts'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     alias: {
-      DOM: path.resolve(__dirname, './src/utils/DOM/index.ts')
+      'DOM': path.resolve(__dirname, './src/utils/DOM/index.ts'),
+      '~': path.resolve(__dirname, './src'),
     }
   },
   output: {
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     path: path.resolve(__dirname, 'www'),
-    filename: env.production ? 'js/[chunkhash].js' : 'js/[name].js',
+    filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
     publicPath: '/'
   },
   module: {
     rules: [
-      {
-        test: /\.pug$/,
-        use: 'pug-loader'
-      },
       {
         test: /\.(t|j)sx?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
       },
       {
-        test: /\.css$/,
-        exclude: path.resolve(__dirname, './src/components'),
-        use: [
-          env.production ? MiniCssExtractWebpackPlugin.loader : 'style-loader',
-          'css-loader'
-        ]
+        test: /\.s?css$/,
+        oneOf: [
+          {
+            include: /\/web-components\//,
+            use: [
+              'css-string-loader',
+              'css-modules-typescript-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  localIdentName: env.production
+                    ? '[hash:base64:5]'
+                    : '[local]--[hash:base64:5]',
+                  camelCase: 'only',
+                }
+              },
+              'sass-loader'
+            ]
+          },
+          {
+            exclude: /\/web-components\//,
+            use: [
+              MiniCssExtractWebpackPlugin.loader,
+              'css-modules-typescript-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  localIdentName: env.production
+                    ? '[hash:base64:5]'
+                    : '[local]--[hash:base64:5]',
+                  camelCase: 'only',
+                  sourceMap: true
+                }
+              },
+              'css-variables-to-json-loader',
+              'resolve-url-loader',
+              {
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: true
+                }
+              }
+            ]
+          }
+        ],
       },
       {
-        test: /\.css$/,
-        include: path.resolve(__dirname, './src/components'),
+        test: /\.svg$/,
         use: [
+          'babel-loader',
           {
-            loader: 'css-loader',
+            loader: '@svgr/webpack',
             options: {
-              minimize: Boolean(env.production),
-              sourceMap: !env.production,
-              modules: true,
-              camelCase: true
+              babel: false,
+              template: (
+                { template },
+                _,
+                { imports, componentName, props, jsx, exports },
+              ) => {
+                return template.ast`
+                  import * as DOM from 'DOM'
+                  export default ((${props}) => ${jsx})({})
+                `
+              }
             }
           }
-        ]
+        ],
       },
       {
-        test: /\.(png|jpg|svg|pdf|ico)$/,
+        test: /\.md$/,
+        use: 'raw-loader'
+      },
+      {
+        test: /\.(woff|woff2|ttf|otf)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: `fonts/[${env.production ? 'hash:5' : 'name'}].[ext]` 
+          }
+        }
+      },
+      {
+        test: /\.(jpe?g|png|pdf|ico)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: `images/[${env.production ? 'hash' : 'name'}].[ext]`
+              name: `images/[${env.production ? 'hash:5' : 'name'}].[ext]`
             }
           }
         ]
       },
     ]
   },
+  resolveLoader: {
+    alias: {
+      'css-string-loader': path.resolve(__dirname, './webpack/css-string-loader.ts'),
+      'css-variables-to-json-loader': path.resolve(__dirname, './webpack/css-variables-to-json-loader.ts'),
+    }
+  },
   plugins: [
-    ...plugins.commons,
-    ...(
-      env.analyze
-      ? [new BundleAnalyzerPlugin()]
-      : []
-    ),
-    ...(
-      env.production
-      ? plugins.production
-      : plugins.development
-    )
+    new HTMLWebpackPlugin({
+      entry: 'main',
+      inject: false,
+      template: path.resolve(__dirname, './webpack/pre-render.ts'),
+      minify: env.production as false | object
+    }),
+    new MiniCssExtractWebpackPlugin({
+      filename: `styles/[${env.production ? 'contenthash:5' : 'name'}].css`,
+      chunkFilename: `styles/[${env.production ? 'contenthash:5' : 'id'}].css`
+    }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: env.production
+        ? 'production'
+        : 'development'
+    }),
+    SimpleProgressPlugin({format: env.production ? 'compact' : 'minimal'}),
+    ...env.production
+    ? [
+      new PreRenderSPAPlugin({
+        staticDir: path.join(__dirname, 'www'),
+        routes: [ '/' ]
+      }),
+      new CleanWebpackPlugin(),
+      new CompressionPlugin({
+        algorithm: 'gzip',
+        filename: '[path].gz[query]',
+        minRatio: 0.8,
+        test: /\.js$/,
+        threshold: 10240
+      })
+    ]
+    : [
+      new webpack.NamedModulesPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
+    ]
   ],
   optimization: {
     splitChunks: {
       chunks: 'async',
-      name: true,
+      name: true
       // automaticNameDelimiter: '_'
     },
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
+    minimizer: env.production ? [
+      new TerserWebpackPlugin({
+        cache: false,
         parallel: true,
-        sourceMap: true
+        sourceMap: true,
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        }
       }),
       new OptimizeCssAssets()
-    ]
+    ] : []
   },
   target: 'web',
   stats: env.production ? 'normal' : 'errors-only',
@@ -118,49 +209,11 @@ const configuration = (env: EnvVars = {}): webpack.Configuration => ({
     compress: false,
     historyApiFallback: true,
     inline: true,
+    hot: false,
     https: false,
     port: 3000,
-    stats: 'minimal'
+    stats: 'errors-only'
   }
 })
-
-const plugins = {
-  commons: [
-    new OptimizeCssAssets({}),
-    new Html({
-      template: './index.pug',
-      inject: false
-    })
-  ],
-  production: [
-    new MiniCssExtractWebpackPlugin({
-      filename: 'styles/[hash].css',
-      chunkFilename: 'styles/[hash].css'
-    }),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production'
-    }),
-    SimpleProgressPlugin({format: 'compact'}),
-    new CleanWebpackPlugin(),
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      filename: '[path].gz[query]',
-      minRatio: 0.8,
-      test: /\.js$/,
-      threshold: 10240
-    })
-  ],
-  development: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new MiniCssExtractWebpackPlugin({
-      filename: 'styles/[name].css',
-      chunkFilename: 'styles/[id].css'
-    }),
-    new webpack.EnvironmentPlugin({NODE_ENV: 'development'}),
-    SimpleProgressPlugin({format: 'minimal'}),
-  ]
-}
-
 
 export default configuration

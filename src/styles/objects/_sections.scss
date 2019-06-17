@@ -1,0 +1,50 @@
+@import "../tools/elevation";
+@import "../tools/colors";
+
+port-details {
+  &#about {
+    .section-header {
+      position: relative;
+      @include z("header", "about");
+    }
+  }
+  &#experience {
+    .section-header {
+      position: relative;
+      @include z("header", "experience");
+    }
+  }
+  &#education {
+    .section-header {
+      position: relative;
+      @include z("header", "education");
+    }
+  }
+}
+
+.section-header {
+  @include shadow;
+  @include with-background-colors;
+  padding: 10px;
+  margin-left: calc((100vw - #{$max-width}) / -2);
+  padding-left: calc((100vw - #{$max-width}) / 2);
+  margin-right: calc((100vw - #{$max-width}) / -2);
+  padding-right: calc((100vw - #{$max-width}) / 2);
+  @media (max-width: #{$max-width}) {
+    margin-left: 0;
+    padding-left: calc(var(--space) * 2);
+    margin-right: 0;
+    padding-right: calc(var(--space) * 2);
+  }
+}
+
+.inner-section {
+  padding: calc(var(--space) * 2);
+}
+
+.main-section {
+  max-width: $max-width;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1 0 auto;
+}

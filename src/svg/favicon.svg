@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="background" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="256" height="256"></rect>
+        <text x="55" y="237" id="text" font-family="NeutraText-Bold, Neutra Text" font-size="20" font-weight="bold" line-spacing="123" fill="#111517">
+            BS
+        </text>
+    </g>
+</svg>
