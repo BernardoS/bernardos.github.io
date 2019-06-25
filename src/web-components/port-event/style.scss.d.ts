@@ -3,7 +3,6 @@
 interface CssExports {
   'content': string;
   'location': string;
-  'subTitleContainer': string;
   'timestamp': string;
   'title': string;
 }

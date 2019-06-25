@@ -1,6 +1,5 @@
-import 'reflect-metadata'
-import { isHTMLElementClass } from './helpers';
-import {Component as addMixin} from './component'
+import { isHTMLElementClass, definedClasses } from './helpers';
+import Component from './component'
 
 interface ClassDescriptor<T> {
   kind: 'class'
@@ -14,17 +13,11 @@ interface Descriptor<T> {
   kind: 'field' | 'method' 
   key: PropertyKey
   placement: 'static'|'prototype'|'own'
-  initializer?: Function
+  initializer?: () => unknown
   extras?: Descriptor<T>[]
   finisher?: (clazz: T) => undefined | T
   descriptor: PropertyDescriptor,
   [Symbol.toStringTag]: "Descriptor"
-}
-
-type HTMLElementObserver = typeof HTMLElement & {
-  observedAttributes?: string[]
-  _listeners: Map<PropertyKey, [string, (boolean | AddEventListenerOptions)?]>
-  _constructorListeners: Map<PropertyKey, [string, (boolean | AddEventListenerOptions)?]>
 }
 
 
@@ -33,9 +26,9 @@ export const customElement = (
   options?: ElementDefinitionOptions
 ) => <T extends typeof HTMLElement>(TargetOrDescriptor: T | ClassDescriptor<T>) => {
   const define = (clazz: T) => {
-    addMixin(clazz)
     customElements.define(name, clazz, options)
-  } 
+    definedClasses.add(clazz)
+  }
   if (isHTMLElementClass(TargetOrDescriptor)) return define(TargetOrDescriptor)
   if (TargetOrDescriptor.kind === 'class') {
     return {...TargetOrDescriptor, finisher: define} as unknown as T
@@ -47,11 +40,11 @@ export const attribute = (
   attribute: string,
   type: typeof String | typeof Boolean | typeof Number = String
 ) => <T extends HTMLElement>(
-  elementOrDescriptor: T | Descriptor<HTMLElementObserver>,
+  elementOrDescriptor: T | Descriptor<typeof Component>,
   property?: string
 ) => {
   if (elementOrDescriptor instanceof HTMLElement) return
-  const descriptor: Descriptor<HTMLElementObserver> = {
+  const descriptor: Descriptor<typeof Component> = {
     ...elementOrDescriptor,
     placement: 'prototype',
     kind: 'method',
@@ -89,42 +82,15 @@ export const attribute = (
     },
     initializer: undefined,
     finisher: (clazz) => {
-      clazz.observedAttributes = [
-        ...(clazz.observedAttributes || []),
-        attribute
-      ]
-      return clazz
-    }
-  }
-  return descriptor as unknown as void
-}
-
-interface ListenOptions extends AddEventListenerOptions {
-  onConstructor?: boolean
-}
-
-/**
- * adds an event listener do the Element on connection
- * and removes it on disconnection, unless onConstructor option is true.
- * In that case the event listener will be added in the Element constructor
- * and won't be removed.
- */
-export const listener = (
-  eventType: string,
-  options?: boolean | ListenOptions
-) => <T extends HTMLElement> (
-  elementOrDescriptor: T | Descriptor<HTMLElementObserver>,
-  property?: string
-) => {
-  if (elementOrDescriptor instanceof HTMLElement) return
-  const descriptor: Descriptor<HTMLElementObserver> = {
-    ...elementOrDescriptor,
-    finisher: (clazz) => {
-      if (!clazz._constructorListeners) clazz._constructorListeners = new Map()
-      if (!clazz._listeners) clazz._listeners = new Map()
-      if (typeof options === 'object' && options.onConstructor) {
-        clazz._constructorListeners.set(elementOrDescriptor.key, [eventType, options])
-      } else clazz._listeners.set(elementOrDescriptor.key, [eventType, options])
+      clazz.observedAttributesInitializer.add({
+        ...elementOrDescriptor,
+        attribute,
+      })
+      const observedAttributes = clazz.observedAttributes
+      Object.defineProperty(clazz, 'observedAttributes', {
+        configurable: true,
+        value: [...observedAttributes, attribute]
+      })
       return clazz
     }
   }

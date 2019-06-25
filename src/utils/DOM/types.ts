@@ -17,6 +17,10 @@ export type NodeType =
 | null
 | undefined
 
+export interface Reference<E extends Element> {
+  readonly instance?: E
+}
+
 export interface CustomElements {}
 
 declare global {
@@ -26,21 +30,16 @@ declare global {
   }
   interface DocumentOrShadowRoot {
     adoptedStyleSheets: ReadonlyArray<CSSStyleSheet>
-    readonly activeElement: Element | null
-    readonly fullscreenElement: Element | null
     readonly styleSheets: StyleSheetList
-    caretPositionFromPoint(x: number, y: number): CaretPosition
-    elementFromPoint(x: number, y: number): Element
-    elementsFromPoint(x: number, y: number): Element[]
-    getSelection(): Selection
-  }
-  interface ShadowRoot extends DocumentOrShadowRoot {
-  }
-  interface Document extends DocumentOrShadowRoot {
   }
 
+  export type FunctionComponent<Attrs extends object> = ((attrs: Attrs) => Node)
+
   namespace JSX {
-    interface Element extends HTMLElement {}
+    type Tag<Attrs extends object> = string
+      | FunctionComponent<Attrs>
+      | typeof globalThis.Element
+    interface Element extends HTMLOrSVGElement, globalThis.Element {}
     interface ElementClass extends HTMLElement {}
     interface ElementAttributesProperty {
       __attributes: {};
@@ -76,7 +75,7 @@ declare global {
       body: Attrs.HTMLBodyElementAttributes
       script: Attrs.HTMLScriptElementAttributes
       footer: Attrs.HTMLElementAttributes
-      main: Attrs.HTMLElementAttributes<HTMLMainElement>
+      main: Attrs.HTMLElementAttributes<HTMLElement>
       details: Attrs.HTMLDetailsElementAttributes<HTMLDetailsElement>
       summary: Attrs.HTMLElementAttributes<HTMLElement>
       i: Attrs.HTMLElementAttributes<HTMLElement>
@@ -87,6 +86,7 @@ declare global {
       rect: Attrs.SVGRectElementAttributes<SVGRectElement>
       text: Attrs.SVGTextElementAttributes<SVGTextElement>
       tspan: Attrs.SVGTextElementAttributes<SVGTSpanElement>
+      button: Attrs.HTMLButtonElementAttributes<HTMLButtonElement>
     }
   }
 }

@@ -12,8 +12,6 @@ export interface Options<Key extends string> {
   plugins?: Plugin[]
 }
 
-export {ChunksByEntry} from './ProxiedChunks'
-
 export type RenderFunction = <Entries extends string>(
   chunksByEntry: ChunksByEntry<Entries>
 ) => string

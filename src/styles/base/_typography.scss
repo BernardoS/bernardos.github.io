@@ -1,15 +1,4 @@
 
-@font-face {
-  font-family: "NeutraText-Bold";
-  src:  local("NeutraText-Bold"),
-        local("Neutra Text Bold"),
-        local("Neutra-Text-Bold"),
-        url("../../fonts/Neutra-Text-Bold.otf") format("otf"),
-        url("../../fonts/Neutra-Text-Bold.ttf") format("ttf");
-  font-weight: bold
-}
-
-
 h1 {
   font-size: 2rem;
 }
@@ -43,6 +32,7 @@ p {
   font-family: $text-font-family;
   font-size: 1rem;
   text-align: justify;
+  hyphens: auto;
   line-height: 1.2;
 }
 

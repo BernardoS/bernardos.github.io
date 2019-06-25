@@ -1,9 +1,0 @@
-:host {
-  display: inline;
-}
-:host([hidden]) {
-  display: none;
-}
-.highlight {
-  color: var(--primary-color-dark);
-}

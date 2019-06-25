@@ -1,0 +1,5 @@
+port-details:not(:defined):not([open]) {
+  .inner-section {
+    display: none;
+  }
+}

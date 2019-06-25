@@ -1,15 +1,17 @@
 @import "../../styles/settings/variables";
 @import "../../styles/tools/elevation";
+@import "../../styles/tools/media";
 
 
 .header {
   @include shadow;
   @include z("header", "app-bar");
+  // @include padding-limit;
+  padding: 0 0 0 calc(#{$space} * 2);
   background-color: $dark-blue;
   color: $white;
   height: 80px;
   display: flex;
   align-items: flex-end;
-  padding: 0 0 0 calc(#{$space} * 2);
   flex: 0 0 auto;
 }

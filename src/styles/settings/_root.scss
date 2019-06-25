@@ -2,26 +2,30 @@
 
 :root {
   --space: 12px;
-  --text-font-family: 'Lato', sans-serif;
+  --text-font-family: system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, sans-serif;
   --title-font-family: 'NeutraText-Bold', 'Neutra Text', monospace;
   --title-font-weight: bold;
-  --caption-font-family: var(--title-font-family);
+  --caption-font-family: 'NeutraText-Bold', 'Neutra Text', monospace;
 
-  --white: #F0F0F2;
+  // --white: #F0F0F2;
   --black: #252525;
   --black-50: rgba(37, 37, 37, 0.5);
-  --lighter-coral: #F2C1B6;
-  --light-coral: #F2958D;
-  --coral: #D94E4E;
-  --dark-coral : #8C2E26;
-  --darker-coral : #0D0D0D;
-  --light-green: #7AFF96;
-  --green: #57B56B;
-  --dark-green: #2A6637;
-  --dark-blue: #090D26;
-  --blue: #4D628C;
-  --light-blue: #91C4D9;
-  --beige: #D9AF8B;
+  // --lighter-coral: #F2C1B6;
+  // --light-coral: #F2958D;
+  // --coral: #D94E4E;
+  // --dark-coral : #8C2E26;
+  // --darker-coral : #0D0D0D;
+  // --dark-blue: #090D26;
+  // --blue: #4D628C;
+  // --light-blue: #91C4D9;
+  // --beige: #D9AF8B;
+
+  --dark-blue : #20333e;
+  --blue : #375a63;
+  --light-blue : #6795a0;
+  --white : #f4efe6;
+  --beige : #ecb172;
+  --orange : #d05f4c;
   
   --bullet-color: var(--dark-coral);
   @media (max-width: $phone-max-width) {

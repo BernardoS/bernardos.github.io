@@ -1,4 +1,5 @@
 @import "../../styles/settings/variables";
+@import "../../styles/tools/media";
 
 $footer-icon-color: var(--footer-icon-color);
 $footer-logo-color: var(--footer-logo-color);
@@ -6,24 +7,29 @@ $footer-icon-size: var(--footer-icon-size);
 
 
 .footer {
-  --footer-icon-color: #{$blue};
+  --footer-icon-color: #{$light-blue};
   --footer-logo-color: #{$white};
   --footer-icon-size: 22px;
-  padding: calc(#{$space} * 2);
   background-color: $dark-blue;
   flex-shrink: 0;
   color: $white;
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr auto 1fr;
-  grid-template-areas: 
-    "logo name"
-    "contact-me contact-me"
-    "icons icons"
-  ;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "logo name" "icons icons";
   grid-gap: calc(#{$space});
   align-items: center;
   justify-items: start;
+  @include tablet {
+    padding-top: $space;
+    padding-bottom: $space;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr;
+    grid-template-areas: "logo name icons";
+  }
+  padding-top: calc(#{$space} * 2);
+  padding-bottom: calc(#{$space} * 2);
+  @include padding-limit;
 }
 
 .name {
@@ -42,13 +48,19 @@ $footer-icon-size: var(--footer-icon-size);
   justify-content: space-evenly;
   align-content: space-around;
   grid-area: icons;
+  @include laptop {
+    justify-self: flex-end;
+  }
 }
 
 .logo {
   width: 40px;
+  @include laptop {
+    width: 50px;
+  }
   grid-area: logo;
   justify-self: start;
-  align-self: start;
+  align-self: end;
   color: $footer-logo-color;
 }
 

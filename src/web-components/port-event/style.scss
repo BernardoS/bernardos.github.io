@@ -1,15 +1,18 @@
 :host {
-  display: block;
-  // display: grid;
-  // grid-template-columns: 1fr auto auto;
-  // grid-template-areas:
-  //   "title    location    timestamp"
-  //   "content  content     .........";
-  // align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "title   location"
+    "content content"
+    ".....   timestamp";
+  grid-gap: var(--space);
 }
 
 :host([hidden]) {
   display: none;
+}
+:host(:focus) {
+  outline: none;
 }
 
 slot {
@@ -21,17 +24,13 @@ slot {
 }
 
 .location {
+  justify-self: end;
   grid-area: location;
 }
 
 .timestamp {
   grid-area: timestamp;
-}
-
-.subTitleContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-self: end;
 }
 
 .content {

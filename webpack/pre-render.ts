@@ -1,97 +1,86 @@
 import {compilation, compiler, Configuration} from 'webpack'
 import {Options as HTMLWebpackPluginOptions, TemplateParametersAssets} from 'html-webpack-plugin'
-import createProxiedChunks from './ProxiedChunks'
 
+
+export interface Assets extends TemplateParametersAssets {
+  chunks: {
+    [chunkName: string]: {
+      size: number
+      entry: string
+      hash: string,
+      css: string[]
+    }
+  }
+}
 
 interface Options {
   compilation: compilation.Compilation
   webpack: compiler.Compiler
   webpackConfig: Configuration
   htmlWebpackPlugin: {
-    files: TemplateParametersAssets,
-    options: HTMLWebpackPluginOptions & {
-      entry: string
-    }
+    files: Assets,
+    options: HTMLWebpackPluginOptions
   }
 }
 
-export default ({htmlWebpackPlugin: {files, options}, compilation}: Options) => {
-  const chunks = createProxiedChunks(compilation)
-  const entries = chunks[options.entry].js
-  return `
+export default ({
+  htmlWebpackPlugin: {files, options: {chunk = 'main'}},
+  compilation,
+}: Options) => {
+  const asset = files.chunks[chunk]
+  if (!asset) {
+    throw new Error(`This template has found no assets under the chunk name ${chunk}`)
+  }
+  return /* html */`
+    <!DOCTYPE html>
     <html>
       <head>
         <script>
-          const chunks = ${JSON.stringify({
-            ...Object.entries(chunks).reduce((acc, [key, value]) => ({
-              ...acc,
-              [key]: {js: value.js, css: value.css}
-            }), {})
-          })}
+          const assets = ${JSON.stringify(files)}
           if (document.currentScript) {
             document.head.removeChild(document.currentScript)
             window.addEventListener('DOMContentLoaded', () => {
-              window.dispatchEvent(new RenderEvent(RenderEvent.eventType, chunks))
+              window.dispatchEvent(new RenderEvent(eventType, assets))
             })
           }
+          const eventType = 'webpack-render'
           class RenderEvent extends Event {
-            static eventType = 'webpack-render'
-            constructor (type, chunks, eventInitDict) {
+            constructor (type, assets, eventInitDict) {
               super(type, eventInitDict)
-              this.chunks = chunks
+              this.assets = assets
             }
           }
         </script>
       </head>
       <body>
-        ${entries.map(entry => `<script src="${entry}"></script>`)}
+        <script src="${files.chunks['main'].entry}"></script>
       </body>
     </html>
   `
 }
 
-export type WebpackChunks<Names extends string> = {
-  [str in Names]: {js: string[], css: string[]}
-}
 
-export interface RenderEvent<Names extends string> extends Event {
-  readonly chunks: WebpackChunks<Names>
+export interface RenderEvent extends Event {
+  readonly assets: Assets
 }
 
 export const renderEventType = 'webpack-render' as const
 
-declare global {
-  interface Window {
-    addEventListener<Names extends string = string>(
-      type: typeof renderEventType,
-      listener: (this: Window, ev: RenderEvent<Names>) => void,
-      options?: boolean | AddEventListenerOptions
-    ): void
-    removeEventListener(
-      type: typeof renderEventType,
-      listener: (this: Window, ev: RenderEvent<string>) => void,
-      options?: boolean | EventListenerOptions
-    ): void
-  }
-  interface HTMLCollection extends HTMLCollectionBase {
-    [Symbol.iterator] (): Iterator<Element>
-}
-  interface HTMLCollectionOf<T extends Element> extends HTMLCollectionBase {
-    [Symbol.iterator] (): Iterator<T>
-  }
-}
 
 
-export type RenderCallback<ChunkNames extends string> = (
-  chunks: WebpackChunks<ChunkNames>
-) => HTMLElement
+export type RenderCallback = (
+  assets: Assets
+) => Element
 
 
-export function renderPage<ChunkNames extends string>(
-  callback: RenderCallback<ChunkNames>
+export function renderPage(
+  callback: RenderCallback
 ) {
-  window.addEventListener<ChunkNames>(renderEventType, ({chunks}) => {
+  window.addEventListener(renderEventType, ({assets: chunks}) => {
     const element = callback(chunks)
+    for (const {name, value} of Array.from(element.attributes)) {
+      document.documentElement.setAttribute(name, value)
+    }
     const [head, body] = element.children
     if (head && head instanceof HTMLHeadElement) {
       const doc = new DocumentFragment()
@@ -102,4 +91,32 @@ export function renderPage<ChunkNames extends string>(
       document.body = body.cloneNode(true) as HTMLBodyElement
     }
   }, {once: true})
+}
+
+
+declare module 'html-webpack-plugin' {
+  interface Options {
+    chunk?: string
+  }
+}
+
+declare global {
+  interface Window {
+    addEventListener<Names extends string = string>(
+      type: typeof renderEventType,
+      listener: (this: Window, ev: RenderEvent) => void,
+      options?: boolean | AddEventListenerOptions
+    ): void
+    removeEventListener(
+      type: typeof renderEventType,
+      listener: (this: Window, ev: RenderEvent) => void,
+      options?: boolean | EventListenerOptions
+    ): void
+  }
+  interface HTMLCollection extends HTMLCollectionBase {
+    [Symbol.iterator] (): Iterator<Element>
+  }
+  interface HTMLCollectionOf<T extends Element> extends HTMLCollectionBase {
+    [Symbol.iterator] (): Iterator<T>
+  }
 }

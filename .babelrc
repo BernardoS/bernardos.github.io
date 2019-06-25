@@ -18,6 +18,18 @@
       "pragma": "DOM.hydrate",
       "pragmaFrag": "DOM.FRAGMENT"
     }],
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    ["babel-plugin-template-html-minifier", {
+      "modules": {
+        "lit-html": ["html"],
+        "lit-element": [
+          "html",
+          {"name": "css", "encapsulation": "style"}
+        ],
+      },
+      "htmlMinifier": {
+        "collapseWhitespace": true
+      }
+    }]
   ]
 }

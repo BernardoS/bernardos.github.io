@@ -1,16 +1,6 @@
-import { NodeType } from "./types";
+import { NodeType, Reference } from "./types";
 
-export interface CSSAttributes {
-  /**
-   * Contains CSS styling declarations to be applied to the element. Note that it is recommended for styles to be defined in a
-   * separate file or files. This attribute and the <style> element have mainly the purpose of allowing for quick styling, for
-   * example for testing purposes.
-   */
-  style?: string;
-}
-export interface ChildrenAttribute {
-  children?: NodeType
-}
+
 // All the WAI-ARIA 1.1 attributes from https://www.w3.org/TR/wai-aria-1.1/
 export interface AriaAttributes {
   role?: string
@@ -219,98 +209,98 @@ export interface AriaAttributes {
   "aria-valuetext"?: string;
 }
 
-export interface GlobalEventHandlers<E extends Element> {
+export interface GlobalEventHandlers<E extends HTMLElement| SVGElement> {
   /**
    * Fires when the user aborts the download.
    * @param ev The event.
    */
-  onabort?: ((this: Element, ev: UIEvent) => any) | null;
-  onanimationcancel?: ((this: Element, ev: AnimationEvent) => any) | null;
-  onanimationend?: ((this: Element, ev: AnimationEvent) => any) | null;
-  onanimationiteration?: ((this: Element, ev: AnimationEvent) => any) | null;
-  onanimationstart?: ((this: Element, ev: AnimationEvent) => any) | null;
-  onauxclick?: ((this: Element, ev: Event) => any) | null;
+  onabort?: ((this: E, ev: UIEvent) => any) | null;
+  onanimationcancel?: ((this: E, ev: AnimationEvent) => any) | null;
+  onanimationend?: ((this: E, ev: AnimationEvent) => any) | null;
+  onanimationiteration?: ((this: E, ev: AnimationEvent) => any) | null;
+  onanimationstart?: ((this: E, ev: AnimationEvent) => any) | null;
+  onauxclick?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the object loses the input focus.
    * @param ev The focus event.
    */
-  onblur?: ((this: Element, ev: FocusEvent) => any) | null;
-  oncancel?: ((this: Element, ev: Event) => any) | null;
+  onblur?: ((this: E, ev: FocusEvent) => any) | null;
+  oncancel?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when playback is possible, but would require further buffering.
    * @param ev The event.
    */
-  oncanplay?: ((this: Element, ev: Event) => any) | null;
-  oncanplaythrough?: ((this: Element, ev: Event) => any) | null;
+  oncanplay?: ((this: E, ev: Event) => any) | null;
+  oncanplaythrough?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the contents of the object or selection have changed.
    * @param ev The event.
    */
-  onchange?: ((this: Element, ev: Event) => any) | null;
+  onchange?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the user clicks the left mouse button on the object
    * @param ev The mouse event.
    */
-  onclick?: ((this: Element, ev: MouseEvent) => any) | null;
-  onclose?: ((this: Element, ev: Event) => any) | null;
+  onclick?: ((this: E, ev: MouseEvent) => any) | null;
+  onclose?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the user clicks the right mouse button in the client area, opening the context menu.
    * @param ev The mouse event.
    */
-  oncontextmenu?: ((this: Element, ev: MouseEvent) => any) | null;
-  oncuechange?: ((this: Element, ev: Event) => any) | null;
+  oncontextmenu?: ((this: E, ev: MouseEvent) => any) | null;
+  oncuechange?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the user double-clicks the object.
    * @param ev The mouse event.
    */
-  ondblclick?: ((this: Element, ev: MouseEvent) => any) | null;
+  ondblclick?: ((this: E, ev: MouseEvent) => any) | null;
   /**
    * Fires on the source object continuously during a drag operation.
    * @param ev The event.
    */
-  ondrag?: ((this: Element, ev: DragEvent) => any) | null;
+  ondrag?: ((this: E, ev: DragEvent) => any) | null;
   /**
    * Fires on the source object when the user releases the mouse at the close of a drag operation.
    * @param ev The event.
    */
-  ondragend?: ((this: Element, ev: DragEvent) => any) | null;
+  ondragend?: ((this: E, ev: DragEvent) => any) | null;
   /**
    * Fires on the target element when the user drags the object to a valid drop target.
    * @param ev The drag event.
    */
-  ondragenter?: ((this: Element, ev: DragEvent) => any) | null;
-  ondragexit?: ((this: Element, ev: Event) => any) | null;
+  ondragenter?: ((this: E, ev: DragEvent) => any) | null;
+  ondragexit?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires on the target object when the user moves the mouse out of a valid drop target during a drag operation.
    * @param ev The drag event.
    */
-  ondragleave?: ((this: Element, ev: DragEvent) => any) | null;
+  ondragleave?: ((this: E, ev: DragEvent) => any) | null;
   /**
    * Fires on the target element continuously while the user drags the object over a valid drop target.
    * @param ev The event.
    */
-  ondragover?: ((this: Element, ev: DragEvent) => any) | null;
+  ondragover?: ((this: E, ev: DragEvent) => any) | null;
   /**
    * Fires on the source object when the user starts to drag a text selection or selected object.
    * @param ev The event.
    */
-  ondragstart?: ((this: Element, ev: DragEvent) => any) | null;
-  ondrop?: ((this: Element, ev: DragEvent) => any) | null;
+  ondragstart?: ((this: E, ev: DragEvent) => any) | null;
+  ondrop?: ((this: E, ev: DragEvent) => any) | null;
   /**
    * Occurs when the duration attribute is updated.
    * @param ev The event.
    */
-  ondurationchange?: ((this: Element, ev: Event) => any) | null;
+  ondurationchange?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the media element is reset to its initial state.
    * @param ev The event.
    */
-  onemptied?: ((this: Element, ev: Event) => any) | null;
+  onemptied?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the end of playback is reached.
    * @param ev The event
    */
-  onended?: ((this: Element, ev: Event) => any) | null;
+  onended?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when an error occurs during object loading.
    * @param ev The event.
@@ -320,179 +310,196 @@ export interface GlobalEventHandlers<E extends Element> {
    * Fires when the object receives focus.
    * @param ev The event.
    */
-  onfocus?: ((this: Element, ev: FocusEvent) => any) | null;
-  ongotpointercapture?: ((this: Element, ev: PointerEvent) => any) | null;
-  oninput?: ((this: Element, ev: Event) => any) | null;
-  oninvalid?: ((this: Element, ev: Event) => any) | null;
+  onfocus?: ((this: E, ev: FocusEvent) => any) | null;
+  ongotpointercapture?: ((this: E, ev: PointerEvent) => any) | null;
+  oninput?: ((this: E, ev: Event) => any) | null;
+  oninvalid?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the user presses a key.
    * @param ev The keyboard event
    */
-  onkeydown?: ((this: Element, ev: KeyboardEvent) => any) | null;
+  onkeydown?: ((this: E, ev: KeyboardEvent) => any) | null;
   /**
    * Fires when the user presses an alphanumeric key.
    * @param ev The event.
    */
-  onkeypress?: ((this: Element, ev: KeyboardEvent) => any) | null;
+  onkeypress?: ((this: E, ev: KeyboardEvent) => any) | null;
   /**
    * Fires when the user releases a key.
    * @param ev The keyboard event
    */
-  onkeyup?: ((this: Element, ev: KeyboardEvent) => any) | null;
+  onkeyup?: ((this: E, ev: KeyboardEvent) => any) | null;
   /**
    * Fires immediately after the browser loads the object.
    * @param ev The event.
    */
-  onload?: ((this: Element, ev: Event) => any) | null;
+  onload?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when media data is loaded at the current playback position.
    * @param ev The event.
    */
-  onloadeddata?: ((this: Element, ev: Event) => any) | null;
+  onloadeddata?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the duration and dimensions of the media have been determined.
    * @param ev The event.
    */
-  onloadedmetadata?: ((this: Element, ev: Event) => any) | null;
-  onloadend?: ((this: Element, ev: ProgressEvent) => any) | null;
+  onloadedmetadata?: ((this: E, ev: Event) => any) | null;
+  onloadend?: ((this: E, ev: ProgressEvent) => any) | null;
   /**
    * Occurs when Internet Explorer begins looking for media data.
    * @param ev The event.
    */
-  onloadstart?: ((this: Element, ev: Event) => any) | null;
-  onlostpointercapture?: ((this: Element, ev: PointerEvent) => any) | null;
+  onloadstart?: ((this: E, ev: Event) => any) | null;
+  onlostpointercapture?: ((this: E, ev: PointerEvent) => any) | null;
   /**
    * Fires when the user clicks the object with either mouse button.
    * @param ev The mouse event.
    */
-  onmousedown?: ((this: Element, ev: MouseEvent) => any) | null;
-  onmouseenter?: ((this: Element, ev: MouseEvent) => any) | null;
-  onmouseleave?: ((this: Element, ev: MouseEvent) => any) | null;
+  onmousedown?: ((this: E, ev: MouseEvent) => any) | null;
+  onmouseenter?: ((this: E, ev: MouseEvent) => any) | null;
+  onmouseleave?: ((this: E, ev: MouseEvent) => any) | null;
   /**
    * Fires when the user moves the mouse over the object.
    * @param ev The mouse event.
    */
-  onmousemove?: ((this: Element, ev: MouseEvent) => any) | null;
+  onmousemove?: ((this: E, ev: MouseEvent) => any) | null;
   /**
    * Fires when the user moves the mouse pointer outside the boundaries of the object.
    * @param ev The mouse event.
    */
-  onmouseout?: ((this: Element, ev: MouseEvent) => any) | null;
+  onmouseout?: ((this: E, ev: MouseEvent) => any) | null;
   /**
    * Fires when the user moves the mouse pointer into the object.
    * @param ev The mouse event.
    */
-  onmouseover?: ((this: Element, ev: MouseEvent) => any) | null;
+  onmouseover?: ((this: E, ev: MouseEvent) => any) | null;
   /**
    * Fires when the user releases a mouse button while the mouse is over the object.
    * @param ev The mouse event.
    */
-  onmouseup?: ((this: Element, ev: MouseEvent) => any) | null;
+  onmouseup?: ((this: E, ev: MouseEvent) => any) | null;
   /**
    * Occurs when playback is paused.
    * @param ev The event.
    */
-  onpause?: ((this: Element, ev: Event) => any) | null;
+  onpause?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the play method is requested.
    * @param ev The event.
    */
-  onplay?: ((this: Element, ev: Event) => any) | null;
+  onplay?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the audio or video has started playing.
    * @param ev The event.
    */
-  onplaying?: ((this: Element, ev: Event) => any) | null;
-  onpointercancel?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointerdown?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointerenter?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointerleave?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointermove?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointerout?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointerover?: ((this: Element, ev: PointerEvent) => any) | null;
-  onpointerup?: ((this: Element, ev: PointerEvent) => any) | null;
+  onplaying?: ((this: E, ev: Event) => any) | null;
+  onpointercancel?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointerdown?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointerenter?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointerleave?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointermove?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointerout?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointerover?: ((this: E, ev: PointerEvent) => any) | null;
+  onpointerup?: ((this: E, ev: PointerEvent) => any) | null;
   /**
    * Occurs to indicate progress while downloading media data.
    * @param ev The event.
    */
-  onprogress?: ((this: Element, ev: ProgressEvent) => any) | null;
+  onprogress?: ((this: E, ev: ProgressEvent) => any) | null;
   /**
    * Occurs when the playback rate is increased or decreased.
    * @param ev The event.
    */
-  onratechange?: ((this: Element, ev: Event) => any) | null;
+  onratechange?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the user resets a form.
    * @param ev The event.
    */
-  onreset?: ((this: Element, ev: Event) => any) | null;
-  onresize?: ((this: Element, ev: UIEvent) => any) | null;
+  onreset?: ((this: E, ev: Event) => any) | null;
+  onresize?: ((this: E, ev: UIEvent) => any) | null;
   /**
    * Fires when the user repositions the scroll box in the scroll bar on the object.
    * @param ev The event.
    */
-  onscroll?: ((this: Element, ev: Event) => any) | null;
+  onscroll?: ((this: E, ev: Event) => any) | null;
   onsecuritypolicyviolation?:
-    | ((this: Element, ev: SecurityPolicyViolationEvent) => any)
+    | ((this: E, ev: SecurityPolicyViolationEvent) => any)
     | null;
   /**
    * Occurs when the seek operation ends.
    * @param ev The event.
    */
-  onseeked?: ((this: Element, ev: Event) => any) | null;
+  onseeked?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the current playback position is moved.
    * @param ev The event.
    */
-  onseeking?: ((this: Element, ev: Event) => any) | null;
+  onseeking?: ((this: E, ev: Event) => any) | null;
   /**
    * Fires when the current selection changes.
    * @param ev The event.
    */
-  onselect?: ((this: Element, ev: Event) => any) | null;
-  onselectionchange?: ((this: Element, ev: Event) => any) | null;
-  onselectstart?: ((this: Element, ev: Event) => any) | null;
+  onselect?: ((this: E, ev: Event) => any) | null;
+  onselectionchange?: ((this: E, ev: Event) => any) | null;
+  onselectstart?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when the download has stopped.
    * @param ev The event.
    */
-  onstalled?: ((this: Element, ev: Event) => any) | null;
-  onsubmit?: ((this: Element, ev: Event) => any) | null;
+  onstalled?: ((this: E, ev: Event) => any) | null;
+  onsubmit?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs if the load operation has been intentionally halted.
    * @param ev The event.
    */
-  onsuspend?: ((this: Element, ev: Event) => any) | null;
+  onsuspend?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs to indicate the current playback position.
    * @param ev The event.
    */
-  ontimeupdate?: ((this: Element, ev: Event) => any) | null;
-  ontoggle?: ((this: Element, ev: Event) => any) | null;
-  ontouchcancel?: ((this: Element, ev: TouchEvent) => any) | null;
-  ontouchend?: ((this: Element, ev: TouchEvent) => any) | null;
-  ontouchmove?: ((this: Element, ev: TouchEvent) => any) | null;
-  ontouchstart?: ((this: Element, ev: TouchEvent) => any) | null;
-  ontransitioncancel?: ((this: Element, ev: TransitionEvent) => any) | null;
-  ontransitionend?: ((this: Element, ev: TransitionEvent) => any) | null;
-  ontransitionrun?: ((this: Element, ev: TransitionEvent) => any) | null;
-  ontransitionstart?: ((this: Element, ev: TransitionEvent) => any) | null;
+  ontimeupdate?: ((this: E, ev: Event) => any) | null;
+  ontoggle?: ((this: E, ev: Event) => any) | null;
+  ontouchcancel?: ((this: E, ev: TouchEvent) => any) | null;
+  ontouchend?: ((this: E, ev: TouchEvent) => any) | null;
+  ontouchmove?: ((this: E, ev: TouchEvent) => any) | null;
+  ontouchstart?: ((this: E, ev: TouchEvent) => any) | null;
+  ontransitioncancel?: ((this: E, ev: TransitionEvent) => any) | null;
+  ontransitionend?: ((this: E, ev: TransitionEvent) => any) | null;
+  ontransitionrun?: ((this: E, ev: TransitionEvent) => any) | null;
+  ontransitionstart?: ((this: E, ev: TransitionEvent) => any) | null;
   /**
    * Occurs when the volume is changed, or playback is muted or unmuted.
    * @param ev The event.
    */
-  onvolumechange?: ((this: Element, ev: Event) => any) | null;
+  onvolumechange?: ((this: E, ev: Event) => any) | null;
   /**
    * Occurs when playback stops because the next frame of a video resource is not available.
    * @param ev The event.
    */
-  onwaiting?: ((this: Element, ev: Event) => any) | null;
-  onwheel?: ((this: Element, ev: WheelEvent) => any) | null;
+  onwaiting?: ((this: E, ev: Event) => any) | null;
+  onwheel?: ((this: E, ev: WheelEvent) => any) | null;
+}
+
+export interface CustomAttributes<E extends Element> {
+  ref?: Reference<E>
+  children?: NodeType
+}
+export interface GlobalAttributes<E extends Element> extends CustomAttributes<E> {
+  /**
+   * Contains CSS styling declarations to be applied to the element. Note that it is recommended for styles to be defined in a
+   * separate file or files. This attribute and the <style> element have mainly the purpose of allowing for quick styling, for
+   * example for testing purposes.
+   */
+  style?: string
+  /**
+   * A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method Document.getElementsByClassName().
+   */
+  class?: string
 }
 
 export interface HTMLElementAttributes<
   Element extends HTMLElement = HTMLElement
-> extends AriaAttributes, GlobalEventHandlers<Element>, CSSAttributes, ChildrenAttribute {
+> extends AriaAttributes, GlobalEventHandlers<Element>, GlobalAttributes<Element> {
   /**
    * Provides a hint for generating a keyboard shortcut for the current element. This attribute consists of a space-separated list of characters. The browser should use the first one that exists on the computer keyboard layout.
    */
@@ -509,10 +516,6 @@ export interface HTMLElementAttributes<
     characters, all letters should default to uppercase
    */
   autocapitalize?: string;
-  /**
-   * A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method Document.getElementsByClassName().
-   */
-  class?: string;
   /**
    * An enumerated attribute indicating if the element should be editable by the user. If so, the browser modifies its widget to allow editing. The attribute must take one of the following values:
     true or the empty string, which indicates that the element must be editable;
@@ -581,7 +584,7 @@ export interface HTMLElementAttributes<
     0 means that the element should be focusable and reachable via sequential keyboard navigation, but its relative order is defined by the platform convention;
     a positive value means that the element should be focusable and reachable via sequential keyboard navigation; the order in which the elements are focused is the increasing value of the tabindex. If several elements share the same tabindex, their relative order follows their relative positions in the document.
    */
-  tabindex?: number;
+  tabindex?: number | string;
   /**
    * Contains a text representing advisory information related to the element it belongs to. Such information can typically, but not necessarily, be presented to the user as a tooltip.
    */
@@ -825,7 +828,7 @@ export interface HTMLMetaElementAttributes<Element extends HTMLMetaElement = HTM
 export interface HTMLLinkElementAttributes<Element extends HTMLLinkElement = HTMLLinkElement>
   extends HTMLElementAttributes<Element> {
     as?: string
-    crossorigin?: string
+    crossorigin?: 'anonymous' | 'use-credentials' | true
     href?: string
     hreflang?: string
     importance?: string
@@ -884,6 +887,21 @@ export interface HTMLScriptElementAttributes<Element extends HTMLScriptElement =
 export interface HTMLDetailsElementAttributes<Element extends HTMLDetailsElement = HTMLDetailsElement>
   extends HTMLElementAttributes<Element> {
     open?: boolean
+  }
+
+export interface HTMLButtonElementAttributes<Element extends HTMLButtonElement = HTMLButtonElement>
+  extends HTMLElementAttributes<Element> {
+    autofocus?: boolean
+    disabled?: boolean
+    form?: string
+    formaction?: string
+    formenctype?: 'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain'
+    formmethod?: 'post' | 'get'
+    formnovalidate?: boolean
+    formtarget?: string
+    name?: string
+    type?: 'submit' | 'reset' | 'button'
+    value?: any
   }
 
 export interface SVGPresentationAttributes {
@@ -952,11 +970,10 @@ export interface SVGPresentationAttributes {
   'writing-mode'?: string
 }
 
-export interface SVGElementAttributes<Element extends SVGElement = SVGElement> extends AriaAttributes, GlobalEventHandlers<Element>, CSSAttributes, SVGPresentationAttributes, ChildrenAttribute {
+export interface SVGElementAttributes<Element extends SVGElement = SVGElement> extends AriaAttributes, GlobalEventHandlers<Element>, SVGPresentationAttributes, GlobalAttributes<Element> {
   id?: string
   lang?: string
   tabindex?: number | string
-  class?: string
 }
 
 export interface SVGSVGElementAttributes<Element extends SVGSVGElement = SVGSVGElement>

@@ -1,42 +1,32 @@
-import * as DOM from 'DOM'
+import {html, LitElement, css, customElement, property} from 'lit-element'
 import cn from 'classnames'
-import style from './style.scss'
 
-export interface HighLightTextAttributes {
-  value?: string
+export interface HighLightTextAttrs {
+  text?: string
 }
 
-@DOM.customElement('highlight-text')
-export class HighLightText extends HTMLElement implements HighLightTextAttributes {
-  public static readonly template = (
-    <template>
-      <span id="value"/>
-    </template>
-  )
-  public static readonly css = style.toString()
-  @DOM.attribute('value', String)
-  public value?: string
-
-  @DOM.listener('dom-attr-change:value', {onConstructor: true})
-  protected _valueChangedCallback () {
-    this.shadowRoot!.replaceChild(
-      <span id="value">{punctation(this.value || '')}</span>,
-      this.shadowRoot!.getElementById('value')!
-    )
+@customElement('highlight-text')
+export default class HighLightText2 extends LitElement {
+  public static readonly styles = css`
+    :host {
+      display: inline;
+    }
+    :host([hidden]) {
+      display: none;
+    }
+    .highlight {
+      color: var(--highlight-text-color);
+    }
+  `
+  @property({type: String})
+  public text: string = ''
+  public render () {
+    return html`
+      ${this.text.split('').map(char => html`
+        <span class=${cn(/^\W+$/.test(char) && 'highlight')}>
+          ${char}
+        </span>
+      `)}
+    `
   }
-}
-
-declare module 'DOM/types' {
-  interface CustomElements {
-    'highlight-text': HighLightTextAttributes
-  }
-}
-
-
-function punctation (text: string) {
-  return text.split('').map(char => (
-    <span class={cn(/^\W+$/.test(char) && style.highlight)}>
-      {char}
-    </span>
-  ))
 }

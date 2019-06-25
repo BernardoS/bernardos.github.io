@@ -33,8 +33,13 @@
 .text {
   font-family: $text-font-family;
   font-size: 1rem;
+  @include laptop {
+    font-size: 1.3rem;
+  }
   text-align: justify;
+  hyphens: auto;
   line-height: 1.2;
+  margin-block-end: 1rem;
 }
 
 .caption {
@@ -44,5 +49,8 @@
   text-transform: uppercase;
   @include tablet {
     font-size: 0.875rem;
+  }
+  @include laptop {
+    font-size: 1rem;
   }
 }

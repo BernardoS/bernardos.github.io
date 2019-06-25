@@ -1,4 +1,10 @@
-import { NodeType } from './types'
+import { NodeType, Reference } from './types'
+
+export const definedClasses = new Set<typeof Element>()
+
+export const isFunctionComponent = (o: any): o is FunctionComponent<object> => {
+  return Object.getPrototypeOf(o) === Function.prototype
+}
 
 const createDocumentFragment = () => {
   return document.createDocumentFragment()
@@ -22,7 +28,14 @@ attributes && "is" in attributes
   ? ((attributes as any).is as string)
   : undefined
 
-export function createNode(tag: string, is?: string): Node {
+export function createNode(
+  tag: Exclude<JSX.Tag<object>, FunctionComponent<object>>,
+  is?: string
+) {
+  if (tag instanceof Function) {
+    if (definedClasses.has(tag)) return new tag()
+    else throw new TypeError(`Class ${tag.name} is not defined via DOM.customElement`)
+  }
   switch (tag) {
     case FRAGMENT:
       return createDocumentFragment()
@@ -56,28 +69,41 @@ function childToNode(child: NodeType): Node | null {
   return null
 }
 
-export function setAttribute<Attribute>(
-  node: Node,
+export function setAttribute<Attribute, E extends Element>(
+  node: E,
   key: string,
   attribute: Attribute
 ) {
-  if (node instanceof Element) {
+  if (node instanceof HTMLElement || node instanceof SVGElement) {
     switch (typeof attribute) {
-      case "object":
+      case "object": {
         throw new TypeError("objects not allowed")
-      case "function":
-        throw new TypeError("functions not allowed")
-      case "undefined":
+      }
+      case "function": return Reflect.set(node, key, attribute)
+      case "undefined": {
         return node.removeAttribute(key)
-      case "boolean":
+      }
+      case "boolean": {
         return node.toggleAttribute(key, attribute)
-      default:
+      }
+      case "string":
+      case "number":
+      case "bigint":
+      case "symbol": {
         return node.setAttribute(key, attribute.toString())
+      }
+      default: {
+        return node.removeAttribute(key)
+      }
     }
   }
   throw new TypeError(`uncharted attribute type ${typeof attribute}`)
 }
 
+
+export function isRefObject(refObj: any): refObj is Reference<Element> {
+  return Boolean(typeof refObj === 'object' && 'instance' in refObj)
+}
 
 export const isHTMLElement = (Target: any): Target is HTMLElement =>
   Target instanceof HTMLElement

@@ -1,107 +1,123 @@
-export type AddEventListenerParams = [string, (boolean | AddEventListenerOptions)?]
+import {HTMLElementAttributes} from './attributes'
 
-export function Component<C extends typeof HTMLElement> (Constructor: C) {
-  const Proto: new (...args: any[]) => HTMLElement = Object.getPrototypeOf(Constructor)
-  if (HTMLElement !== Proto && !HTMLElement.isPrototypeOf(Proto)) return
-  class WebComponent extends Proto {
-    public static readonly template?: HTMLElement
-    public static readonly css?: string
-    public static readonly _listeners: Map<PropertyKey, AddEventListenerParams> = (
-      (Constructor as any)._listeners || new Map()
-    )
-    public static readonly _constructorListeners: Map<PropertyKey, AddEventListenerParams> = (
-      (Constructor as any)._constructorListeners ||new Map()
-    )
-    public static _style?: CSSStyleSheet
-    protected readonly _shadow!: ShadowRoot
-    constructor (...args: any[]) {
-      super(...args)
-      const WCConstructor = this.constructor as typeof WebComponent
-      const {template, css} = this.constructor as typeof WebComponent
-      if (template || css) {
-        this.attachShadow({mode: 'open'})
-        this._shadow = this.shadowRoot!
-      }
-      if (template instanceof HTMLTemplateElement) {
-        this._shadow.append(template.content.cloneNode(true))
-      }
-      if (!WCConstructor._style && 'adoptedStyleSheets' in ShadowRoot.prototype) {
-        WCConstructor._style = new CSSStyleSheet()
-      }
-      if (css) {
-        if (WCConstructor._style) {
-          this._shadow.adoptedStyleSheets = [WCConstructor._style]
-        } else {
-          const style = document.createElement('style')
-          style.textContent = css
-          this._shadow.append(style)
-        }
-      }
-      for (const listener of this._constructorListeners) {
-        this.addEventListener(...listener)
-      }
-    }
-    protected attributeChangedCallback (
-      name: string,
-      previousValue: string | null,
-      value: string | null
-    ) {
-      const event = new ChangeAttributeEvent(`dom-attr-change:${name}`, previousValue, value, {bubbles: false, cancelable: false})
-      this.dispatchEvent(event)
-    }
-    protected connectedCallback () {
-      const {css, _style} = this.constructor as typeof WebComponent
-      if (typeof css === 'string' && _style instanceof CSSStyleSheet && _style.cssRules.length == 0) {
-        _style.replaceSync(css)
-      }
-      for (const listener of this._listeners) {
-        this.addEventListener(...listener)
-      }
-      this.dispatchEvent(new Event('dom-connected', {bubbles: false, cancelable: false}))
-    }
-    protected disconnectedCallback () {
-      this.dispatchEvent(new Event('dom-disconnected', {bubbles: false, cancelable: false}))
-      for (const listener of this._listeners) {
-        this.removeEventListener(...listener)
-      }
-    }
-    private _listeners = Array.from((WebComponent._listeners).entries())
-    .reduce<Parameters<HTMLElement['addEventListener']>[]>((acc, [propertyKey, [eventType, options]]) => {
-      const listener: unknown = (this as any)[propertyKey]
-      if (listener instanceof Function) {
-        acc.push([
-          eventType,
-          listener as (this: this, ev: Event) => void,
-          options
-        ])
-      }
-      return acc
-    }, [])
-    private _constructorListeners = Array.from((WebComponent._constructorListeners).entries())
-    .reduce<Parameters<HTMLElement['addEventListener']>[]>((acc, [propertyKey, [eventType, options]]) => {
-      const listener: unknown = (this as any)[propertyKey]
-      if (listener instanceof Function) {
-        acc.push([
-          eventType,
-          listener as (this: this, ev: Event) => void,
-          options
-        ])
-      }
-      return acc
-    }, [])
+const styleSheets = new WeakMap<typeof Component, CSSStyleSheet | HTMLStyleElement>()
+
+export interface AttributeInitializer {
+  attribute: string,
+  key: PropertyKey,
+  initializer?: () => unknown
+}
+
+const shadows = new WeakMap<Component, ShadowRoot>()
+export function hasShadow(component: Component) {
+  return shadows.has(component)
+}
+export function getShadow(component: Component) {
+  return shadows.get(component)
+}
+
+export default abstract class Component<Attributes extends {} = {}> extends HTMLElement {
+  public static readonly observedAttributes: string[] = []
+  public static readonly observedAttributesInitializer = new Set<AttributeInitializer>()
+  public static readonly css?: string
+  public static readonly shadowRootInit: ShadowRootInit = {mode: 'open'}
+  public static readonly tabIndex?: number
+  public static readonly role?: string
+  private __attributes?: Attributes & HTMLElementAttributes<this>
+  constructor () {
+    super()
+    attachShadow(this)
+    createStyleSheet(this)
+    appendStyleSheet(this)
   }
-  Object.setPrototypeOf(Constructor.prototype, WebComponent.prototype)
-  Object.setPrototypeOf(Constructor, WebComponent)
+  protected connectedCallback () {
+    addCSS(this)
+    addRole(this)
+    addTabIndex(this)
+    const {observedAttributesInitializer} = this.constructor as typeof Component
+    for (const attributeInitializer of observedAttributesInitializer) {
+      initializeAttribute(this, attributeInitializer)
+      upgradeProperty(this, attributeInitializer.key)
+    }
+    appendRenderization(this)
+  }
+  protected disconnectedCallback () {}
+  protected attributeChangedCallback () {}
+  protected abstract render? (): Element
+}
+
+function appendStyleSheet(component: Component) {
+}
+
+function createStyleSheet(component:Component) {
+  const Constructor = component.constructor as typeof Component
+  const {css} = Constructor
+  if (!styleSheets.has(Constructor) && shadows.has(component)) {
+    if ('adoptedStyleSheets' in ShadowRoot.prototype) {
+      styleSheets.set(Constructor, new CSSStyleSheet())  
+    } else {
+      const styleSheet = document.createElement('style')
+      styleSheet.textContent = css || ''
+      styleSheets.set(Constructor, styleSheet)
+    }
+  }
+}
+
+function attachShadow(component: Component) {
+  const {css, shadowRootInit} = component.constructor as typeof Component
+  if (component['render'] || css) {
+    shadows.set(component, component.attachShadow(shadowRootInit))
+  }
+}
+
+function appendRenderization (component: Component) {
+  if (component['render'] instanceof Function && hasShadow(component)) {
+    const shadow = getShadow(component)!
+    const renderization = component['render']()
+    shadow.append(renderization)
+  }
 }
 
 
-export class ChangeAttributeEvent extends Event {
-  constructor (
-    type: string,
-    public readonly previousValue: string | null,
-    public readonly value: string | null,
-    init?: EventInit
-  ) {
-    super(type, init)
+function addCSS(component:Component) {
+  const Constructor = component.constructor as typeof Component
+  const {css} = Constructor
+  if (styleSheets.has(Constructor) && typeof css === 'string' && hasShadow(component)) {
+    const styleSheet = styleSheets.get(Constructor)!
+    const shadow = getShadow(component)!
+    if (styleSheet instanceof CSSStyleSheet) {
+      shadow.adoptedStyleSheets = [styleSheet]
+      if (styleSheet.rules.length === 0) styleSheet.replaceSync(css)
+    } else {
+      shadow.append(styleSheet.cloneNode(true))
+    }
+  }
+}
+
+function addRole(component: Component) {
+  const {role} = component.constructor as typeof Component
+  if (!component.hasAttribute('role') && typeof role === 'string') {
+    component.setAttribute('role', role)
+  }
+}
+
+function addTabIndex(component:Component) {
+  const {tabIndex} = component.constructor as typeof Component
+  if (!component.hasAttribute('tabindex') && typeof tabIndex === 'number') {
+    component.tabIndex = tabIndex
+  }
+}
+
+function upgradeProperty(component: Component, key: PropertyKey) {
+  if (component.hasOwnProperty(key)) {
+    const value = Reflect.get(component, key)
+    Reflect.deleteProperty(component, key)
+    Reflect.set(component, key, value)
+  }
+}
+
+function initializeAttribute(component: Component, {key, initializer, attribute}: AttributeInitializer) {
+  if (initializer && !component.hasAttribute(attribute)) {
+    Reflect.set(component, key, initializer())
   }
 }

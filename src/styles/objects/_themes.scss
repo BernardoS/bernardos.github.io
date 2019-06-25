@@ -1,0 +1,26 @@
+@import "../settings/variables";
+
+@mixin theme($bg) {
+  background-color: $bg;
+  
+}
+
+.dark-blue-theme {
+  background-color: $dark-blue;
+  color: $white;
+}
+
+.light-blue-theme {
+  background-color: $light-blue;
+  color: $black;
+}
+
+.blue-theme {
+  background-color: $blue;
+  color: $white;
+}
+
+.beige {
+  background-color: $blue;
+  color: $white;
+}

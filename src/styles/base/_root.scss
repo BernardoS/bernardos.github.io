@@ -10,12 +10,9 @@ body {
   overflow: auto;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
-
-port-event {
-  margin-bottom: calc(#{$space} * 2);
-}
 
 // ::-webkit-scrollbar-track {
 //   box-shadow: inset 0 0 6px var(--dark-color);

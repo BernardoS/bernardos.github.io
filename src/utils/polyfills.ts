@@ -26,3 +26,5 @@ if (!Array.prototype.flatMap) {
     return Array.prototype.map.apply(this, args).flat(1);
   };
 }
+
+export default {}

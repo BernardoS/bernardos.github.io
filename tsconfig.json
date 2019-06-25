@@ -4,21 +4,17 @@
     "paths": {
       "DOM": ["./src/utils/DOM/index.ts"],
       "DOM/*": ["./src/utils/DOM/*"],
-      "~": ["./src/index.tsx"],
-      "~/*": ["./src/*"]
+      "~": ["src/index.ts"],
+      "~/*": ["./src/*"],
+      "@": ["src/index.ts"],
+      "@/*": ["./src/*"]
     },
     "sourceMap": true,
-    // Target latest version of ECMAScript.
     "target": "esnext",
-    // Search under node_modules for non-relative imports.
     "moduleResolution": "node",
-    // Don't emit; allow Babel to transform files.
     "noEmit": true,
-    // Enable strictest settings like strictNullChecks & noImplicitAny.
     "strict": true,
-    // Disallow features that require cross-file information for emit.
-    "isolatedModules": false,
-    // Import non-ES modules as default imports.
+    "isolatedModules": true,
     "esModuleInterop": true,
     "declaration": false,
     "resolveJsonModule": true,
@@ -30,12 +26,14 @@
       "esnext"
     ],
     "typeRoots": [
-      "./node_modules/@types",
-      "./@types"
+      "node_modules/@types",
+      "@types"
     ]
   },
   "include": [
-    "src",
+    "src/web-components/index.tsx",
+    "src/index.ts",
+    "src/template.ts",
     "webpack"
   ]
 }

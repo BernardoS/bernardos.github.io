@@ -1,5 +1,5 @@
 declare module '*.svg' {
-  const svg: SVGElement
+  const svg: string
   export default  svg
 }
 
@@ -31,6 +31,15 @@ declare module '*.ico' {
 declare module "*.md" {
   const md: string
   export default md
+}
+declare module "*.otf" {
+  const otf: string
+  export default otf
+}
+
+declare module "*.ttf" {
+  const ttf: string
+  export default ttf
 }
 
 
