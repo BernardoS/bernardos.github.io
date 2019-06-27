@@ -1,6 +1,5 @@
 /node_modules
 /dist
-/www
 *.log
 *.psd
 *.studio

@@ -11,7 +11,7 @@
     "bundle": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --env.production -p",
     "bundle:analyze": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --env.production --env.analyze -p",
     "debug": "node --inspect ./node_modules/.bin/cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" ./node_modules/.bin/webpack --env.production -p",
-    "serve": "pushstate-server -d=www -p=3000",
+    "serve": "pushstate-server -d=. -p=3000",
     "clean": "rimraf www",
     "check-types": "tsc"
   },

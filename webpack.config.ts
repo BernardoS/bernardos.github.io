@@ -32,7 +32,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       devtoolModuleFilenameTemplate: '[absolute-resource-path]',
       path: path.resolve(__dirname, 'www'),
       filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
-      publicPath: '/'
+      publicPath: '/www/'
     },
     module: {
       rules: [
@@ -136,6 +136,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
         inject: false,
         template: './template.ts',
         minify: env.production as false | object,
+        filename: '../index.html'
       }),
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.production
@@ -153,7 +154,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
         // new HTMLInlineCSSWebpackPlugin(),
         new CSSOWebpackPlugin(),
         new PreRenderSPAPlugin({
-          staticDir: path.join(__dirname, 'www'),
+          staticDir: path.join(__dirname),
           routes: [ '/' ],
           server: {port: 3001},
           minify: {
