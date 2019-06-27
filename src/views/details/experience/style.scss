@@ -7,7 +7,7 @@
 
 .strv {
   float: left;
-  padding: $space;
-  max-width: 100px;
+  padding: calc(#{$space} * 2);
+  max-width: 150px;
 }
 

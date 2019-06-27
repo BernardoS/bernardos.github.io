@@ -27,8 +27,6 @@
   background-size: contain;
   background-blend-mode: luminosity;
   background-color: $white;
-}
-
-.section {
-  overflow: auto;
+  border-radius: 100%;
+  shape-outside: circle(50%);
 }

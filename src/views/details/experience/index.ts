@@ -1,3 +1,8 @@
+import '~/web-components/port-details'
+import '~/web-components/port-event'
+import '~/web-components/highlight-text'
+import '~/web-components/port-list'
+
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
 import locals from './style.scss'
@@ -14,9 +19,9 @@ export default html`
     </div>
     <section class=${cn(globals.innerSection)}>
       <port-event class=${globals.event}>
-        <h1 class=${cn(globals.subTitle)} slot="title">
+        <h3 slot="title">
           Front-end Web Engineer
-        </h1>
+        </h3>
         <a rel="noopener" href="https://www.strv.com/" target="__blank" class=${globals.caption} slot="location">
           STRV
         </a>
@@ -32,13 +37,13 @@ export default html`
               src=${STRVLogo}
               srcset=${STRVLogo}
             />
-            <p class=${globals.text}>
+            <p>
               I'm currently working on <span class=${cn(globals.caption)}>STRV</span> as an Front-End Web Engineer. 
             </p>
-            <p class=${globals.text}>
+            <p>
               Whether you are fortune 500 or a startup <span class=${cn(globals.caption)}>STRV</span> can help you to unlock opportunity by creating human-centered products.
             </p>
-            <p class=${globals.text}>
+            <p>
               Some of <span class=${cn(globals.caption)}>STRV</span> collaborations have been featured on TechCrunch, Mashable or Wired; incubated in top US accelerators, or crowd-funded via Kickstarter.
             </p>
           </div>
@@ -53,9 +58,9 @@ export default html`
         </div>
       </port-event>
       <port-event class=${globals.event}>
-        <h1 class=${globals.subTitle} slot="title">
+        <h3 slot="title">
           Lead Front-end Web Engineer
-        </h1>
+        </h3>
         <span class=${globals.caption} slot="location">
           Evológica
         </span>
@@ -65,7 +70,7 @@ export default html`
           text=${formatDate`< ${new Date(2016, 0)} - ${new Date(2018, 9)} >`}
         ></highlight-text>
         <div class=${locals.eventContent}>
-          <p class=${globals.text}>
+          <p>
             Evológica is a company with expertise in the modeling, development, and support of Insurance Systems. My activities at Evológica involves:
           </p>
         </div>
@@ -74,7 +79,7 @@ export default html`
             Development of tools to improve communication between Curio (Evologica’s internal framework) and web applications.
           </port-list-item>
           <port-list-item class=${globals.text}>
-            Mentor Front-End web development to other colleagues. With side projects to learn from HTML5, CSS and Javascript to Typescript, React, Redux, MobX, RxJS, Unstated and React’s Context API.
+            Mentor Front-End web development to other colleagues. With side projects to learn from HTML5, CSS and Javascript to Typescript, React, Redux, MobX, RxJS, Unstated and React’s Context <abbr title="Application Programming Interface">API</abbr>.
           </port-list-item>
           <port-list-item class=${globals.text}>
             Maintain and create robust and complete environment (production and development ready), to ensure that most developers don’t have to worry about this.
@@ -85,9 +90,9 @@ export default html`
         </port-list>
       </port-event>
       <port-event class=${globals.event}>
-        <h1 class=${globals.subTitle} slot="title">
+        <h3 slot="title">
           Front-end Web Engineer
-        </h1>
+        </h3>
         <p class=${globals.caption} slot="location">
           Multicast
         </p>
@@ -97,11 +102,11 @@ export default html`
           text=${formatDate`< ${new Date(2017, 5)} - ${new Date(2018, 11)} >`}
         ></highlight-text>
         <p class=${cn(globals.text, locals.eventContent)}>
-          Multicast is a young IoT company who provides an end-to-end solution for monitoring products, equipment, supplies, environments, etc,. My roles were:
+          Multicast is a young <abbr title="Internet of Things">IoT</abbr> company who provides an end-to-end solution for monitoring products, equipment, supplies, environments, etc,. My roles were:
         </p>
         <port-list class=${locals.eventContent}>
           <port-list-item class=${globals.text}>
-            Develop the PWA that both user and administrator have access to interact with. Being this application robust, offline-first, mobile-first and available in all platforms (for IOS I had to introduce Phonegap to the project)
+            Develop the <abbr title="Progressive Web Application">PWA</abbr> that both user and administrator have access to interact with. Being this application robust, offline-first, mobile-first and available in all platforms (for <abbr>IOS</abbr> I had to introduce Phonegap to the project)
           </port-list-item>
           <port-list-item class=${globals.text}>
             Manage the environment used for production and development, ensuring the lightest possible application with tree shaking, code splitting and multiple modules entry points, with the help of Webpack
@@ -109,7 +114,9 @@ export default html`
         </port-list>
       </port-event>
       <port-event class=${globals.event}>
-        <h2 class=${cn(globals.subTitle)} slot="title">Fullstack Web Developer</h2>
+        <h3 slot="title">
+          Fullstack Web Developer
+        </h3>
         <a rel="noopener" href="https://www.resultate.com.br/" target="__blank" class=${cn(globals.caption)} slot="location">
           Resultate
         </a>
@@ -123,7 +130,7 @@ export default html`
             Worked with Wordpress to fast deliver applications
           </port-list-item>
           <port-list-item class=${globals.text}>
-            Learned Laravel and other PHP technologies that ensured me a good remote environment
+            Learned Laravel and other <abbr title="Hypertext Preprocessor">PHP</abbr> technologies that ensured me a good remote environment
           </port-list-item>
         </port-list>
       </port-event>

@@ -11,7 +11,7 @@
   "lightBlue": "#6795a0",
   "white": "#f4efe6",
   "beige": "#ecb172",
-  "orange": "#d05f4c",
+  "coral": "#d05f4c",
   "bulletColor": "var(--dark-coral)",
   "highlightTextColor": "var(--beige)",
   "sectionColor": "var(--beige)",

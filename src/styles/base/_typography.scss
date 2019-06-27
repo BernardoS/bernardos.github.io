@@ -34,6 +34,10 @@ p {
   text-align: justify;
   hyphens: auto;
   line-height: 1.2;
+  margin-block-end: 1rem;
+  @include laptop {
+    font-size: 1.3rem;
+  }
 }
 
 a {
@@ -47,4 +51,11 @@ a:link {
 }
 a:visited {
   color: $light-blue;
+}
+
+abbr {
+  font-family: $caption-font-family;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
 }

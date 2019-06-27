@@ -96,7 +96,7 @@ export default class PortDetails extends LitElement {
   }
   private _handleKeyDown = (ev: KeyboardEvent) => {
     const button = this.shadowRoot!.getElementById('button') as HTMLButtonElement
-    if (button && (ev.code === 'Space' || ev.code === 'Enter')) {
+    if (ev.target === this && button && (ev.code === 'Space' || ev.code === 'Enter')) {
       button.click()
     }
   }

@@ -10,16 +10,16 @@ import TerserWebpackPlugin from 'terser-webpack-plugin'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import PreRenderSPAPlugin from 'prerender-spa-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
-import HTMLInlineCSSWebpackPlugin from 'html-inline-css-webpack-plugin'
+import CSSOWebpackPlugin from 'csso-webpack-plugin'
+// import HTMLInlineCSSWebpackPlugin from 'html-inline-css-webpack-plugin'
+// const CssoWebpackPlugin = require('csso-webpack-plugin').default;
+
 
 const configuration = (env: { production?: boolean, analyze?: boolean } = {}): webpack.Configuration => {
   return ({
     mode: env.production ? 'production' : 'development',
     context: path.resolve(__dirname, 'src'),
-    entry: {
-      main: './index.ts',
-      webComponents: './web-components/index.tsx'
-    },
+    entry: './index.ts',
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       alias: {
@@ -150,7 +150,8 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       }),
       ...env.production
       ? [
-        new HTMLInlineCSSWebpackPlugin(),
+        // new HTMLInlineCSSWebpackPlugin(),
+        new CSSOWebpackPlugin(),
         new PreRenderSPAPlugin({
           staticDir: path.join(__dirname, 'www'),
           routes: [ '/' ],
@@ -176,17 +177,20 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       : []
     ],
     optimization: {
-      // namedModules: true,
-      // splitChunks: {
-      //   cacheGroups: {
-      //     'dom': {
-      //       test: /[\\/]DOM[\\/]/,
-      //       name: 'dom',
-      //       chunks: 'all',
-      //       enforce: true
-      //     },
-      //   }
-      // },
+      noEmitOnErrors: true,
+      runtimeChunk: true,
+      splitChunks: {
+        cacheGroups: {
+          ['web-components']: {
+            test: /[\\/]web-components[\\/]/,
+            chunks: 'all'
+          },
+          commons: {
+            chunks: 'initial',
+            minChunks: 2
+          }
+        }
+      },
       minimizer: env.production ? [
         new TerserWebpackPlugin({
           cache: false,

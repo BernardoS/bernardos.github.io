@@ -42,3 +42,5 @@ export default html`
     </div>
   </footer>
 `
+
+export {style}

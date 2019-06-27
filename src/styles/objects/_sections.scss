@@ -83,6 +83,7 @@ $section-accent-color: var(--section-accent-color);
 }
 
 .inner-section {
+  overflow: auto;
   padding: calc(var(--space) * 2);
   .event:not(:last-child) {
     border-bottom: 3px solid $section-color;
