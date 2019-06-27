@@ -1,0 +1,30 @@
+@mixin phone {
+  @media (max-width: $phone-max-width) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (min-width: $tablet-min-width) {
+    @content;
+  }
+}
+@mixin laptop {
+  @media (min-width: $laptop-min-width) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: $desktop-min-width) {
+    @content;
+  }
+}
+
+
+@mixin padding-limit {
+  @media (max-width: #{$max-width}) {
+    padding-left: calc(#{$space} * 2);
+    padding-right: calc(#{$space} * 2);
+  }
+  padding-left: calc((100vw - 960px) / 2);
+  padding-right: calc((100vw - 960px)/ 2);
+}

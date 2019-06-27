@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "lib": [
+      "esnext"
+    ],
+    "typeRoots": [
+      "./@types",
+      "./node_modules/@types"
+    ]
+  }
+}

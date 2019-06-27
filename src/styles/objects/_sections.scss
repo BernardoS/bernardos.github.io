@@ -1,0 +1,111 @@
+@import "../tools/elevation";
+@import "../tools/colors";
+
+$section-color: var(--section-color);
+$section-contrast-color: var(--section-contrast-color);
+$section-accent-color: var(--section-accent-color);
+
+%section-color {
+  color: $section-contrast-color;
+  background-color: $section-color;
+}
+
+@mixin section-variables($color, $contrast: $white) {
+  --highlight-text-color: #{$color};
+  --section-color: #{$color};
+  --section-contrast-color: #{$contrast};
+  --port-list-item-bullet-color: #{$color};
+}
+
+.section {
+  &:focus,
+  &[open] {
+    outline: none;
+    .section-header {
+      .section-header-text {
+        position: relative;
+        display: inline;
+        &:after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 3px;
+          bottom: 0;
+          left: 0;
+          background-color: $section-contrast-color;
+          animation: slide .5s ease-in;
+        }
+      }
+    }
+  }
+  &#about {
+    @include section-variables($blue);
+    .section-header {
+      position: relative;
+      @extend %section-color;
+      @include z("header", "about");
+    }
+  }
+  &#experience {
+    @include section-variables($light-blue);
+    .section-header {
+      @extend %section-color;
+      position: relative;
+      @include z("header", "experience");
+    }
+  }
+  &#education {
+    @include section-variables($beige);
+    .section-header {
+      @extend %section-color;
+      position: relative;
+      @include z("header", "education");
+    }
+  }
+  a {
+    color: $section-color;
+  }
+}
+
+.section-header {
+  @include shadow;
+  padding: 10px;
+  margin-left: calc((100vw - #{$max-width}) / -2);
+  margin-right: calc((100vw - #{$max-width}) / -2);
+  padding-left: calc((100vw - #{$max-width}) / 2);
+  padding-right: calc((100vw - #{$max-width}) / 2);
+  @media (max-width: #{$max-width}) {
+    margin-left: 0;
+    padding-left: calc(var(--space) * 2);
+    margin-right: 0;
+    padding-right: calc(var(--space) * 2);
+  }
+}
+
+.inner-section {
+  overflow: auto;
+  padding: calc(var(--space) * 2);
+  .event:not(:last-child) {
+    border-bottom: 3px solid $section-color;
+    padding-bottom: calc(#{$space} * 4);
+    margin-bottom: calc(#{$space} * 4);
+  }
+}
+
+
+
+@keyframes slide {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.main-section {
+  max-width: $max-width;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1 0 auto;
+}

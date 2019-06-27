@@ -1,12 +1,35 @@
 {
+  "presets": [
+    ["@babel/preset-env", {
+      "exclude": [
+        "@babel/plugin-transform-classes"
+      ]
+    }],
+    ["@babel/typescript", {
+      "jsxPragma": "DOM"
+    }]
+  ],
   "plugins": [
-    "@babel/plugin-proposal-optional-chaining",
+    ["@babel/plugin-proposal-decorators", {
+      "decoratorsBeforeExport": true
+    }],
     "@babel/plugin-syntax-dynamic-import",
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose" : true }],
-    ["transform-react-jsx", {
+    ["@babel/plugin-transform-react-jsx", {
       "pragma": "DOM.hydrate",
-      "useBuiltIns": true
+      "pragmaFrag": "DOM.FRAGMENT"
+    }],
+    "@babel/plugin-proposal-class-properties",
+    ["babel-plugin-template-html-minifier", {
+      "modules": {
+        "lit-html": ["html"],
+        "lit-element": [
+          "html",
+          {"name": "css", "encapsulation": "style"}
+        ],
+      },
+      "htmlMinifier": {
+        "collapseWhitespace": true
+      }
     }]
   ]
 }

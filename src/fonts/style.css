@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "NeutraText-Bold";
+  font-display: auto;
+  src:  local("NeutraText-Bold"),
+        local("Neutra Text Bold"),
+        local("Neutra-Text-Bold"),
+        /* url("./Neutra-Text-Bold.otf") format("otf"), */
+        url("./Neutra-Text-Bold.ttf") format("ttf");
+  font-weight: bold
+}
