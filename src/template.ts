@@ -32,42 +32,42 @@ interface Options {
   }
 }
 
-export default ({htmlWebpackPlugin: {files}}: Options) => html`
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>Bernardo Sunderhus</title>
-      <meta property="og:title" content="Bernardo Sunderhus">
-      <meta property="og:description" content="Front-end Web Engineer">
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <meta name="msapplication-TileColor" content=${variables.darkBlue}>
-      <meta name="theme-color" content=${variables.darkBlue}>
-      <meta name="mobile-web-app-capable" content="yes">
-      ${files.js.map(file => html`
-        <link as="script" rel="preload" href=${file}>
-      `)}
-      ${files.css.map(css => html`
-        <link as="style" rel="preload" href=${css}>
-      `)}
-      <link as="image" rel="preload" href=${avatarPNG}>
-      <link as="image" rel="preload" href=${STRVPNG}>
-      <link rel="icon" href=${ico} type="image/png" sizes="48x48">
-      <link rel="icon" href=${ico16x16} type="image/png" sizes="16x16">
-      <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
-      <link rel="apple-touch-icon" href=${ico180x180} type="image/png" sizes="180x180">
-      ${fonts}
-      ${'commons' in files.chunks && html`
-        <script src=${files.chunks.commons.entry}></script>
-      `}
-      <script src=${files.chunks['runtime~main'].entry}></script>
-      <script src=${files.chunks['web-components~main'].entry}></script>
-      <script defer src=${files.chunks.main.entry}></script>
-      ${files.css.map(css => html`
-        <link rel="stylesheet" href=${css}>
-      `)}
-    </head>
-    <body></body>
-  </html>
-`
+export default ({htmlWebpackPlugin: {files}}: Options) => {
+  return html`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <title>Bernardo Sunderhus</title>
+        <meta property="og:title" content="Bernardo Sunderhus">
+        <meta property="og:description" content="Front-end Web Engineer">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="msapplication-TileColor" content=${variables.darkBlue}>
+        <meta name="theme-color" content=${variables.darkBlue}>
+        <meta name="mobile-web-app-capable" content="yes">
+        ${files.js.map(file => html`
+          <link as="script" rel="preload" href=${file}>
+        `)}
+        ${files.css.map(css => html`
+          <link as="style" rel="preload" href=${css}>
+        `)}
+        <link as="image" rel="preload" href=${avatarPNG}>
+        <link as="image" rel="preload" href=${STRVPNG}>
+        <link rel="icon" href=${ico} type="image/png" sizes="48x48">
+        <link rel="icon" href=${ico16x16} type="image/png" sizes="16x16">
+        <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
+        <link rel="apple-touch-icon" href=${ico180x180} type="image/png" sizes="180x180">
+        ${fonts}
+        <script src=${files.chunks['runtime'].entry}></script>
+        <script src=${files.chunks['commons'].entry}></script>
+        <script src=${files.chunks['web-components'].entry}></script>
+        <script defer src=${files.chunks['main'].entry}></script>
+        ${files.css.map(css => html`
+          <link rel="stylesheet" href=${css}>
+        `)}
+      </head>
+      <body></body>
+    </html>
+  `
+}

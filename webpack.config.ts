@@ -19,7 +19,10 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
   return ({
     mode: env.production ? 'production' : 'development',
     context: path.resolve(__dirname, 'src'),
-    entry: './index.ts',
+    entry: {
+      main: './index.ts',
+      ['web-components']: './web-components/index.ts'
+    },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       alias: {
@@ -29,10 +32,9 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       }
     },
     output: {
-      devtoolModuleFilenameTemplate: '[absolute-resource-path]',
       path: path.resolve(__dirname, 'www'),
       filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
-      publicPath: '/www/'
+      publicPath: '/www/',
     },
     module: {
       rules: [
@@ -179,16 +181,19 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     ],
     optimization: {
       noEmitOnErrors: true,
-      runtimeChunk: true,
+      runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
-          ['web-components']: {
-            test: /[\\/]web-components[\\/]/,
-            chunks: 'all'
-          },
+          // ['web-components']: {
+          //   test: /[\\/]web-components[\\/]/,
+          //   chunks: 'all',
+          //   enforce: true,
+          //   priority: 20,
+          // },
           commons: {
             chunks: 'initial',
-            minChunks: 2
+            minChunks: 2,
+            name: 'commons'
           }
         }
       },

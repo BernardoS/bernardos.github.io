@@ -1,5 +1,3 @@
-import '~/web-components/port-details'
-
 import {html} from 'lit-html'
 import {style as globals} from '~/views/app'
 import locals from './style.scss'

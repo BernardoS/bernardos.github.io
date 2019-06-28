@@ -1,7 +1,3 @@
-import '~/web-components/port-details'
-import '~/web-components/port-event'
-import '~/web-components/highlight-text'
-import '~/web-components/port-list'
 
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
