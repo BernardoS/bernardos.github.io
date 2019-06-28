@@ -1,16 +1,21 @@
 import './src/utils/polyfills'
-import webpack from 'webpack'
+import webpack, { Plugin } from 'webpack'
 import path from 'path'
 import MiniCssExtractWebpackPlugin from 'mini-css-extract-plugin'
 import OptimizeCssAssets from 'optimize-css-assets-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
-import SimpleProgressPlugin from 'simple-progress-webpack-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
 import TerserWebpackPlugin from 'terser-webpack-plugin'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import PreRenderSPAPlugin from 'prerender-spa-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import CSSOWebpackPlugin from 'csso-webpack-plugin'
+import OfflinePlugin from 'offline-plugin'
+
+import WebpackPwaManifestPlugin from 'webpack-pwa-manifest'
+import manifesOptions from './src/manifest'
+
+const OUTPUT_PATH = path.resolve(__dirname, 'www')
 
 
 const configuration = (env: { production?: boolean, analyze?: boolean } = {}): webpack.Configuration => {
@@ -30,7 +35,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       }
     },
     output: {
-      path: path.resolve(__dirname, 'www'),
+      path: OUTPUT_PATH,
       filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
       publicPath: '/',
     },
@@ -142,7 +147,6 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
         ? 'production'
         : 'development'
       }),
-      SimpleProgressPlugin({format: env.production ? 'compact' : 'minimal'}),
       new BundleAnalyzerPlugin({
         analyzerMode: env.analyze ? 'static' : 'disabled',
         analyzerPort: 3000,
@@ -151,9 +155,9 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       ...env.production
       ? [
         // new HTMLInlineCSSWebpackPlugin(),
-        new CSSOWebpackPlugin(),
+        new CSSOWebpackPlugin() as unknown as Plugin,
         new PreRenderSPAPlugin({
-          staticDir: path.join(__dirname),
+          staticDir: OUTPUT_PATH,
           routes: [ '/' ],
           server: {port: 3001},
           minify: {
@@ -172,7 +176,9 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
           minRatio: 0.8,
           test: /\.js$/,
           threshold: 10240
-        })
+        }),
+        new OfflinePlugin(),
+        new WebpackPwaManifestPlugin(manifesOptions)
       ]
       : []
     ],

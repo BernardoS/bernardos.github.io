@@ -34,6 +34,8 @@
     "src/web-components/index.tsx",
     "src/index.ts",
     "src/template.ts",
-    "webpack"
+    "webpack",
+    "./webpack.config.ts",
+    "./src/manifest.ts",
   ]
 }
