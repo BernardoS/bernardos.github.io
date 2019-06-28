@@ -39,7 +39,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     output: {
       path: OUTPUT_PATH,
       filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
-      publicPath: '/www/',
+      publicPath: '/',
     },
     module: {
       rules: [
@@ -142,7 +142,6 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       new HTMLWebpackPlugin({
         inject: false,
         template: './template.ts',
-        filename: path.resolve(ROOT_PATH, 'index.html'),
         minify: env.production as false | object
       }),
       new webpack.EnvironmentPlugin({
@@ -160,7 +159,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
         // new HTMLInlineCSSWebpackPlugin(),
         new CSSOWebpackPlugin() as unknown as Plugin,
         new PreRenderSPAPlugin({
-          staticDir: ROOT_PATH,
+          staticDir: OUTPUT_PATH,
           routes: [ '/' ],
           server: {port: 3001},
           minify: {
