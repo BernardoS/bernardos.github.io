@@ -11,8 +11,6 @@ import HTMLWebpackPlugin from 'html-webpack-plugin'
 import PreRenderSPAPlugin from 'prerender-spa-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import CSSOWebpackPlugin from 'csso-webpack-plugin'
-// import HTMLInlineCSSWebpackPlugin from 'html-inline-css-webpack-plugin'
-// const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 
 
 const configuration = (env: { production?: boolean, analyze?: boolean } = {}): webpack.Configuration => {
@@ -34,7 +32,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     output: {
       path: path.resolve(__dirname, 'www'),
       filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
-      publicPath: '/www/',
+      publicPath: '/',
     },
     module: {
       rules: [
@@ -137,8 +135,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       new HTMLWebpackPlugin({
         inject: false,
         template: './template.ts',
-        minify: env.production as false | object,
-        filename: '../index.html'
+        minify: env.production as false | object
       }),
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.production
