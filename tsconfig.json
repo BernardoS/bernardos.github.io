@@ -2,8 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "DOM": ["./src/utils/DOM/index.ts"],
-      "DOM/*": ["./src/utils/DOM/*"],
       "~": ["src/index.ts"],
       "~/*": ["./src/*"],
       "@": ["src/index.ts"],

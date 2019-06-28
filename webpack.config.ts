@@ -15,13 +15,16 @@ import OfflinePlugin from 'offline-plugin'
 import WebpackPwaManifestPlugin from 'webpack-pwa-manifest'
 import manifesOptions from './src/manifest'
 
-const OUTPUT_PATH = path.resolve(__dirname, 'www')
+const ROOT_PATH = __dirname
+const OUTPUT_PATH = path.resolve(ROOT_PATH, 'www')
+const SRC_PATH = path.resolve(ROOT_PATH, 'src')
+
 
 
 const configuration = (env: { production?: boolean, analyze?: boolean } = {}): webpack.Configuration => {
   return ({
     mode: env.production ? 'production' : 'development',
-    context: path.resolve(__dirname, 'src'),
+    context: SRC_PATH,
     entry: {
       main: './index.ts',
       ['web-components']: './web-components/index.ts'
@@ -29,15 +32,14 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       alias: {
-        'DOM': path.resolve(__dirname, './src/utils/DOM/index.ts'),
-        '~': path.resolve(__dirname, './src'),
-        '@': path.resolve(__dirname, './src'),
+        '~': SRC_PATH,
+        '@': SRC_PATH,
       }
     },
     output: {
       path: OUTPUT_PATH,
       filename: env.production ? 'js/[chunkhash:5].js' : 'js/[name].js',
-      publicPath: '/',
+      publicPath: '/www/',
     },
     module: {
       rules: [
@@ -127,9 +129,9 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     },
     resolveLoader: {
       alias: {
-        'css-string-loader': path.resolve(__dirname, './webpack/css-string-loader.ts'),
-        'css-variables-to-json-loader': path.resolve(__dirname, './webpack/css-variables-to-json-loader.ts'),
-        'dom-svg-loader': path.resolve(__dirname, './webpack/svg-loader.ts'),
+        'css-string-loader': path.resolve(ROOT_PATH, 'webpack/css-string-loader.ts'),
+        'css-variables-to-json-loader': path.resolve(ROOT_PATH, 'webpack/css-variables-to-json-loader.ts'),
+        'dom-svg-loader': path.resolve(ROOT_PATH, 'webpack/svg-loader.ts'),
       }
     },
     plugins: [
@@ -140,6 +142,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       new HTMLWebpackPlugin({
         inject: false,
         template: './template.ts',
+        filename: path.resolve(ROOT_PATH, 'index.html'),
         minify: env.production as false | object
       }),
       new webpack.EnvironmentPlugin({
@@ -157,7 +160,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
         // new HTMLInlineCSSWebpackPlugin(),
         new CSSOWebpackPlugin() as unknown as Plugin,
         new PreRenderSPAPlugin({
-          staticDir: OUTPUT_PATH,
+          staticDir: ROOT_PATH,
           routes: [ '/' ],
           server: {port: 3001},
           minify: {
