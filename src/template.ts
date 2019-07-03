@@ -7,8 +7,8 @@ import ico from './images/favicon.ico'
 import ico16x16 from './images/favicon-16x16.png'
 import ico32x32 from './images/favicon-32x32.png'
 import ico180x180 from './images/apple-touch-icon.png'
-import avatarPNG from '~/images/avatar.png'
-import STRVPNG from '~/images/STRV.png'
+import avatarURL from './images/avatar.png'
+import strvURL from './images/STRV.png'
 import fonts from './fonts'
 
 export interface Assets extends TemplateParametersAssets {
@@ -60,9 +60,9 @@ export default ({htmlWebpackPlugin: {files}, compilation}: Options) => {
         <link as="script" rel="preload" href=${commons.entry}>
         <link as="script" rel="preload" href=${webComponents.entry}>
         <link as="script" rel="preload" href=${main.entry}>
+        <link as="image" rel="preload" href=${avatarURL}>
+        <link as="image" rel="preload" href=${strvURL}>
         ${css.map(css => html`<link as="style" rel="preload" href=${css}>`)}
-        <link as="image" rel="preload" href=${avatarPNG}>
-        <link as="image" rel="preload" href=${STRVPNG}>
         <link rel="icon" href=${ico} type="image/png" sizes="48x48">
         <link rel="icon" href=${ico16x16} type="image/png" sizes="16x16">
         <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
@@ -72,9 +72,7 @@ export default ({htmlWebpackPlugin: {files}, compilation}: Options) => {
         <script src=${commons.entry}></script>
         <script src=${webComponents.entry}></script>
         <script defer src=${main.entry}></script>
-        ${css.map(css => html`
-          <link rel="stylesheet" href=${css}>
-        `)}
+        ${main.css.map(css => html`<link rel="stylesheet" href=${css}>`)}
       </head>
       <body></body>
     </html>

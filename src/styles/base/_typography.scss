@@ -45,12 +45,12 @@ a {
   font-weight: 700;
   font-size: 1rem;
   color: $light-blue;
-}
-a:link {
-  color: $light-blue;
-}
-a:visited {
-  color: $light-blue;
+  &:link {
+    color: $light-blue;
+  }
+  &:visited {
+    color: $light-blue;
+  }
 }
 
 abbr {

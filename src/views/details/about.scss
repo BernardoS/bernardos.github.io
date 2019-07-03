@@ -1,17 +1,5 @@
 @import "~@/styles/settings/variables";
 @import "~@/styles/tools/media";
-@import "~@/styles/tools/elevation";
-
-.list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: $space;
-}
-
-
-.sectionItem {
-  margin-bottom: $space;
-}
 
 
 .avatar {
@@ -23,23 +11,10 @@
     width: 150px;
     height: 150px;
   }
-  background-image: url("./avatar.png");
+  background-image: url("~@/images/avatar.png");
   background-size: contain;
   background-blend-mode: luminosity;
   background-color: $white;
   border-radius: 100%;
   shape-outside: circle(50%);
 }
-
-
-.event-content {
-  overflow: auto;
-  margin-top: $space;
-}
-
-.strv {
-  float: left;
-  padding: calc(#{$space} * 2);
-  max-width: 150px;
-}
-

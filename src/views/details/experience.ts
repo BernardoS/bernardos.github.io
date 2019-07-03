@@ -4,7 +4,7 @@ import '~/web-components/highlight-text'
 
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
-import locals from './style.scss'
+import locals from './experience.scss'
 import STRVLogo from '~/images/STRV.png'
 import formatDate from '~/utils/formatDate';
 import { html } from 'lit-html';

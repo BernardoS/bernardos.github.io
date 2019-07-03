@@ -1,6 +1,7 @@
 import {html} from 'lit-html'
-import locals from './style.scss'
+import locals from './about.scss'
 import cn from 'classnames'
+
 
 export default html`
   <div class=${cn(locals.avatar)}></div>

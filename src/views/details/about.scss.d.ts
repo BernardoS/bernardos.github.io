@@ -2,10 +2,6 @@
 // Please do not change this file!
 interface CssExports {
   'avatar': string;
-  'eventContent': string;
-  'list': string;
-  'sectionItem': string;
-  'strv': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

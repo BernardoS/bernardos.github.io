@@ -5,19 +5,13 @@
         "@babel/plugin-transform-classes"
       ]
     }],
-    ["@babel/typescript", {
-      "jsxPragma": "DOM"
-    }]
+    "@babel/typescript"
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", {
       "decoratorsBeforeExport": true
     }],
     "@babel/plugin-syntax-dynamic-import",
-    ["@babel/plugin-transform-react-jsx", {
-      "pragma": "DOM.hydrate",
-      "pragmaFrag": "DOM.FRAGMENT"
-    }],
     "@babel/plugin-proposal-class-properties",
     ["babel-plugin-template-html-minifier", {
       "modules": {
@@ -30,6 +24,16 @@
       "htmlMinifier": {
         "collapseWhitespace": true
       }
-    }]
+    }],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "absoluteRuntime": false,
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ]
   ]
 }

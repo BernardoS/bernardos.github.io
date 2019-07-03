@@ -161,7 +161,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
         new CSSOWebpackPlugin() as unknown as Plugin,
         new PreRenderSPAPlugin({
           staticDir: OUTPUT_PATH,
-          routes: [ '/' ],
+          routes: [ '/' , '/experience', '/education'],
           server: {port: 3001},
           minify: {
             collapseBooleanAttributes: true,

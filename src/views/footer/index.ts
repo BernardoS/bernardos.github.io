@@ -9,7 +9,6 @@ import facebook from '~/svg/facebook.svg'
 import linkedin from '~/svg/linkedin.svg'
 import github from '~/svg/github.svg'
 import mail from '~/svg/envelope-solid.svg'
-// import Whatsapp from '~/svg/whatsapp-brands.svg'
 
 export default html`
   <footer id="footer" class=${style.footer}>
@@ -19,14 +18,10 @@ export default html`
     <h3 class=${style.name}>
       <i>Bernardo Sunderhus</i>
     </h3>
-    <!-- <p class=${style.contactMe}>Feel free to contact me</p> -->
     <div class=${style.icons}>
       <a class=${style.icon} aria-label="E-mail link" target="__blank" href="mailto:bernardo.sunderhus@gmail.com">
         ${unsafeHTML(mail)}
       </a>
-      <!-- <a target="__blank" href="https://wa.me/5527992844701">
-        <Whatsapp class=${style.icon}/>
-      </a> -->
       <a class=${style.icon} aria-label="Github link" target="__blank" href="https://github.com/bsunderhus">
         ${unsafeHTML(github)}
       </a>

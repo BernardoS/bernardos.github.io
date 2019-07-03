@@ -1,4 +1,5 @@
 import {directive, NodePart} from 'lit-html'
+import pMinDelay from '~/utils/p-min-delay'
 
 declare global {
   interface Window {
@@ -8,20 +9,24 @@ declare global {
 
 export type ImportFn = () => Promise<{default: unknown}>
 export interface LazyOptions {
-  disabled?: boolean
-  loading?: unknown
+  delay?: number
   error?: unknown
+  loading?: unknown
+  disabled?: boolean
+  delayRejection?: boolean
 }
 
 const partMap = new WeakMap<NodePart, unknown>()
 
 const defaultOptions: LazyOptions = {
-  disabled: Boolean(window.__PRERENDER_INJECTED),
+  delay: 0,
+  disabled: false,
+  delayRejection: false
 }
 
 export default directive((fn: ImportFn, options: LazyOptions = defaultOptions) => (part: NodePart) => {
   if (!(part instanceof NodePart)) throw new Error('lazy directive can only be used in content bindings');
-  const {disabled, loading, error} = options
+  const {disabled, loading, error, delay, delayRejection} = {...defaultOptions, ...options}
   if (disabled) return
   if (partMap.has(part)) {
     const template = partMap.get(part)!
@@ -29,7 +34,7 @@ export default directive((fn: ImportFn, options: LazyOptions = defaultOptions) =
     return
   } else if (loading) part.setValue(options.loading)
 
-  fn()
+  pMinDelay(fn(), delay, {delayRejection})
   .then(({default: template}) => template)
   .catch(() => error)
   .then(value => {
