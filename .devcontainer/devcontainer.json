@@ -2,7 +2,7 @@
 {
 	"name": "Node.js (latest LTS)",
 	"dockerFile": "Dockerfile",
-	"appPort": [3000, 3001],
+	"appPort": [3000, 3001, 8080],
 	"postCreateCommand": "npm install",
 	"extensions": [
 		"mgmcdermott.vscode-language-babel",
