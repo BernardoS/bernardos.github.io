@@ -32,12 +32,22 @@ interface Options {
   }
 }
 
-export default ({htmlWebpackPlugin: {files}}: Options) => {
+export default ({htmlWebpackPlugin: {files}, compilation}: Options) => {
+  const {
+    chunks: {
+      runtime,
+      commons,
+      'web-components': webComponents,
+      main
+    },
+    css
+  } = files
   return html`
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <title>Bernardo Sunderhus</title>
+        <meta name="Description" content="Bernardo Sunderhus personal website">
         <meta property="og:title" content="Bernardo Sunderhus">
         <meta property="og:description" content="Front-end Web Engineer">
         <meta charset="UTF-8">
@@ -46,12 +56,11 @@ export default ({htmlWebpackPlugin: {files}}: Options) => {
         <meta name="msapplication-TileColor" content=${variables.darkBlue}>
         <meta name="theme-color" content=${variables.darkBlue}>
         <meta name="mobile-web-app-capable" content="yes">
-        ${files.js.map(file => html`
-          <link as="script" rel="preload" href=${file}>
-        `)}
-        ${files.css.map(css => html`
-          <link as="style" rel="preload" href=${css}>
-        `)}
+        <link as="script" rel="preload" href=${runtime.entry}>
+        <link as="script" rel="preload" href=${commons.entry}>
+        <link as="script" rel="preload" href=${webComponents.entry}>
+        <link as="script" rel="preload" href=${main.entry}>
+        ${css.map(css => html`<link as="style" rel="preload" href=${css}>`)}
         <link as="image" rel="preload" href=${avatarPNG}>
         <link as="image" rel="preload" href=${STRVPNG}>
         <link rel="icon" href=${ico} type="image/png" sizes="48x48">
@@ -59,11 +68,11 @@ export default ({htmlWebpackPlugin: {files}}: Options) => {
         <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
         <link rel="apple-touch-icon" href=${ico180x180} type="image/png" sizes="180x180">
         ${fonts}
-        <script src=${files.chunks['runtime'].entry}></script>
-        <script src=${files.chunks['commons'].entry}></script>
-        <script src=${files.chunks['web-components'].entry}></script>
-        <script defer src=${files.chunks['main'].entry}></script>
-        ${files.css.map(css => html`
+        <script src=${runtime.entry}></script>
+        <script src=${commons.entry}></script>
+        <script src=${webComponents.entry}></script>
+        <script defer src=${main.entry}></script>
+        ${css.map(css => html`
           <link rel="stylesheet" href=${css}>
         `)}
       </head>

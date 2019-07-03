@@ -6,9 +6,13 @@ declare module 'prerender-spa-plugin' {
     indexPath?: string
     routes?: string[],
     server?: object,
-    minify?: object
+    minify?: object,
+    renderer: object
   }
   export default class PreRenderSPAPlugin extends Plugin {
     constructor (options?: Options)
+  }
+  export class PuppeteerRenderer {
+    constructor (options?: object)
   }
 }

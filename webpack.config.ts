@@ -7,11 +7,11 @@ import CleanWebpackPlugin from 'clean-webpack-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
 import TerserWebpackPlugin from 'terser-webpack-plugin'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import PreRenderSPAPlugin from 'prerender-spa-plugin'
+import PreRenderSPAPlugin, {PuppeteerRenderer} from 'prerender-spa-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import CSSOWebpackPlugin from 'csso-webpack-plugin'
 import OfflinePlugin from 'offline-plugin'
-
+import RobotsTXTWebpackPlugin from 'robotstxt-webpack-plugin'
 import WebpackPwaManifestPlugin from 'webpack-pwa-manifest'
 import manifesOptions from './src/manifest'
 
@@ -27,7 +27,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     context: SRC_PATH,
     entry: {
       main: './index.ts',
-      ['web-components']: './web-components/index.ts'
+      ['web-components']: ['./web-components/port-details.ts']
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -142,7 +142,8 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       new HTMLWebpackPlugin({
         inject: false,
         template: './template.ts',
-        minify: env.production as false | object
+        minify: env.production as false | object,
+        chunksSortMode: 'none'
       }),
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.production
@@ -169,7 +170,11 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
             keepClosingSlash: true,
             sortAttributes: true,
             removeComments: false
-          }
+          },
+          renderer: new PuppeteerRenderer({
+            injectProperty: '__PRERENDER_INJECTED',
+            inject: true,
+          })
         }),
         new CleanWebpackPlugin(),
         new CompressionPlugin({
@@ -180,7 +185,23 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
           threshold: 10240
         }),
         new OfflinePlugin(),
-        new WebpackPwaManifestPlugin(manifesOptions)
+        new WebpackPwaManifestPlugin(manifesOptions),
+        new RobotsTXTWebpackPlugin({
+          policy: [
+            {
+              userAgent: "Googlebot",
+              allow: "/",
+              disallow: "/search",
+              crawlDelay: 2
+            },
+            {
+              userAgent: "*",
+              allow: "/",
+              crawlDelay: 10,
+            }
+          ],
+          host: "https://bernardo.sunderhus.nom.br"
+        })
       ]
       : []
     ],
