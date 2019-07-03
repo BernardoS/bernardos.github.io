@@ -74,6 +74,7 @@
     "resolve-url-loader": "^3.1.0",
     "responsive-loader": "^1.2.0",
     "rimraf": "^2.6.3",
+    "robotstxt-webpack-plugin": "^6.0.0",
     "sass-loader": "^7.1.0",
     "script-loader": "^0.7.2",
     "simple-progress-webpack-plugin": "^1.1.2",

@@ -32,7 +32,7 @@ interface Options {
   }
 }
 
-export default ({htmlWebpackPlugin: {files}}: Options) => {
+export default ({htmlWebpackPlugin: {files}, compilation}: Options) => {
   const {
     chunks: {
       runtime,
@@ -47,6 +47,7 @@ export default ({htmlWebpackPlugin: {files}}: Options) => {
     <html lang="en">
       <head>
         <title>Bernardo Sunderhus</title>
+        <meta name="Description" content="Bernardo Sunderhus personal website">
         <meta property="og:title" content="Bernardo Sunderhus">
         <meta property="og:description" content="Front-end Web Engineer">
         <meta charset="UTF-8">

@@ -11,7 +11,7 @@ import PreRenderSPAPlugin, {PuppeteerRenderer} from 'prerender-spa-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import CSSOWebpackPlugin from 'csso-webpack-plugin'
 import OfflinePlugin from 'offline-plugin'
-
+import RobotsTXTWebpackPlugin from 'robotstxt-webpack-plugin'
 import WebpackPwaManifestPlugin from 'webpack-pwa-manifest'
 import manifesOptions from './src/manifest'
 
@@ -27,7 +27,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     context: SRC_PATH,
     entry: {
       main: './index.ts',
-      ['web-components']: './web-components/index.ts'
+      ['web-components']: ['./web-components/port-details.ts']
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -185,7 +185,23 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
           threshold: 10240
         }),
         new OfflinePlugin(),
-        new WebpackPwaManifestPlugin(manifesOptions)
+        new WebpackPwaManifestPlugin(manifesOptions),
+        new RobotsTXTWebpackPlugin({
+          policy: [
+            {
+              userAgent: "Googlebot",
+              allow: "/",
+              disallow: "/search",
+              crawlDelay: 2
+            },
+            {
+              userAgent: "*",
+              allow: "/",
+              crawlDelay: 10,
+            }
+          ],
+          host: "https://bernardo.sunderhus.nom.br"
+        })
       ]
       : []
     ],
