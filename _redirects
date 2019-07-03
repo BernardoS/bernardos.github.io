@@ -2,3 +2,8 @@
 
 # Redirect default Netlify subdomain to primary domain
 https://bsunderhus-personal-web-site.netlify.com/* https://bernardo.sunderhus.nom.br/:splat 301!
+
+
+/experience  /experience/index.html 200
+/education  /education/index.html 200
+/* /index.html 200

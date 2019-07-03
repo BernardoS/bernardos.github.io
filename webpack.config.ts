@@ -27,7 +27,9 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     context: SRC_PATH,
     entry: {
       main: './index.ts',
-      ['web-components']: ['./web-components/port-details.ts']
+      ['web-components']: [
+        './web-components/port-details.ts',
+      ]
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -142,7 +144,14 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       new HTMLWebpackPlugin({
         inject: false,
         template: './template.ts',
-        minify: env.production as false | object,
+        minify: env.production ? {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          decodeEntities: true,
+          keepClosingSlash: true,
+          sortAttributes: true,
+          removeComments: false
+        } : false,
         chunksSortMode: 'none'
       }),
       new webpack.EnvironmentPlugin({

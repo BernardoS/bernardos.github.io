@@ -35,5 +35,8 @@ RUN apt-get update
 RUN apt-get install -y zsh
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
+# Instal xsel
+RUN apt install xsel
+
 # Set the default shell to bash instead of sh
 ENV SHELL /bin/zsh
