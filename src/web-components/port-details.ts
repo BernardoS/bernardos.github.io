@@ -1,9 +1,8 @@
-import { css, html, customElement, LitElement, property } from 'lit-element';
-
+import HyperElement, {customElement, attribute} from '~/utils/hyper-element'
 @customElement('port-details')
-export default class PortDetails extends LitElement {
-  // public static readonly tabIndex = 0
-  public static readonly styles = css`
+export default class PortDetails extends HyperElement {
+  public static readonly tabIndex = 0
+  public static readonly css = /*css*/`
     :host {
       display: block;
     }
@@ -57,28 +56,27 @@ export default class PortDetails extends LitElement {
     }
   `
   
-  @property({type: Boolean, reflect: true})
+  @attribute('open', Boolean)
   public open: boolean = false
-  @property({type: Boolean, reflect: true})
+  @attribute('sticky', Boolean)
   public sticky: boolean = false
 
   public render () {
-    return html`
+    this.html`
       <button
         id="button"
         tabindex=${-1}
         aria-controls="content"
-        @click=${this.toggle}
         aria-expanded=${this.open ? 'true' : 'false'}
+        onclick=${this._handleClick}
       >
-        <slot name="summary"></slot>
+        <slot name="summary"/>
       </button>
-      <slot id="content"></slot>
+      <slot id="content"/>
     `
   }
   public connectedCallback () {
     super.connectedCallback()
-    if (!this.hasAttribute('tabindex')) this.tabIndex = 0
     this.addEventListener('keydown', this._handleKeyDown, {passive: true})
   }
   public disconnectedCallback () {
@@ -94,6 +92,7 @@ export default class PortDetails extends LitElement {
       ))
     }
   }
+  private _handleClick = (ev: MouseEvent) => this.toggle()
   private _handleKeyDown = (ev: KeyboardEvent) => {
     const button = this.shadowRoot!.getElementById('button') as HTMLButtonElement
     if (ev.target === this && button && (ev.code === 'Space' || ev.code === 'Enter')) {

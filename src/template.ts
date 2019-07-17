@@ -33,15 +33,7 @@ interface Options {
 }
 
 export default ({htmlWebpackPlugin: {files}}: Options) => {
-  const {
-    chunks: {
-      runtime,
-      commons,
-      'web-components': webComponents,
-      main
-    },
-    css
-  } = files
+  const {chunks: {runtime, main}, js, css} = files
   return html`
     <!DOCTYPE html>
     <html lang="en">
@@ -57,8 +49,6 @@ export default ({htmlWebpackPlugin: {files}}: Options) => {
         <meta name="theme-color" content=${variables.darkBlue}>
         <meta name="mobile-web-app-capable" content="yes">
         <link as="script" rel="preload" href=${runtime.entry}>
-        ${commons && html`<link as="script" rel="preload" href=${commons.entry}>`}
-        <link as="script" rel="preload" href=${webComponents.entry}>
         <link as="script" rel="preload" href=${main.entry}>
         <link as="image" rel="preload" href=${avatarURL}>
         <link as="image" rel="preload" href=${strvURL}>
@@ -68,11 +58,8 @@ export default ({htmlWebpackPlugin: {files}}: Options) => {
         <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
         <link rel="apple-touch-icon" href=${ico180x180} type="image/png" sizes="180x180">
         ${fonts}
-        <script src=${runtime.entry}></script>
-        ${commons && html`<script src=${commons.entry}></script>`}
-        <script src=${webComponents.entry}></script>
-        <script defer src=${main.entry}></script>
-        ${main.css.map(css => html`<link rel="stylesheet" href=${css}>`)}
+        ${css.map(css => html`<link rel="stylesheet" href=${css}>`)}
+        ${js.map(js => html`<script defer src=${js}></script>`)}
       </head>
       <body></body>
     </html>

@@ -1,16 +1,16 @@
-import {html, css, customElement, LitElement} from 'lit-element'
+import HyperElement, {customElement} from '~/utils/hyper-element'
 
 @customElement('port-event')
-export default class PortEvent extends LitElement {
-  protected render () {
-    return html`
-      <slot name="title" class="title"></slot>
-      <slot name="location" class="location"></slot>
-      <slot class="content"></slot>
-      <slot name="timestamp" class="timestamp"></slot>
+export default class PortEvent extends HyperElement {
+  public render () {
+    this.html`
+      <slot name="title" class="title"/>
+      <slot name="location" class="location"/>
+      <slot class="content"/>
+      <slot name="timestamp" class="timestamp"/>
     `
   }
-  public static readonly styles = css`
+  public static readonly css = /*css*/`
     :host {
       display: grid;
       grid-template-columns: 1fr auto;

@@ -1,9 +1,9 @@
-import {html} from 'lit-html'
+import hyper from 'hyperhtml'
 import locals from './about.scss'
 import cn from 'classnames'
 
 
-export default html`
+export default hyper`
   <div class=${cn(locals.avatar)}></div>
   <p>
     Hi I'm Bernardo, I'm a Brazilian who is passionate about working with innovations.

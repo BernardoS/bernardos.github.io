@@ -1,13 +1,13 @@
-import '~/web-components/port-event'
 import '~/web-components/highlight-text'
+import '~/web-components/port-event'
 
-import {html} from 'lit-html'
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
 import formatDate from '~/utils/formatDate'
+import hyper from 'hyperhtml'
 
 
-export default html`
+export default hyper`
   <port-event class="${globals.event}">
     <h3 slot="title">
       Bachelor of Computer Science

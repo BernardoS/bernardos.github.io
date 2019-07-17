@@ -7,7 +7,7 @@ import CleanWebpackPlugin from 'clean-webpack-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
 import TerserWebpackPlugin from 'terser-webpack-plugin'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
-import PreRenderSPAPlugin, {PuppeteerRenderer} from 'prerender-spa-plugin'
+// import PreRenderSPAPlugin, {PuppeteerRenderer} from 'prerender-spa-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import CSSOWebpackPlugin from 'csso-webpack-plugin'
 import OfflinePlugin from 'offline-plugin'
@@ -27,9 +27,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     context: SRC_PATH,
     entry: {
       main: './index.ts',
-      ['web-components']: [
-        './web-components/port-details.ts',
-      ]
+      // ['web-components']: './web-components/port-details.ts'
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -168,23 +166,23 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       ? [
         // new HTMLInlineCSSWebpackPlugin(),
         new CSSOWebpackPlugin() as unknown as Plugin,
-        new PreRenderSPAPlugin({
-          staticDir: OUTPUT_PATH,
-          routes: [ '/' , '/experience', '/education'],
-          server: {port: 3001},
-          minify: {
-            collapseBooleanAttributes: true,
-            collapseWhitespace: true,
-            decodeEntities: true,
-            keepClosingSlash: true,
-            sortAttributes: true,
-            removeComments: false
-          },
-          renderer: new PuppeteerRenderer({
-            injectProperty: '__PRERENDER_INJECTED',
-            inject: true,
-          })
-        }),
+        // new PreRenderSPAPlugin({
+        //   staticDir: OUTPUT_PATH,
+        //   routes: [ '/' , '/experience', '/education'],
+        //   server: {port: 3001},
+        //   minify: {
+        //     collapseBooleanAttributes: true,
+        //     collapseWhitespace: true,
+        //     decodeEntities: true,
+        //     keepClosingSlash: true,
+        //     sortAttributes: true,
+        //     removeComments: false
+        //   },
+        //   renderer: new PuppeteerRenderer({
+        //     injectProperty: '__PRERENDER_INJECTED',
+        //     inject: true,
+        //   })
+        // }),
         new CleanWebpackPlugin(),
         new CompressionPlugin({
           algorithm: 'gzip',
@@ -219,12 +217,16 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
       runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
-          // ['web-components']: {
-          //   test: /[\\/]web-components[\\/]/,
-          //   chunks: 'all',
-          //   enforce: true,
-          //   priority: 20,
-          // },
+          styles: {
+            name: 'styles',
+            test: /\.css$/,
+            chunks: 'all',
+            enforce: true,
+          },
+          ['web-components']: {
+            test: /[\\/]web-components[\\/]/,
+            chunks: 'all',
+          },
           commons: {
             chunks: 'initial',
             minChunks: 2,
@@ -248,7 +250,7 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
     },
     target: 'web',
     stats: env.production ? 'normal' : 'errors-only',
-    devtool: 'source-map',
+    devtool: env.production ? 'source-map' : 'source-map',
     devServer: {
       contentBase: path.resolve('./src'),
       host: '0.0.0.0',

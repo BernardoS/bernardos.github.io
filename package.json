@@ -11,7 +11,7 @@
     "bundle": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --env.production -p",
     "bundle:analyze": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --env.production --env.analyze -p",
     "debug": "node --inspect ./node_modules/.bin/cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" ./node_modules/.bin/webpack --env.production -p",
-    "serve": "cd www && serve -n -s -l 8080 ",
+    "serve": "serve -n -l 8080 ",
     "clean": "rimraf www",
     "check-types": "tsc"
   },
@@ -64,6 +64,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jsdom": "^15.0.0",
+    "literally-html": "^0.1.1",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
     "offline-plugin": "^5.0.7",
@@ -103,12 +104,9 @@
     "@babel/runtime": "^7.4.5",
     "classnames": "^2.2.6",
     "history": "^4.9.0",
-    "lit-element": "^2.2.0",
-    "lit-html": "^1.1.0",
+    "hyperhtml": "^2.29.4",
     "loader-utils": "^1.2.3",
-    "markdown-it": "^8.4.2",
     "marked": "^0.6.2",
-    "normalize.css": "^8.0.1",
     "reset.css": "^2.0.2",
     "strip-indent": "^3.0.0"
   }

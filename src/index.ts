@@ -1,9 +1,11 @@
-import {render} from 'lit-html'
-import app, {style} from '~/views/app'
+import style from '~/views/app/style.scss'
 import * as OfflinePluginRuntime from 'offline-plugin/runtime'
+import hyper from 'hyperhtml'
+import app from '~/views/app'
+
+
 
 OfflinePluginRuntime.install()
 
 document.body.classList.add(style.baseTheme)
-render(app, document.body)
-
+hyper(document.body)`${app}`

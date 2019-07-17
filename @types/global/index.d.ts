@@ -48,3 +48,26 @@ declare namespace NodeJS {
     NODE_ENV: 'development' | 'production'
   }
 }
+
+interface RequestIdleCallbackDeadline {
+  readonly didTimeout: boolean
+  timeRemaining: () => number
+}
+
+declare function requestIdleCallback(
+  callback: (deadline: RequestIdleCallbackDeadline) => void,
+  opts?: {timeout: number}
+): number
+declare function cancelIdleCallback(
+  handle: number
+): void
+
+interface Window {
+  requestIdleCallback(
+    callback: (deadline: RequestIdleCallbackDeadline) => void,
+    opts?: {timeout: number}
+  ): number
+  cancelIdleCallback(
+    handle: number
+  ): void
+}

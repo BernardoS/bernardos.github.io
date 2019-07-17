@@ -1,5 +1,4 @@
-import {html} from 'lit-html'
-import {unsafeHTML} from 'lit-html/directives/unsafe-html'
+import hyper from 'hyperhtml'
 
 import style from './style.scss'
 
@@ -10,29 +9,29 @@ import linkedin from '~/svg/linkedin.svg'
 import github from '~/svg/github.svg'
 import mail from '~/svg/envelope-solid.svg'
 
-export default html`
+export default hyper`
   <footer id="footer" class=${style.footer}>
     <div class=${style.logo}>
-      ${unsafeHTML(favicon)}
+      ${{html: favicon}}
     </div>
     <h3 class=${style.name}>
       <i>Bernardo Sunderhus</i>
     </h3>
     <div class=${style.icons}>
       <a class=${style.icon} aria-label="E-mail link" target="__blank" href="mailto:bernardo.sunderhus@gmail.com">
-        ${unsafeHTML(mail)}
+        ${{html: mail}}
       </a>
       <a class=${style.icon} aria-label="Github link" target="__blank" href="https://github.com/bsunderhus">
-        ${unsafeHTML(github)}
+        ${{html: github}}
       </a>
       <a class=${style.icon} aria-label="Linkedin link" target="__blank" href="https://www.linkedin.com/in/bsunderhus">
-        ${unsafeHTML(linkedin)}
+        ${{html: linkedin}}
       </a>
       <a class=${style.icon} aria-label="Facebook icon" target="__blank" href="https://www.facebook.com/bsunderhus">
-        ${unsafeHTML(facebook)}
+        ${{html: facebook}}
       </a>
       <a class=${style.icon} aria-label="Instagram icon" target="__blank" href="https://www.instagram.com/bsunderhus/">
-        ${unsafeHTML(instagram)}
+        ${{html: instagram}}
       </a>
     </div>
   </footer>

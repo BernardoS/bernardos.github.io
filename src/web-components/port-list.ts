@@ -1,8 +1,8 @@
-import {html, css, customElement, LitElement} from 'lit-element'
+import HyperElement, {customElement} from '~/utils/hyper-element'
 
 @customElement('port-list')
-export class PortList extends LitElement {
-  public static readonly styles = css`
+export class PortList extends HyperElement {
+  public static readonly css = /*css*/`
     :host {
       display: block;
       &:focus {
@@ -17,18 +17,14 @@ export class PortList extends LitElement {
     }  
   `
   public static readonly role = 'list'
-  public connectedCallback () {
-    super.connectedCallback()
-    if (!this.hasAttribute('role')) this.setAttribute('role', 'list')
-  }
   public render () {
-    return html`<slot></slot>`
+    this.html`<slot/>`
   }
 }
 
 @customElement('port-list-item')
-export class PortListItem extends LitElement {
-  public static readonly styles = css`
+export class PortListItem extends HyperElement {
+  public static readonly css = /*css*/`
     :host {
       display: flex;
       align-items: center;
@@ -52,15 +48,11 @@ export class PortListItem extends LitElement {
     }  
   `
   public static readonly role = 'listitem'
-  public connectedCallback () {
-    super.connectedCallback()
-    if (!this.hasAttribute('role')) this.setAttribute('role', 'listitem')
-  }
-  protected render () {
-    return html`
-      <span class="bullet"></span>
+  public render () {
+    this.html`
+      <span class="bullet"/>
       <span>
-        <slot></slot>
+        <slot/>
       </span>
     `
   }

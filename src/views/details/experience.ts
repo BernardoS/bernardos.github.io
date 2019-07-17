@@ -1,27 +1,27 @@
-import '~/web-components/port-list'
-import '~/web-components/port-event'
 import '~/web-components/highlight-text'
+import '~/web-components/port-event'
+import '~/web-components/port-list'
 
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
 import locals from './experience.scss'
 import STRVLogo from '~/images/STRV.png'
 import formatDate from '~/utils/formatDate';
-import { html } from 'lit-html';
+import hyper from 'hyperhtml'
 
-export default html`
+export default hyper`
   <port-event class=${globals.event}>
     <h3 slot="title">
       Front-end Web Engineer
     </h3>
-    <a rel="noopener" href="https://www.strv.com/" target="__blank" class=${globals.caption} slot="location">
+    <a rel="noopener" href="https://www.strv.com" target="__blank" class=${globals.caption} slot="location">
       STRV
     </a>
     <highlight-text
       class=${cn(globals.caption)}
       slot="timestamp"
       text=${formatDate`< ${new Date(2018, 9)} - ${new Date()} >`}
-    ></highlight-text>
+    />
     <div>
       <div class=${locals.eventContent}>
         <img
@@ -60,7 +60,7 @@ export default html`
       class=${cn(globals.caption)}
       slot="timestamp"
       text=${formatDate`< ${new Date(2016, 0)} - ${new Date(2018, 9)} >`}
-    ></highlight-text>
+    />
     <div class=${locals.eventContent}>
       <p>
         Evológica is a company with expertise in the modeling, development, and support of Insurance Systems. My activities at Evológica involves:
@@ -92,7 +92,7 @@ export default html`
       class=${cn(globals.caption)}
       slot="timestamp"
       text=${formatDate`< ${new Date(2017, 5)} - ${new Date(2018, 11)} >`}
-    ></highlight-text>
+    />
     <p class=${cn(globals.text, locals.eventContent)}>
       Multicast is a young <abbr title="Internet of Things">IoT</abbr> company who provides an end-to-end solution for monitoring products, equipment, supplies, environments, etc,. My roles were:
     </p>
@@ -116,7 +116,7 @@ export default html`
       class=${cn(globals.caption)}
       slot="timestamp"
       text=${formatDate`< ${new Date(2016, 2)} - ${new Date(2016, 6)} >`}
-    ></highlight-text>
+    />
     <port-list class=${locals.eventContent}>
       <port-list-item class=${globals.text}>
         Worked with Wordpress to fast deliver applications
