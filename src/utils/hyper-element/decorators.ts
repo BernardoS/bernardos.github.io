@@ -80,9 +80,15 @@ export const attribute = (
     },
     initializer: undefined,
     finisher: (clazz) => {
+      if (!clazz.hasOwnProperty('observedAttributesInitializer')) {
+        Object.defineProperty(clazz, 'observedAttributesInitializer', {
+          value: new Set()
+        })
+      }
       clazz.observedAttributesInitializer.add({
         ...elementOrDescriptor,
         attribute,
+        type
       })
       const observedAttributes = clazz.observedAttributes
       Object.defineProperty(clazz, 'observedAttributes', {

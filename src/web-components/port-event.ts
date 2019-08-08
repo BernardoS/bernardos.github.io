@@ -1,6 +1,5 @@
-import HyperElement, {customElement} from '~/utils/hyper-element'
+import HyperElement from '~/utils/hyper-element';
 
-@customElement('port-event')
 export default class PortEvent extends HyperElement {
   public render () {
     this.html`

@@ -1,5 +1,5 @@
-@import "~@/styles/settings/variables";
-@import "~@/styles/tools/media";
+@import "../../styles/settings/variables";
+@import "../../styles/tools/media";
 
 
 .avatar {
@@ -11,10 +11,13 @@
     width: 150px;
     height: 150px;
   }
-  background-image: url("~@/images/avatar.png");
+  background-image: url("../../images/avatar.png");
   background-size: contain;
   background-blend-mode: luminosity;
   background-color: $white;
   border-radius: 100%;
   shape-outside: circle(50%);
+  @media print {
+    display: none;
+  }
 }

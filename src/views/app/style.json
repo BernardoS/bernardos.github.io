@@ -9,12 +9,12 @@
   "darkBlue": "#20333e",
   "blue": "#375a63",
   "lightBlue": "#6795a0",
-  "white": "#f4efe6",
+  "white": "#ffffff",
   "beige": "#ecb172",
   "coral": "#d05f4c",
   "bulletColor": "var(--dark-coral)",
-  "highlightTextColor": "var(--beige)",
-  "sectionColor": "var(--beige)",
+  "highlightTextColor": "var(--coral)",
+  "sectionColor": "var(--coral)",
   "sectionContrastColor": "var(--white)",
-  "portListItemBulletColor": "var(--beige)"
+  "portListItemBulletColor": "var(--coral)"
 }

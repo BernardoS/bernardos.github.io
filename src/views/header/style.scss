@@ -4,17 +4,25 @@
 
 
 .header {
-  @include shadow;
+  @media screen {
+    @include shadow;
+  }
   @include z("header", "app-bar");
   // @include padding-limit;
-  padding: 0 0 0 calc(#{$space} * 2);
+  padding: calc(#{$space} * 2) calc(#{$space} * 2) 0 calc(#{$space} * 2);
   background-color: $dark-blue;
   color: $white;
-  height: 80px;
+  min-height: 80px;
   display: flex;
   align-items: flex-end;
   flex: 0 0 auto;
   a {
     text-decoration: none;
   }
+}
+
+
+.aside {
+  flex: 1;
+  margin-right: $space;
 }

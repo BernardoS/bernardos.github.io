@@ -2,6 +2,10 @@ declare module '*.svg' {
   const svg: string
   export default  svg
 }
+declare module '*.html' {
+  const html: unknown
+  export default html
+}
 
 // declare module '*.css' {
 //   const classes: { [key: string]: string };
@@ -70,4 +74,12 @@ interface Window {
   cancelIdleCallback(
     handle: number
   ): void
+}
+
+
+interface NodeList {
+  [Symbol.iterator] (): Iterator<Node>
+}
+interface NodeListOf<TNode extends Node> extends NodeList {
+  [Symbol.iterator] (): Iterator<TNode>
 }

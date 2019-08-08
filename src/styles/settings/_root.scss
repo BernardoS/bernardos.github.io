@@ -21,4 +21,8 @@
   @media (max-width: $phone-max-width) {
     --space: 6px;
   }
+  @media print {
+    --space: 6px;
+    --white : #ffffff;
+  }
 }

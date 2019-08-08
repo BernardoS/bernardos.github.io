@@ -8,7 +8,6 @@ import ico16x16 from './images/favicon-16x16.png'
 import ico32x32 from './images/favicon-32x32.png'
 import ico180x180 from './images/apple-touch-icon.png'
 import avatarURL from './images/avatar.png'
-import strvURL from './images/STRV.png'
 import fonts from './fonts'
 
 export interface Assets extends TemplateParametersAssets {
@@ -32,36 +31,37 @@ interface Options {
   }
 }
 
-export default ({htmlWebpackPlugin: {files}}: Options) => {
-  const {chunks: {runtime, main}, js, css} = files
-  return html`
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <title>Bernardo Sunderhus</title>
-        <meta name="Description" content="Bernardo Sunderhus personal website">
-        <meta property="og:title" content="Bernardo Sunderhus">
-        <meta property="og:description" content="Front-end Web Engineer">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="msapplication-TileColor" content=${variables.darkBlue}>
-        <meta name="theme-color" content=${variables.darkBlue}>
-        <meta name="mobile-web-app-capable" content="yes">
-        <link as="script" rel="preload" href=${runtime.entry}>
-        <link as="script" rel="preload" href=${main.entry}>
-        <link as="image" rel="preload" href=${avatarURL}>
-        <link as="image" rel="preload" href=${strvURL}>
-        ${css.map(css => html`<link as="style" rel="preload" href=${css}>`)}
-        <link rel="icon" href=${ico} type="image/png" sizes="48x48">
-        <link rel="icon" href=${ico16x16} type="image/png" sizes="16x16">
-        <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
-        <link rel="apple-touch-icon" href=${ico180x180} type="image/png" sizes="180x180">
-        ${fonts}
-        ${css.map(css => html`<link rel="stylesheet" href=${css}>`)}
-        ${js.map(js => html`<script defer src=${js}></script>`)}
-      </head>
-      <body></body>
-    </html>
-  `
-}
+export default ({htmlWebpackPlugin: {files: {chunks: {runtime, main, webComponents, commons}, js, css}}}: Options) => html`
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <title>Bernardo Sunderhus</title>
+      <meta name="Description" content="Bernardo Sunderhus personal website">
+      <meta property="og:title" content="Bernardo Sunderhus">
+      <meta property="og:description" content="Front-end Web Engineer">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <meta name="msapplication-TileColor" content=${variables.darkBlue}>
+      <meta name="theme-color" content=${variables.darkBlue}>
+      <meta name="mobile-web-app-capable" content="yes">
+      <link as="script" rel="preload" href=${commons.entry}>
+      <link as="script" rel="preload" href=${runtime.entry}>
+      <link as="script" rel="preload" href=${webComponents.entry}>
+      <link as="script" rel="preload" href=${main.entry}>
+      <link as="image" rel="preload" href=${avatarURL}>
+      ${css.map(css => html`<link as="style" rel="preload" href=${css}>`)}
+      <link rel="icon" href=${ico} type="image/png" sizes="48x48">
+      <link rel="icon" href=${ico16x16} type="image/png" sizes="16x16">
+      <link rel="icon" href=${ico32x32} type="image/png" sizes="32x32">
+      <link rel="apple-touch-icon" href=${ico180x180} type="image/png" sizes="180x180">
+      ${fonts}
+      ${css.map(css => html`<link rel="stylesheet" href=${css}>`)}
+      <script defer src=${runtime.entry}></script>
+      <script defer src=${commons.entry}></script>
+      <script defer src=${webComponents.entry}></script>
+      <script defer src=${main.entry}></script>
+    </head>
+    <body></body>
+  </html>
+`

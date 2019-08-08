@@ -34,6 +34,9 @@ $section-accent-color: var(--section-accent-color);
           left: 0;
           background-color: $section-contrast-color;
           animation: slide .5s ease-in;
+          @media print {
+            display: none;
+          }
         }
       }
     }
@@ -62,13 +65,23 @@ $section-accent-color: var(--section-accent-color);
       @include z("header", "education");
     }
   }
+  &#contact {
+    @include section-variables($coral);
+    .section-header {
+      @extend %section-color;
+      position: relative;
+      @include z("header", "contact");
+    }
+  }
   a {
     color: $section-color;
   }
 }
 
 .section-header {
-  @include shadow;
+  @media screen {
+    @include shadow;
+  }
   padding: 10px;
   margin-left: calc((100vw - #{$max-width}) / -2);
   margin-right: calc((100vw - #{$max-width}) / -2);
@@ -87,8 +100,8 @@ $section-accent-color: var(--section-accent-color);
   padding: calc(var(--space) * 2);
   .event:not(:last-child) {
     border-bottom: 3px solid $section-color;
-    padding-bottom: calc(#{$space} * 4);
-    margin-bottom: calc(#{$space} * 4);
+    padding-bottom: calc(#{$space} * 2);
+    margin-bottom: calc(#{$space} * 2);
   }
 }
 

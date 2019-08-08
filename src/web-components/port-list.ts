@@ -1,6 +1,5 @@
-import HyperElement, {customElement} from '~/utils/hyper-element'
+import HyperElement from '~/utils/hyper-element';
 
-@customElement('port-list')
 export class PortList extends HyperElement {
   public static readonly css = /*css*/`
     :host {
@@ -22,7 +21,6 @@ export class PortList extends HyperElement {
   }
 }
 
-@customElement('port-list-item')
 export class PortListItem extends HyperElement {
   public static readonly css = /*css*/`
     :host {

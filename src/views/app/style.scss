@@ -23,3 +23,31 @@
 }
 
 // Trumps: Helpers and overrides
+
+.print-display-none {
+  @media print {
+    display: none !important;
+  }
+  &.at-screen {
+    @media screen {
+      display: none;
+    }
+    @media print {
+      display: unset !important;
+    }
+  }
+}
+.print-hidden {
+  @media print {
+    visibility: hidden
+  }
+}
+
+@page {
+  margin: 1cm;
+}
+
+
+printer-container {
+  display: contents;
+}

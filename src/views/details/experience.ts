@@ -1,11 +1,6 @@
-import '~/web-components/highlight-text'
-import '~/web-components/port-event'
-import '~/web-components/port-list'
-
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
 import locals from './experience.scss'
-import STRVLogo from '~/images/STRV.png'
 import formatDate from '~/utils/formatDate';
 import hyper from 'hyperhtml'
 
@@ -24,11 +19,6 @@ export default hyper`
     />
     <div>
       <div class=${locals.eventContent}>
-        <img
-          class=${locals.strv}
-          src=${STRVLogo}
-          srcset=${STRVLogo}
-        />
         <p>
           I'm currently working on <span class=${cn(globals.caption)}>STRV</span> as an Front-End Web Engineer. 
         </p>

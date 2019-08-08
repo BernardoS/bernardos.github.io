@@ -1,6 +1,8 @@
 import hyper from 'hyperhtml'
 
 import style from './style.scss'
+import {style as globals} from '~/views/app'
+import cn from 'classnames'
 
 import favicon from '~/svg/favicon.svg'
 import instagram from '~/svg/instagram.svg'
@@ -10,7 +12,7 @@ import github from '~/svg/github.svg'
 import mail from '~/svg/envelope-solid.svg'
 
 export default hyper`
-  <footer id="footer" class=${style.footer}>
+  <footer id="footer" class=${cn(style.footer, globals.printDisplayNone)}>
     <div class=${style.logo}>
       ${{html: favicon}}
     </div>

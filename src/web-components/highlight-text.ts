@@ -1,7 +1,6 @@
-import HyperElement, {customElement, attribute} from '~/utils/hyper-element'
+import HyperElement, {attribute} from '~/utils/hyper-element'
 import cn from 'classnames'
 
-@customElement('highlight-text')
 export class HighLightText extends HyperElement {
   public static readonly css = /*css*/`
     :host {

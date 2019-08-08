@@ -20,21 +20,17 @@ const OUTPUT_PATH = path.resolve(ROOT_PATH, 'www')
 const SRC_PATH = path.resolve(ROOT_PATH, 'src')
 
 
-
 const configuration = (env: { production?: boolean, analyze?: boolean } = {}): webpack.Configuration => {
   return ({
     mode: env.production ? 'production' : 'development',
     context: SRC_PATH,
     entry: {
       main: './index.ts',
-      // ['web-components']: './web-components/port-details.ts'
+      webComponents: './web-components/index.ts'
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-      alias: {
-        '~': SRC_PATH,
-        '@': SRC_PATH,
-      }
+      alias: {'~': SRC_PATH}
     },
     output: {
       path: OUTPUT_PATH,
@@ -47,6 +43,14 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
           test: /\.(t|j)sx?$/,
           exclude: /node_modules/,
           use: ['babel-loader']
+        },
+        {
+          test: /\.html$/,
+          include: /\/web-components\//,
+          use: [
+            'babel-loader',
+            'html-module-loader'
+          ]
         },
         {
           test: /\.s?css$/,
@@ -223,10 +227,10 @@ const configuration = (env: { production?: boolean, analyze?: boolean } = {}): w
             chunks: 'all',
             enforce: true,
           },
-          ['web-components']: {
-            test: /[\\/]web-components[\\/]/,
-            chunks: 'all',
-          },
+          // ['web-components']: {
+          //   test: /[\\/]web-components[\\/]/,
+          //   chunks: 'all',
+          // },
           commons: {
             chunks: 'initial',
             minChunks: 2,

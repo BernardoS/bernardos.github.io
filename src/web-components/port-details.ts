@@ -1,6 +1,6 @@
-import HyperElement, {customElement, attribute} from '~/utils/hyper-element'
-@customElement('port-details')
-export default class PortDetails extends HyperElement {
+import HyperElement, {attribute} from '~/utils/hyper-element'
+
+export class PortDetails extends HyperElement {
   public static readonly tabIndex = 0
   public static readonly css = /*css*/`
     :host {
@@ -30,8 +30,6 @@ export default class PortDetails extends HyperElement {
     slot[name="summary"]:focus {
       outline: none;
     }
-
-
     button {
       width: 100%;
       text-align: unset;

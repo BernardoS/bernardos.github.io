@@ -2,13 +2,17 @@
 // Please do not change this file!
 interface CssExports {
   'about': string;
+  'atScreen': string;
   'baseTheme': string;
   'caption': string;
+  'contact': string;
   'education': string;
   'event': string;
   'experience': string;
   'innerSection': string;
   'mainSection': string;
+  'printDisplayNone': string;
+  'printHidden': string;
   'section': string;
   'sectionHeader': string;
   'sectionHeaderText': string;

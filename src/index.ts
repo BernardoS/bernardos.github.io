@@ -4,8 +4,9 @@ import hyper from 'hyperhtml'
 import app from '~/views/app'
 
 
-
 OfflinePluginRuntime.install()
 
 document.body.classList.add(style.baseTheme)
-hyper(document.body)`${app}`
+hyper(document.body)`
+  ${app}
+`

@@ -1,6 +1,3 @@
-import '~/web-components/highlight-text'
-import '~/web-components/port-event'
-
 import cn from 'classnames'
 import {style as globals} from '~/views/app'
 import formatDate from '~/utils/formatDate'
@@ -19,7 +16,7 @@ export default hyper`
       class=${globals.caption}
       slot="timestamp"
       text="${formatDate`< ${new Date(2012, 0)} - ${new Date(2018, 6)} >`}"
-    ></highlight-text>
+    />
     <p>
       Research on structural supporting the development of Situation-awareness applications based on Context-awareness concepts. Motivated by the increasing number of data to support the development of applications that are more sensible to an user.
     </p>
@@ -35,7 +32,7 @@ export default hyper`
       class="${globals.caption}"
       slot="timestamp"
       text="${formatDate`< ${new Date(2015, 0)} - ${new Date(2016, 0)} >`}"
-    ></highlight-text>
+    />
     <p>
       One year exchange experience on Netherlands sponsored by the Brazilian government with the program <abbr title="Brazil Netherlands Technology">BRANETEC</abbr>.
     </p>

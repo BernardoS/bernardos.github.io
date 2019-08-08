@@ -4,6 +4,7 @@ import {bind, wire, BoundTemplateFunction, WiredTemplateFunction} from 'hyperhtm
 export interface AttributeInitializer {
   attribute: string,
   key: PropertyKey,
+  type: typeof String | typeof Boolean | typeof Number
   initializer?: () => unknown
 }
 
@@ -26,7 +27,7 @@ if (!window.requestIdleCallback) {
 
 export default abstract class HyperElement extends HTMLElement {
   public static readonly observedAttributes: string[] = []
-  public static readonly observedAttributesInitializer = new Set<AttributeInitializer>()
+  public static readonly observedAttributesInitializer?: Set<AttributeInitializer>
   public static readonly css: string | null = null
   public static styleSheet?: CSSStyleSheet | HTMLStyleElement
   public static readonly shadowRootInit: ShadowRootInit = {mode: 'open'}
@@ -62,7 +63,7 @@ export default abstract class HyperElement extends HTMLElement {
     addRole(this)
     addTabIndex(this)
     addCSSStyleSheet(this)
-    for (const attributeInitializer of constructor.observedAttributesInitializer) {
+    for (const attributeInitializer of constructor.observedAttributesInitializer || []) {
       initializeAttribute(this, attributeInitializer)
       upgradeProperty(this, attributeInitializer.key)
     }
@@ -147,9 +148,15 @@ function upgradeProperty(component: HyperElement, key: PropertyKey) {
   }
 }
 
-function initializeAttribute(component: HyperElement, {key, initializer, attribute}: AttributeInitializer) {
-  if (initializer && !component.hasAttribute(attribute)) {
+function initializeAttribute(component: HyperElement, {key, initializer, attribute, type}: AttributeInitializer) {
+  const hasAttribute = component.hasAttribute(attribute)
+  if (initializer && !hasAttribute) {
     Reflect.set(component, key, initializer())
+  } else if (hasAttribute) {
+    const value = component.getAttribute(attribute)
+    if (type === String) Reflect.set(component, key, value)
+    else if (type === Number) Reflect.set(component, key, Number(value))
+    else if (type === Boolean) Reflect.set(component, key, value === 'true' || value === '' || value === attribute)
   }
 }
 

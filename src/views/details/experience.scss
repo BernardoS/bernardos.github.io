@@ -1,6 +1,6 @@
-@import "~@/styles/settings/variables";
-@import "~@/styles/tools/media";
-@import "~@/styles/tools/elevation";
+@import "../../styles/settings/variables";
+@import "../../styles/tools/media";
+@import "../../styles/tools/elevation";
 
 .event-content {
   overflow: auto;
@@ -11,5 +11,8 @@
   float: left;
   padding: calc(#{$space} * 2);
   max-width: 150px;
+  @media print {
+    display: none;
+  }
 }
 
