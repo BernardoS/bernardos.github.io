@@ -1,5 +1,6 @@
-import HyperElement, {attribute} from '~/utils/hyper-element'
+import HyperElement, {attribute, customElement} from '~/utils/hyper-element'
 
+@customElement('port-details')
 export class PortDetails extends HyperElement {
   public static readonly tabIndex = 0
   public static readonly css = /*css*/`
