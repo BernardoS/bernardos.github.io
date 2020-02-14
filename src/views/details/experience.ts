@@ -40,11 +40,23 @@ export default html`
         </p>
       </div>
       <port-list class=${locals.eventContent}>
-        <port-list-item class=${globals.text}>
-          React-Native Application development for clients across the world!
+      <port-list-item class=${globals.text}>
+          React + Apollo Application for internal <a rel="noopener" href="https://github.com/strvcom/dep-manager-web" class=${cn(globals.caption)}>dependency management</a> 
         </port-list-item>
         <port-list-item class=${globals.text}>
-          Web based internal applications development with liberty to develop the best
+          React-Native E-Commerce Application development for <a rel="noopener" href="https://www.ecomi.com/" class=${cn(globals.caption)}>Ecomi</a>
+        </port-list-item>
+        <port-list-item class=${globals.text}>
+          Support and refactoring for Apollo of E-Commerce application on React + Redux for <a rel="noopener" href="https://www.medmen.com/" class=${cn(globals.caption)}>Medmen</a>
+        </port-list-item>
+        <port-list-item class=${globals.text}>
+          What's new on TS 3+ <a rel="noopener" target="__blank" href="https://drive.google.com/file/d/1xxLDEpLefg7ITsnvzg9e9nroXkDuesFp/view?usp=sharing" class=${cn(globals.caption)}>Talk</a> & <a rel="noopener" href="https://docs.google.com/presentation/d/1pknzzFsoG7Ntz5u1u56iX4PpNdFuXHoW1QgsSULSIvM/edit?usp=sharing" target="__blank" class=${cn(globals.caption)}>Slides</a>
+        </port-list-item>
+        <port-list-item class=${globals.text}>
+          Web Components: What, why, how?  <a rel="noopener" target="__blank" href="https://drive.google.com/file/d/1L2BQbMVJ9QPizK17NDn05EedtNbGYRto/view?usp=sharing" class=${cn(globals.caption)}>Talk</a> & <a rel="noopener" href="https://docs.google.com/presentation/d/1AurUgH80KicpMpzOsvlPY75WEkEVk8yrx5ptlR6Q5RY/edit?usp=sharing" target="__blank" class=${cn(globals.caption)}>Slides</a>
+        </port-list-item>
+        <port-list-item class=${globals.text}>
+          Currently working on internal projects based on React + Apollo
         </port-list-item>
       </port-list>
     </div>
