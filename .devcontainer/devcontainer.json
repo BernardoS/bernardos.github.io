@@ -1,20 +1,12 @@
-// See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
-	"name": "Node.js (latest LTS)",
+	"name": "Personal Website",
 	"dockerFile": "Dockerfile",
 	"appPort": [3000, 3001, 8080],
-	"postCreateCommand": "npm install",
 	"extensions": [
-		"mgmcdermott.vscode-language-babel",
-		"visualstudioexptteam.vscodeintellicode",
-		"closedcontour.very-smart-select",
-		"ms-vscode.vscode-typescript-tslint-plugin",
-		"christian-kohler.npm-intellisense",
-		"eg2.vscode-npm-script",
-		"editorconfig.editorconfig",
-		"compulim.vscode-clock",
-		"coenraads.bracket-pair-colorizer-2",
-    "christian-kohler.path-intellisense",
     "bierner.lit-html"
-	]
+	],
+  "runArgs": ["-u", "node", "-v", "personal-node_modules:/workspace/node_modules"],
+  "postCreateCommand": "sudo chown node:node node_modules",
+  "workspaceMount": "src=${localWorkspaceFolder},dst=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
 }
