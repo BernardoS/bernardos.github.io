@@ -7,7 +7,7 @@ import ico from './images/favicon.ico'
 import ico16x16 from './images/favicon-16x16.png'
 import ico32x32 from './images/favicon-32x32.png'
 import ico180x180 from './images/apple-touch-icon.png'
-import avatarURL from './images/avatar.png'
+import avatarURL from './images/avatar.jpeg'
 import strvURL from './images/STRV.png'
 import fonts from './fonts'
 

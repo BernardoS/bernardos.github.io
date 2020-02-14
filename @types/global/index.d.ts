@@ -23,6 +23,11 @@ declare module '*.png' {
   export default png
 }
 
+declare module '*.jpeg' {
+  const png: string
+  export default png
+}
+
 declare module '*.ico' {
   const ico: string
   export default ico
