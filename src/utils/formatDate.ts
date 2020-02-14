@@ -1,6 +1,6 @@
 
 const dateFormatter = new Intl.DateTimeFormat('default', {
-  year: '2-digit',
+  year: 'numeric',
   month: '2-digit'
 })
 
