@@ -1,0 +1,15 @@
+@use '/styles/variables';
+@use '/components/TimeStamp/variables' as highlight-text;
+@use 'variables' as *;
+
+@mixin theme {
+	color: $contrast-color;
+	background-color: $color;
+}
+
+@mixin variables($color, $contrast: variables.$white) {
+  #{highlight-text.$color-name}: #{$color};
+  --section-color: #{$color};
+  --section-contrast-color: #{$contrast};
+  --port-list-item-bullet-color: #{$color};
+}

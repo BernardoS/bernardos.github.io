@@ -1,0 +1,80 @@
+@use 'variables';
+@use 'media';
+
+.no-margin {
+	margin-block-start: 0px;
+	margin-block-end: 0px;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+
+.anchor {
+  font-family: variables.$caption-font-family;
+  font-weight: 700;
+  font-size: 1rem;
+  color: variables.$light-blue;
+  &:link {
+    color: variables.$light-blue;
+  }
+  &:visited {
+    color: variables.$light-blue;
+  }
+}
+
+.title {
+	font-family: variables.$title-font-family;
+	&-1 {
+		composes: title no-margin;
+		font-size: 2rem;
+	}
+	&-2 {
+		composes: title no-margin;
+		font-weight: variables.$title-font-weight;
+		font-size: 1.5rem
+	}
+}
+
+.subtitle {
+	&-1 {
+		composes: title no-margin;
+		font-weight: variables.$title-font-weight;
+		font-size: 1.2rem;
+	}
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.text {
+  font-family: variables.$text-font-family;
+  font-size: 1rem;
+  @include media.laptop {
+    font-size: 1.3rem;
+  }
+  text-align: justify;
+  hyphens: auto;
+  line-height: 1.2;
+  margin-block-end: 1rem;
+}
+
+.caption {
+  font-family: variables.$caption-font-family;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  @include media.tablet {
+    font-size: 0.875rem;
+  }
+  @include media.laptop {
+    font-size: 1rem;
+  }
+}
+
+
+.abbreviation {
+  font-family: variables.$caption-font-family;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+}

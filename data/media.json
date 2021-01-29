@@ -1,0 +1,7 @@
+{
+	"maxWidth": "960px",
+	"phoneMaxWidth": "425px",
+	"tabletMinWidth": "426px",
+	"laptopMinWidth": "769px",
+	"desktopMinWidth": "1024px"
+}

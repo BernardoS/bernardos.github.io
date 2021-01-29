@@ -1,0 +1,21 @@
+@use "/styles/variables";
+@use "/styles/elevation";
+@use "/components/Section/mixins" as section-mixins;
+@use "/components/Section/variables" as section-variables;
+
+@value caption, abbreviation, text, subtitle-1 as section__title from '/styles/_typography.scss';
+@value section__anchor from "/components/Section/style.module.scss";
+
+.section {
+	@include section-mixins.variables(variables.$beige);
+	summary {
+		@include section-mixins.theme;
+		@include elevation.z("header", "education");
+	}
+	&__event:not(:last-child) {
+		border-bottom: 3px solid section-variables.$color;
+		padding-bottom: calc(#{variables.$space} * 4);
+		margin-bottom: calc(#{variables.$space} * 4);
+	}
+}
+

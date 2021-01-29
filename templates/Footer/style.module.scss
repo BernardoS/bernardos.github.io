@@ -1,0 +1,76 @@
+@use "/styles/variables";
+@use "/styles/media";
+
+$icon-color: var(--footer-icon-color);
+$logo-color: var(--footer-logo-color);
+$icon-size: var(--footer-icon-size);
+
+
+.footer {
+  --footer-icon-color: #{variables.$light-blue};
+  --footer-logo-color: #{variables.$white};
+  --footer-icon-size: 22px;
+  background-color: variables.$dark-blue;
+  flex-shrink: 0;
+  color: variables.$white;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "logo name" "icons icons";
+  grid-gap: calc(#{variables.$space});
+  align-items: center;
+  justify-items: start;
+  @include media.tablet {
+    padding-top: variables.$space;
+    padding-bottom: variables.$space;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr;
+    grid-template-areas: "logo name icons";
+  }
+  padding-top: calc(#{variables.$space} * 2);
+  padding-bottom: calc(#{variables.$space} * 2);
+  @include media.padding-limit;
+}
+
+.name {
+  align-self: end;
+	grid-area: name;
+	composes: subtitle-1 from "/styles/_typography.scss";
+}
+
+.contact-me {
+  justify-self: center;
+  align-self: end;
+  grid-area: contact-me;
+}
+
+.icons {
+  justify-self: stretch;
+  display: flex;
+  // padding: $space) ;
+  justify-content: space-evenly;
+  align-content: space-around;
+  grid-area: icons;
+  @include media.laptop {
+    justify-self: flex-end;
+  }
+}
+
+.logo {
+  width: 40px;
+  @include media.laptop {
+    width: 50px;
+  }
+  grid-area: logo;
+  justify-self: start;
+  align-self: end;
+  color: $logo-color;
+}
+
+.icon {
+	composes: anchor from "/styles/_typography.scss";
+  padding: variables.$space;
+  height: $icon-size;
+  width: $icon-size;
+  color: $icon-color;
+}

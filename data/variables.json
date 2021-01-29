@@ -1,0 +1,17 @@
+
+{
+	"space": "12px",
+	"spacePhone": "6px",
+	"textFontFamily": "system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, sans-serif",
+	"titleFontFamily": "'NeutraText-Bold', 'Neutra Text', monospace",
+	"titleFontWeight": "bold",
+	"captionFontFamily": "'NeutraText-Bold', 'Neutra Text', monospace",
+	"black": "#252525",
+	"black50": "rgba(37, 37, 37, 0.5)",
+	"darkBlue": "#20333e",
+	"blue": "#375a63",
+	"lightBlue": "#6795a0",
+	"white": "#f4efe6",
+	"beige": "#ecb172",
+	"coral": "#d05f4c"
+}

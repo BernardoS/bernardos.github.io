@@ -1,0 +1,34 @@
+@use '/components/Section/mixins' as section;
+@use '/styles/variables';
+@use "/styles/media";
+@use "/styles/elevation";
+
+.section {
+	@include section.variables(variables.$blue);
+	&__avatar {
+		float: right;
+		margin: 0 0 0 variables.$space;
+		width: 200px;
+		height: 200px;
+		background-image: url("/images/avatar.jpeg");
+		background-size: 115%;
+		background-position: 90%;
+		background-blend-mode: luminosity;
+		background-color: variables.$white;
+		border-radius: 100%;
+		shape-outside: circle(50%);
+
+		@include media.phone {
+			width: 150px;
+			height: 150px;
+		}
+	}
+	&__summary {
+		@include section.theme;
+		@include elevation.z("header", "about");
+	}
+	&__paragraph {
+		composes: text from "/styles/_typography.scss";
+	}
+}
+

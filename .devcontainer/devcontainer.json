@@ -1,12 +1,19 @@
 {
-	"name": "Personal Website",
-	"dockerFile": "Dockerfile",
-	"appPort": [3000, 3001, 8080],
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/zsh"
+	},
 	"extensions": [
-    "bierner.lit-html"
+		"editorconfig.editorconfig",
+		"streetsidesoftware.code-spell-checker",
+		"bashmish.es6-string-css"
 	],
-  "runArgs": ["-u", "node", "-v", "personal-node_modules:/workspace/node_modules"],
-  "postCreateCommand": "sudo chown node:node node_modules",
-  "workspaceMount": "src=${localWorkspaceFolder},dst=/workspace,type=bind,consistency=cached",
-  "workspaceFolder": "/workspace"
+	"forwardPorts": [
+		3000,
+	],
+	"containerEnv": {
+		"WORKSPACE": "${containerWorkspaceFolder}"
+	},
 }
