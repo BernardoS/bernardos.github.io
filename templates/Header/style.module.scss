@@ -1,0 +1,22 @@
+
+@use "/styles/variables";
+@use "/styles/elevation";
+
+
+.header {
+  @include elevation.shadow;
+  @include elevation.z("header", "app-bar");
+  padding: 0 0 0 calc(#{variables.$space} * 2);
+  background-color: variables.$dark-blue;
+  color: variables.$white;
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  flex: 0 0 auto;
+  &__link {
+    text-decoration: none;
+	}
+	&__title {
+		composes: anchor title-1 from "/styles/_typography.scss";
+	}
+}

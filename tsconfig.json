@@ -1,37 +1,39 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~": ["src/index.ts"],
-      "~/*": ["./src/*"],
-      "@": ["src/index.ts"],
-      "@/*": ["./src/*"]
-    },
-    "sourceMap": true,
-    "target": "esnext",
-    "moduleResolution": "node",
-    "module": "esnext",
-    "noEmit": true,
-    "strict": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "declaration": false,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "jsx": "preserve",
-    "jsxFactory": "DOM.hydrate",
+    "target": "es5",
     "lib": [
       "dom",
+      "dom.iterable",
       "esnext"
     ],
-    "typeRoots": [
-      "node_modules/@types",
-      "@types"
-    ]
+    "allowJs": true,
+    "skipLibCheck": true,
+		"strict": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+		"jsx": "preserve",
+		"baseUrl": ".",
+		"paths": {
+			"data/*": ["data/*"],
+			"components/*": ["components/*"],
+			"styles/*": ["styles/*"],
+		}
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "webpack"
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

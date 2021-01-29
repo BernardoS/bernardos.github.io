@@ -1,0 +1,84 @@
+@use '/styles/variables';
+@use "/styles/elevation";
+@use 'variables' as *;
+
+.section {
+	$self: &;
+	display: block;
+	&__title {
+		composes: title-2 from '/styles/_typography.scss';
+	}
+	&__summary {
+		position: sticky;
+		top: 0px;
+		&:focus {
+			outline: none;
+			#{$self}__title {
+				position: relative;
+				display: inline;
+				&:after {
+					content: "";
+					position: absolute;
+					width: 100%;
+					height: 3px;
+					bottom: 0;
+					left: 0;
+					background-color: $contrast-color;
+					animation: slide .5s ease-in;
+				}
+			}
+		}
+
+		@include elevation.shadow;
+
+		text-transform: uppercase;
+		padding: 10px;
+		margin-left: calc((100vw - #{variables.$max-width}) / -2);
+		margin-right: calc((100vw - #{variables.$max-width}) / -2);
+		padding-left: calc((100vw - #{variables.$max-width}) / 2);
+		padding-right: calc((100vw - #{variables.$max-width}) / 2);
+
+		@media (max-width: #{variables.$max-width}) {
+			margin-left: 0;
+			padding-left: calc(#{variables.$space} * 2);
+			margin-right: 0;
+			padding-right: calc(#{variables.$space} * 2);
+		}
+
+		text-align: unset;
+		box-sizing: content-box;
+		background: none;
+		border: 0;
+		color: inherit;
+		font: inherit;
+		line-height: normal;
+		overflow: visible;
+		user-select: none;
+		cursor: pointer;
+
+		&::-webkit-details-marker {
+			display:none;
+		}
+	}
+	&__content {
+		padding: calc(#{variables.$space} * 2);
+  }
+
+	&__anchor {
+		color: $color;
+		&:focus {
+			outline-color: $color;
+			outline-offset: calc(#{variables.$space} / 2);
+		}
+	}
+}
+
+
+@keyframes slide {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}

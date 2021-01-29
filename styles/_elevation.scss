@@ -1,0 +1,22 @@
+@use "variables";
+
+@mixin shadow {
+  box-shadow: 0px 4px 4px 0px variables.$black-50;
+}
+
+@function z-index($key1, $key2: null) {
+  $map: variables.$z-indexes;
+  $found-index: null;
+  @if (map-has-key($map, $key1)) {
+      $found-index: index(map-keys($map), $key1);
+      @if ($key2) {
+          $map: map-get($map, $key1);
+          $found-index: index($map, $key2);
+      }
+  }
+  @return $found-index;
+}
+
+@mixin z($key1, $key2: null) {
+  z-index: z-index($key1, $key2);
+}

@@ -1,0 +1,30 @@
+.port-list {
+	display: block;
+	&:focus {
+		outline: none;
+	}
+	&[hidden] {
+		display: none;
+	}
+	&__item {
+		display: flex;
+		align-items: center;
+		padding: var(--space);
+		&:focus {
+			outline: none;
+		}
+		&[hidden] {
+			display: none;
+		}
+	}
+	&__bullet {
+		flex: 0 0 auto;
+		box-sizing: border-box;
+		height: 6px;
+		width: 6px;
+		background-color: var(--port-list-item-bullet-color);
+		border-radius: 100%;
+		display: inline-block;
+		margin-right: var(--space);
+	}
+}

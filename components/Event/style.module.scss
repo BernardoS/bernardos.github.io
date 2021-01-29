@@ -1,0 +1,34 @@
+@use '/styles/variables';
+
+.event {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-areas:
+		"title   location"
+		"content content"
+		".....   timestamp";
+	grid-gap: variables.$space;
+
+	&:focus {
+		outline: none;
+	}
+
+	&__title {
+		grid-area: title;
+	}
+
+	&__location {
+		justify-self: end;
+		grid-area: location;
+	}
+
+	&__timestamp {
+		grid-area: timestamp;
+		justify-self: end;
+	}
+
+	&__content {
+		align-self: baseline;
+		grid-area: content;
+	}
+}
