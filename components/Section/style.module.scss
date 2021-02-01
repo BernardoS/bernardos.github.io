@@ -4,7 +4,7 @@
 
 .section {
 	$self: &;
-	display: block;
+  display: block;
 	&__title {
 		composes: title-2 from '/styles/_typography.scss';
 	}

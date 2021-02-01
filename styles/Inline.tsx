@@ -58,7 +58,11 @@ function InlineStyle() {
 
 			html {
 				font-size: 16px;
-			}
+      }
+
+      body {
+        overflow-x: hidden;
+      }
 
 			*:not(:defined) {
 				display: none;

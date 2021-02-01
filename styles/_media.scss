@@ -26,6 +26,6 @@
     padding-left: calc(#{variables.$space} * 2);
     padding-right: calc(#{variables.$space} * 2);
   }
-  padding-left: calc((100vw - 960px) / 2);
-  padding-right: calc((100vw - 960px)/ 2);
+  padding-left: calc((100vw - #{variables.$max-width}) / 2);
+  padding-right: calc((100vw - #{variables.$max-width})/ 2);
 }

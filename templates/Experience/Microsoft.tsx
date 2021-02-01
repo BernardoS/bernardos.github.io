@@ -20,12 +20,17 @@ export function MicrosoftEvent() {
       <div className={style.sectionContent}>
         <Icon className={style.logo} width={150} height={150}/>
         <p className={style.text}>
-          I'm working in <Link
+          I just started working in <Link
             className={style.sectionAnchor}
             href="https://www.microsoft.com/en/microsoft-teams/group-chat-software/"
           >
             Microsoft Teams
-          </Link> project.
+          </Link> project, directly in the <Link
+            className={style.sectionAnchor}
+            href="https://github.com/microsoft/fluentui"
+          >
+            FluentUI
+          </Link> working group.
         </p>
       </div>
     </Event>
