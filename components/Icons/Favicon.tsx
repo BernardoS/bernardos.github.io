@@ -1,8 +1,9 @@
 import * as React from "react"
+import variables from "data/variables.json";
 
 export function Favicon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg viewBox="0 0 100 100" {...props}>
       <path
         strokeWidth={5}
         stroke="currentColor"
@@ -16,9 +17,9 @@ export function Favicon(props: React.SVGProps<SVGSVGElement>) {
         textAnchor="end"
         fontWeight="bold"
         fill="currentColor"
-        fontFamily="NeutraText-Bold, Neutra Text"
+        fontFamily={variables.titleFontFamily}
       >
-        {"BS"}
+        BS
       </text>
     </svg>
   )

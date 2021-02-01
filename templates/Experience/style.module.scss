@@ -6,7 +6,7 @@
 @value abbreviation, caption, text, subtitle-1 as section__title from '/styles/_typography.scss';
 @value section__anchor from "/components/Section/style.module.scss";
 
-.strv {
+.logo {
   float: left;
   padding: calc(#{variables.$space} * 2);
   max-width: 150px;
