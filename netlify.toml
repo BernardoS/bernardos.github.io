@@ -1,0 +1,7 @@
+[[plugins]]
+  package = "netlify-plugin-cache-nextjs"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Removes previous installed service worker
+    Clear-Site-Data = "\"storage\""
