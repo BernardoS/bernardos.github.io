@@ -28,7 +28,7 @@ export function BarclaysEvent() {
         <p className={style.text}>
           I've worked in the <abbr className={style.abbreviation} title="Risk Finance & Treasury">RFT</abbr> department,
           Working on the OneRisk UI internal application, for analyzing risks.
-          The application is mainly developed under the <Link className={style.sectionAnchor} href="https://angular.io/">Angular framework</Link>.
+          The application is mainly developed under the <Link className={style.sectionAnchor} href="https://angular.io/">Angular</Link>.
         </p>
       </div>
     </Event>

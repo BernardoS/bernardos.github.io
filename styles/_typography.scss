@@ -73,6 +73,11 @@
 
 
 .abbreviation {
+  @include media.phone {
+    &::after {
+      content: " (" attr(title) ")";
+    }
+  }
   font-family: variables.$caption-font-family;
   font-weight: 700;
   font-size: 1rem;
