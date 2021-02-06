@@ -14,7 +14,7 @@ export function About() {
 				always interested, dedicated to keep up and improve.
 			</p>
 			<p className={style.sectionParagraph}>
-				I love spend time with my family, travel,
+				I love to spend time with my family, travel,
 				go to the movies and I simply can't live without a decent headphone!
 			</p>
 		</Section>
